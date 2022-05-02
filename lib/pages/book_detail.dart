@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/book_detail_json.dart';
 import 'package:pxp_flutter/json/home_json.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 // import 'package:expandable/expandable.dart';
 
 class BookDetail extends StatefulWidget {
@@ -40,16 +41,8 @@ class _BookDetailState extends State<BookDetail> {
       actions: [
         IconButton(
             icon: Icon(
-              Icons.collections_bookmark,
+              Feather.bookmark,
               size: 28,
-            ),
-            onPressed: () {}),
-        IconButton(
-            icon: Image.asset(
-              "assets/images/kaguya.jpeg",
-              fit: BoxFit.cover,
-              width: 26,
-              height: 26,
             ),
             onPressed: () {}),
       ],
@@ -63,7 +56,7 @@ class _BookDetailState extends State<BookDetail> {
       height: double.infinity,
       decoration: BoxDecoration(
         image: DecorationImage(
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.2), BlendMode.dstATop),
           image: NetworkImage(
@@ -73,7 +66,7 @@ class _BookDetailState extends State<BookDetail> {
       child: Column(
         children: [
           Container(
-            height: size.height - 103,
+            height: size.height - 243,
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
@@ -413,7 +406,56 @@ class _BookDetailState extends State<BookDetail> {
                 ),
               ),
             ),
-          )
+          ),
+          Container(
+            height: 140,
+            width: double.maxFinite,
+            decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(20.0))),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 50.0),
+                  child: Container(
+                    width: 300,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Colors.white),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => BookDetail()));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.play_arrow,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Start Reading",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

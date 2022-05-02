@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                               gradient: LinearGradient(
                                   colors: [
                                 Colors.black.withOpacity(0.85),
-                                Colors.black.withOpacity(0.0),
+                                Colors.black.withOpacity(0.3),
                               ],
                                   end: Alignment.topCenter,
                                   begin: Alignment.bottomCenter))),

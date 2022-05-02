@@ -6,5 +6,5 @@ List items = [
   {"icon": AntDesign.home, "text": "Home"},
   {"icon": AntDesign.search1, "text": "Search"},
   {"icon": Entypo.book, "text": "Library"},
-  {"icon": Feather.user, "text": "Account"},
+  {"icon": Feather.user, "text": "User"},
 ];

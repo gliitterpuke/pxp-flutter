@@ -29,6 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  epub_viewer: ^0.2.5
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -37,6 +38,7 @@ dependencies:
   video_player: ^2.4.0
   flutter_icons: ^1.1.0
   expandable: ^5.0.1
+  animated_theme_switcher: ^2.0.6
 
 
 dev_dependencies:
