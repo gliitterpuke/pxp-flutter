@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/book_detail_json.dart';
 import 'package:pxp_flutter/json/home_json.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:epub_viewer/epub_viewer.dart';
 // import 'package:expandable/expandable.dart';
 
 class BookDetail extends StatefulWidget {
@@ -485,9 +486,25 @@ class _BookDetailState extends State<BookDetail> {
                         borderRadius: BorderRadius.circular(4),
                         color: Colors.white),
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => BookDetail()));
+                      onTap: () async {
+                        EpubViewer.setConfig(
+                          identifier: 'iosBook',
+                          themeColor: Theme.of(context).primaryColor,
+                          scrollDirection: EpubScrollDirection.VERTICAL,
+                          enableTts: true,
+                          allowSharing: true,
+                        );
+                        await EpubViewer.openAsset(
+                          "assets/epub/3.epub",
+                          lastLocation: EpubLocator.fromJson({
+                            "bookId": "2239",
+                            "href": "/OEBPS/ch06.xhtml",
+                            "created": 1539934158390,
+                            "locations": {
+                              "cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"
+                            }
+                          }),
+                        );
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

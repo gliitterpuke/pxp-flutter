@@ -7,7 +7,7 @@ const List likesList = [
 ];
 const List episodesList = ["SEASONS", "MORE LIKE THIS"];
 
-const List movieList = [
+const List seasonsList = [
   {
     "title": "Season 1",
     "description":
