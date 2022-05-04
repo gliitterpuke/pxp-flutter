@@ -16,10 +16,16 @@ class ProfileWidget extends StatelessWidget {
 
     return Center(
       child: Stack(
-        children: [
-          buildImage(),
-        ],
+        children: [buildImage(), if (isEdit == true) edited()],
       ),
+    );
+  }
+
+  Widget edited() {
+    return Positioned(
+      bottom: 0,
+      right: 4,
+      child: buildEditIcon(Colors.grey),
     );
   }
 

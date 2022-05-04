@@ -21,22 +21,81 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: buildAppBar(context),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: [
-          ProfileWidget(
-            imagePath: user.imagePath,
+      body: Stack(
+        children: <Widget>[
+          Column(
+            children: [
+              Flexible(
+                flex: 1,
+                child: Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/loveiswar.jpg"),
+                            colorFilter: ColorFilter.mode(
+                                Colors.black.withOpacity(0.2),
+                                BlendMode.dstATop),
+                            fit: BoxFit.cover)),
+                    child: Stack(
+                      children: <Widget>[
+                        SafeArea(
+                          bottom: false,
+                          right: false,
+                          left: false,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 30),
+                            child: Column(
+                              children: [
+                                ProfileWidget(imagePath: user.imagePath),
+                                buildName(user),
+                                NumbersWidget()
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    )),
+              ),
+              buildAbout(
+                user,
+              ),
+            ],
           ),
-          const SizedBox(height: 24),
-          buildName(user),
-          const SizedBox(height: 6),
-          Center(child: followButton()),
-          const SizedBox(height: 12),
-          NumbersWidget(),
-          const SizedBox(height: 12),
-          buildAbout(user),
-          const SizedBox(height: 12),
-          const TabBarDemo()
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 0.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        primary: Colors.white,
+                      ),
+                      onPressed: () {},
+                      child: const Text("Follow",
+                          style: TextStyle(fontSize: 13.0)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        primary: Colors.white,
+                        backgroundColor: Colors.blue,
+                      ),
+                      onPressed: () {},
+                      child: const Text("Subscribe",
+                          style: TextStyle(fontSize: 13.0)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -61,18 +120,26 @@ class _ProfilePageState extends State<ProfilePage> {
         onClicked: () {},
       );
 
-  Widget buildAbout(User user) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 48),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
+  Widget buildAbout(User user) => Flexible(
+        flex: 1,
+        child: Container(
+            child: Padding(
+          padding: const EdgeInsets.only(left: 5.0, right: 5.0, top: 24.0),
+          child: Column(children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 24.0, right: 24, top: 30, bottom: 24),
               child: Text(
                 user.about,
                 style: const TextStyle(fontSize: 16, height: 1.4),
               ),
             ),
-          ],
-        ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: TabBarDemo(),
+              ),
+            ),
+          ]),
+        )),
       );
 }

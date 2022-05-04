@@ -6,6 +6,7 @@ import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/pages/home.dart';
 import 'package:pxp_flutter/pages/search.dart';
 import 'package:pxp_flutter/pages/account.dart';
+import 'package:pxp_flutter/pages/library.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _RootAppState extends State<RootApp> {
   Widget getBody() {
     return IndexedStack(
       index: activeTab,
-      children: [HomePage(), SearchPage(), HomePage(), ProfilePage()],
+      children: [HomePage(), SearchPage(), LibraryPage(), ProfilePage()],
     );
   }
 
