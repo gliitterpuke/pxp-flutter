@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/root_app_json.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/pages/home.dart';
+import 'package:pxp_flutter/pages/onboarding.dart';
 import 'package:pxp_flutter/pages/search.dart';
 import 'package:pxp_flutter/pages/account.dart';
 import 'package:pxp_flutter/pages/library.dart';
+import 'package:pxp_flutter/pages/onboarding.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -28,7 +30,13 @@ class _RootAppState extends State<RootApp> {
   Widget getBody() {
     return IndexedStack(
       index: activeTab,
-      children: [HomePage(), SearchPage(), LibraryPage(), ProfilePage()],
+      children: [
+        HomePage(),
+        SearchPage(),
+        LibraryPage(),
+        Onboarding(),
+        ProfilePage()
+      ],
     );
   }
 

@@ -44,20 +44,24 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
           ),
           const SizedBox(height: 8),
-          TextField(
-            controller: controller,
-            style: TextStyle(fontSize: 14),
-            decoration: InputDecoration(
-              hintText: 'Tell us about you',
-              isDense: true,
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
+          Container(
+            padding:
+                EdgeInsets.only(top: 4.0, bottom: 4.0, left: 15.0, right: 15.0),
+            decoration: BoxDecoration(
+              color: Color(0xFF212124),
+              borderRadius: BorderRadius.circular(10),
             ),
-            maxLines: widget.maxLines,
-          ),
+            child: TextField(
+              controller: controller,
+              style: TextStyle(fontSize: 14),
+              maxLines: widget.maxLines,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Tell us about you',
+                  isDense: true,
+                  hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14)),
+            ),
+          )
         ],
       );
 }
