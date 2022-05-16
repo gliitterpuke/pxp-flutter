@@ -62,3 +62,44 @@ const List archived = [
     "author": "Morgan Housel"
   },
 ];
+
+const List creatorsFollowed = [
+  {
+    "img": "assets/images/loid.jpg",
+    "author": "Loid Forger",
+    "series": "2",
+    "followers": "11,231",
+    "notification": "yes"
+  },
+  {
+    "img": "assets/images/gintoki.webp",
+    "author": "Gin-chan",
+    "series": "1",
+    "followers": "512",
+    "notification": "no"
+  },
+  {
+    "img": "assets/images/flyanya.jpg",
+    "author": "Anya Forger",
+    "series": "1",
+    "followers": "52",
+    "notification": "no"
+  },
+];
+
+const List creatorsSubbed = [
+  {
+    "img": "assets/images/san.jpg",
+    "author": "San",
+    "series": "321",
+    "followers": "1,342",
+    "notification": "yes"
+  },
+  {
+    "img": "assets/images/drunkyor.jpg",
+    "author": "Yor Forger",
+    "series": "1",
+    "followers": "2,468",
+    "notification": "no"
+  },
+];

@@ -92,8 +92,8 @@ class _LibraryPageState extends State<LibraryPage>
                                         fit: BoxFit.cover)),
                               ),
                               Container(
-                                  height: 80,
-                                  width: 80,
+                                  height: 70,
+                                  width: 70,
                                   decoration: BoxDecoration(
                                       color: Colors.black.withOpacity(0.2)))
                             ],
@@ -213,8 +213,8 @@ class _LibraryPageState extends State<LibraryPage>
                                         fit: BoxFit.cover)),
                               ),
                               Container(
-                                  height: 80,
-                                  width: 80,
+                                  height: 110,
+                                  width: 70,
                                   decoration: BoxDecoration(
                                       color: Colors.black.withOpacity(0.2)))
                             ],
@@ -289,8 +289,8 @@ class _LibraryPageState extends State<LibraryPage>
                                       fit: BoxFit.cover)),
                             ),
                             Container(
-                                height: 80,
-                                width: 80,
+                                height: 110,
+                                width: 70,
                                 decoration: BoxDecoration(
                                     color: Colors.black.withOpacity(0.2)))
                           ],
@@ -353,8 +353,8 @@ class _LibraryPageState extends State<LibraryPage>
                                         fit: BoxFit.cover)),
                               ),
                               Container(
-                                  height: 80,
-                                  width: 80,
+                                  height: 70,
+                                  width: 70,
                                   decoration: BoxDecoration(
                                       color: Colors.black.withOpacity(0.2)))
                             ],
@@ -413,7 +413,101 @@ class _LibraryPageState extends State<LibraryPage>
 
   // followed tab
 
-  _followed() => Padding(
+  _followed() => ListView(
+        children: [
+          Column(
+              children: List.generate(creatorsFollowed.length, (index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => BookDetail()));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 18, bottom: 10),
+                child: Row(
+                  children: [
+                    Container(
+                      child: Row(
+                        children: [
+                          Stack(
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(99),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            creatorsFollowed[index]['img']),
+                                        fit: BoxFit.cover)),
+                              ),
+                              // Container(
+                              //     height: 60,
+                              //     width: 60,
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.black.withOpacity(0.2)))
+                            ],
+                          ),
+                          Container(
+                            width:
+                                (MediaQuery.of(context).size.width - 30) * 0.7,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    creatorsFollowed[index]['author'],
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(children: [
+                                    Text(
+                                      creatorsFollowed[index]['series'] +
+                                          " series",
+                                      style: TextStyle(
+                                        color: pxpColors.secondaryT,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      creatorsFollowed[index]['followers'] +
+                                          " followers",
+                                      style: TextStyle(
+                                        color: pxpColors.secondaryT,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ])
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 35,
+                      height: 35,
+                      child: Icon(
+                        EvilIcons.bell,
+                        color: pxpColors.secondaryT,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }))
+        ],
+      );
+
+  _noFollowed() => Padding(
       padding: const EdgeInsets.only(left: 45, right: 45),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -444,7 +538,101 @@ class _LibraryPageState extends State<LibraryPage>
 
   // subbed tab
 
-  _subbed() => Padding(
+  _subbed() => ListView(
+        children: [
+          Column(
+              children: List.generate(creatorsSubbed.length, (index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => BookDetail()));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 18, bottom: 10),
+                child: Row(
+                  children: [
+                    Container(
+                      child: Row(
+                        children: [
+                          Stack(
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(99),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            creatorsSubbed[index]['img']),
+                                        fit: BoxFit.cover)),
+                              ),
+                              // Container(
+                              //     height: 60,
+                              //     width: 60,
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.black.withOpacity(0.2)))
+                            ],
+                          ),
+                          Container(
+                            width:
+                                (MediaQuery.of(context).size.width - 30) * 0.7,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    creatorsSubbed[index]['author'],
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(children: [
+                                    Text(
+                                      creatorsSubbed[index]['series'] +
+                                          " series",
+                                      style: TextStyle(
+                                        color: pxpColors.secondaryT,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      creatorsSubbed[index]['followers'] +
+                                          " followers",
+                                      style: TextStyle(
+                                        color: pxpColors.secondaryT,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ])
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 35,
+                      height: 35,
+                      child: Icon(
+                        EvilIcons.bell,
+                        color: pxpColors.secondaryT,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }))
+        ],
+      );
+
+  _noSubbed() => Padding(
       padding: const EdgeInsets.only(left: 45, right: 45),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
