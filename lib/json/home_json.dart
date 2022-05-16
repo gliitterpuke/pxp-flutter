@@ -1,8 +1,8 @@
 const List mylist = [
-  {"img": "assets/images/nonfiction.png"},
-  {"img": "assets/images/kinfolk.jpg"},
-  {"img": "assets/images/narnia.jpg"},
-  {"img": "assets/images/cover.jpg"},
+  {"img": "assets/images/nonfiction.png", "title": "Title1"},
+  {"img": "assets/images/kinfolk.jpg", "title": "Title2"},
+  {"img": "assets/images/narnia.jpg", "title": "Title3"},
+  {"img": "assets/images/cover.jpg", "title": "Title4"},
 ];
 
 const List popularList = [

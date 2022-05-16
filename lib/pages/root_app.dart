@@ -8,7 +8,7 @@ import 'package:pxp_flutter/pages/onboarding.dart';
 import 'package:pxp_flutter/pages/search.dart';
 import 'package:pxp_flutter/pages/account.dart';
 import 'package:pxp_flutter/pages/library.dart';
-import 'package:pxp_flutter/pages/onboarding.dart';
+import 'package:pxp_flutter/constants/Theme.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _RootAppState extends State<RootApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: pxpColors.menu,
       resizeToAvoidBottomInset: false,
       bottomNavigationBar: getFooter(),
       body: getBody(),
@@ -43,9 +43,9 @@ class _RootAppState extends State<RootApp> {
   Widget getFooter() {
     return Container(
       height: 80,
-      decoration: BoxDecoration(color: Colors.black),
+      decoration: BoxDecoration(color: pxpColors.menu),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(items.length, (index) {

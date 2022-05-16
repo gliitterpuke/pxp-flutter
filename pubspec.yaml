@@ -39,6 +39,7 @@ dependencies:
   flutter_icons: ^1.1.0
   expandable: ^5.0.1
   animated_theme_switcher: ^2.0.6
+  percent_indicator: ^4.0.1
 
 
 dev_dependencies:
