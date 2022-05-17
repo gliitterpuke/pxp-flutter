@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:pxp_flutter/pages/root_app.dart';
 import 'package:pxp_flutter/pages/onboarding.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData.dark(),
-    home: Onboarding(),
-  ));
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      home: Onboarding(),
+    ));
+  });
 }
