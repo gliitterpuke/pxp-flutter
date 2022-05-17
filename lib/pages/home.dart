@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/home_json.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:pxp_flutter/constants/Theme.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -173,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 10,
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -188,17 +189,55 @@ class _HomePageState extends State<HomePage> {
                             padding: EdgeInsets.only(left: 10),
                             child: Row(
                               children: List.generate(mylist.length, (index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 8),
-                                  width: 110,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      image: DecorationImage(
-                                          image:
-                                              AssetImage(mylist[index]['img']),
-                                          fit: BoxFit.cover)),
-                                );
+                                return Column(children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: 10),
+                                    width: 115,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                mylist[index]['img']),
+                                            fit: BoxFit.cover)),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 115,
+                                        child: Text(
+                                          mylist[index]['genre'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              color: pxpColors.secondaryT,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      SizedBox(
+                                        width: 110,
+                                        height: 40,
+                                        child: Text(
+                                          mylist[index]['title'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ]);
                               }),
                             ),
                           ),
@@ -216,7 +255,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 10,
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -231,18 +270,56 @@ class _HomePageState extends State<HomePage> {
                             padding: EdgeInsets.only(left: 10),
                             child: Row(
                               children:
-                                  List.generate(popularList.length, (index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 8),
-                                  width: 110,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              popularList[index]['img']),
-                                          fit: BoxFit.cover)),
-                                );
+                                  List.generate(trendingList.length, (index) {
+                                return Column(children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: 10),
+                                    width: 115,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                trendingList[index]['img']),
+                                            fit: BoxFit.cover)),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 110,
+                                        child: Text(
+                                          trendingList[index]['genre'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              color: pxpColors.secondaryT,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      SizedBox(
+                                        width: 110,
+                                        height: 50,
+                                        child: Text(
+                                          trendingList[index]['title'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ]);
                               }),
                             ),
                           ),
@@ -260,7 +337,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 10,
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -274,8 +351,7 @@ class _HomePageState extends State<HomePage> {
                           child: Padding(
                             padding: EdgeInsets.only(left: 10),
                             child: Row(
-                              children:
-                                  List.generate(trendingList.length, (index) {
+                              children: List.generate(newList.length, (index) {
                                 return Container(
                                   margin: EdgeInsets.only(right: 8),
                                   width: 110,
@@ -283,8 +359,8 @@ class _HomePageState extends State<HomePage> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(6),
                                       image: DecorationImage(
-                                          image: AssetImage(
-                                              trendingList[index]['img']),
+                                          image:
+                                              AssetImage(newList[index]['img']),
                                           fit: BoxFit.cover)),
                                 );
                               }),
@@ -298,13 +374,13 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15, right: 15),
                         child: Text(
-                          "Romance",
+                          "Completed",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 10,
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -319,18 +395,56 @@ class _HomePageState extends State<HomePage> {
                             padding: EdgeInsets.only(left: 10),
                             child: Row(
                               children:
-                                  List.generate(originalList.length, (index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 8),
-                                  width: 165,
-                                  height: 300,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              originalList[index]['img']),
-                                          fit: BoxFit.cover)),
-                                );
+                                  List.generate(completedList.length, (index) {
+                                return Column(children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: 10),
+                                    width: 115,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                completedList[index]['img']),
+                                            fit: BoxFit.cover)),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 110,
+                                        child: Text(
+                                          completedList[index]['genre'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              color: pxpColors.secondaryT,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      SizedBox(
+                                        width: 110,
+                                        height: 50,
+                                        child: Text(
+                                          completedList[index]['title'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ]);
                               }),
                             ),
                           ),
@@ -342,41 +456,59 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15, right: 15),
                         child: Text(
-                          "Science fiction",
+                          "Favourite genres",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 10,
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => BookDetail()));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              children:
-                                  List.generate(animeList.length, (index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 8),
-                                  width: 110,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              animeList[index]['img']),
-                                          fit: BoxFit.cover)),
-                                );
-                              }),
-                            ),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: List.generate(genreList.length, (index) {
+                              return Column(children: [
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Color(0xff161618),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      genreList[index]['icon'],
+                                      color: pxpColors.secondaryT,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookDetail()));
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  width: 80,
+                                  child: Center(
+                                    child: Text(
+                                      genreList[index]['genre'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          color: pxpColors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                              ]);
+                            }),
                           ),
                         ),
                       ),
@@ -387,78 +519,33 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
               child: SafeArea(
-                child: Column(
-                  children: [
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Padding(
-                    //       padding: const EdgeInsets.only(left: 10),
-                    //       child: Row(
-                    //         children: [
-                    //           Image.asset(
-                    //             "assets/images/kaguya.jpeg",
-                    //             width: 35,
-                    //             fit: BoxFit.cover,
-                    //           )
-                    //         ],
-                    //       ),
-                    //     ),
-                    //     Row(
-                    //       children: [
-                    //         IconButton(
-                    //             icon: Icon(
-                    //               Icons.collections_bookmark,
-                    //               size: 28,
-                    //             ),
-                    //             onPressed: () {}),
-                    //         IconButton(
-                    //             icon: Image.asset(
-                    //               "assets/images/kaguya.jpeg",
-                    //               fit: BoxFit.cover,
-                    //               width: 26,
-                    //               height: 26,
-                    //             ),
-                    //             onPressed: () {}),
-                    //       ],
-                    //     )
-                    //   ],
-                    // ),
-                    // SizedBox(
-                    //   height: 15,
-                    // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          "Books",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          "Audiobooks",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500),
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Categories",
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.w500),
-                            ),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            Icon(Icons.keyboard_arrow_down)
-                          ],
-                        ),
-                        Icon(Ionicons.ios_notifications_outline)
-                      ],
-                    )
-                  ],
-                ),
-              ),
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    "Books",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    "Audiobooks",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Categories",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Icon(Icons.keyboard_arrow_down)
+                    ],
+                  ),
+                  Icon(Ionicons.ios_notifications_outline)
+                ],
+              )),
             ),
           ],
         ),
