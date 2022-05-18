@@ -52,6 +52,7 @@ class _SearchPageState extends State<SearchPage> {
   PreferredSizeWidget getAppBar() {
     var size = MediaQuery.of(context).size;
     return AppBar(
+      automaticallyImplyLeading: false,
       backgroundColor: Colors.black,
       elevation: 0,
       title: Container(
