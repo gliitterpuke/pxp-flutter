@@ -214,6 +214,7 @@ class _HomePageState extends State<HomePage> {
                             aspectRatio: 1.75,
                             viewportFraction: 0.35,
                             enlargeStrategy: CenterPageEnlargeStrategy.height,
+                            initialPage: 0,
                             onPageChanged: (index, reason) {
                               setState(() {
                                 _current = index;
@@ -224,7 +225,8 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   GestureDetector(
-                    onTap: () => _controller.animateToPage(_current),
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => BookDetail())),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
