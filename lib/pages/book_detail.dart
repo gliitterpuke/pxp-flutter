@@ -5,6 +5,7 @@ import 'package:pxp_flutter/json/book_detail_json.dart';
 import 'package:pxp_flutter/json/home_json.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:epub_viewer/epub_viewer.dart';
+import 'package:pxp_flutter/pages/chapters.dart';
 // import 'package:expandable/expandable.dart';
 
 class BookDetail extends StatefulWidget {
@@ -389,7 +390,6 @@ class _BookDetailState extends State<BookDetail> {
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.bold),
                                       unselectedLabelColor: Colors.grey,
-                                      indicatorColor: Colors.grey,
                                       tabs: [
                                         Tab(text: 'CHAPTERS'),
                                         Tab(text: 'REVIEWS'),
@@ -421,7 +421,7 @@ class _BookDetailState extends State<BookDetail> {
                                                             context,
                                                             MaterialPageRoute(
                                                                 builder: (_) =>
-                                                                    BookDetail()));
+                                                                    Chapters()));
                                                       },
                                                       child: Padding(
                                                         padding:
@@ -453,7 +453,7 @@ class _BookDetailState extends State<BookDetail> {
                                                                           children: [
                                                                             Text(
                                                                               "Season " + seasonsList[index]['season'].toString(),
-                                                                              style: TextStyle(fontSize: 17, height: 1.3, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.9)),
+                                                                              style: TextStyle(fontSize: 16, height: 1.3, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.9)),
                                                                             ),
                                                                           ],
                                                                         ),
@@ -489,7 +489,7 @@ class _BookDetailState extends State<BookDetail> {
                                                                       'lastupdated'] +
                                                                   " ago",
                                                               style: TextStyle(
-                                                                  height: 1.4,
+                                                                  fontSize: 12,
                                                                   color: Colors
                                                                       .white
                                                                       .withOpacity(

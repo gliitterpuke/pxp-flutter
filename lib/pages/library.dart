@@ -3,9 +3,7 @@ import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/json/library.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
-import 'package:pxp_flutter/pages/home.dart';
 import 'package:pxp_flutter/pages/root_app.dart';
-// import 'package:pxp_flutter/pages/register.dart';
 
 class LibraryPage extends StatefulWidget {
   @override

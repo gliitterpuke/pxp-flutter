@@ -245,36 +245,182 @@ class _HomePageState extends State<HomePage> {
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600),
                               ),
-                              pxppicks[_current]['icon'] == FontAwesome.heart
-                                  ? Text("")
-                                  : Row(
-                                      children: [
-                                        Text(
-                                          " • ",
-                                          style: TextStyle(
-                                              color: pxpColors.secondaryT,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600),
+                              GestureDetector(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Dialog(
+                                        backgroundColor: Color(0xff212124),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: ListView(
+                                            shrinkWrap: true,
+                                            children: <Widget>[
+                                              SizedBox(height: 20),
+                                              Center(
+                                                child: Text(
+                                                  'What are these icons?',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "Each icon represents a different tier of book: whether it's free, paid, or another tier.",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                        FontAwesome.hourglass_o,
+                                                        color: tierColor.paid),
+                                                    Text(
+                                                      ' Free: details here',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(FontAwesome.dollar,
+                                                        color: tierColor.paid),
+                                                    Text(
+                                                      ' Paid: detalis here',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(AntDesign.star,
+                                                        color:
+                                                            tierColor.bronze),
+                                                    Text(
+                                                      ' Bronze subscription: details',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(AntDesign.star,
+                                                        color:
+                                                            tierColor.silver),
+                                                    Text(
+                                                      ' Silver subscription: details',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(AntDesign.star,
+                                                        color: tierColor.gold),
+                                                    Text(
+                                                      ' Gold subscription: details',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(height: 20),
+                                            ],
+                                          ),
                                         ),
-                                        Icon(pxppicks[_current]['icon'],
-                                            color: pxppicks[_current]['tier'] ==
-                                                    1
-                                                ? tierColor.bronze
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, right: 1),
+                                      child: Icon(
+                                        pxppicks[_current]['icon'],
+                                        color: pxppicks[_current]['tier'] == 0
+                                            ? tierColor.gold
+                                            : pxppicks[_current]['tier'] == 2
+                                                ? tierColor.silver
                                                 : pxppicks[_current]['tier'] ==
-                                                        2
-                                                    ? tierColor.silver
+                                                        3
+                                                    ? tierColor.gold
                                                     : pxppicks[_current]
                                                                 ['tier'] ==
-                                                            3
-                                                        ? tierColor.gold
-                                                        : pxppicks[_current]
-                                                                    ['tier'] ==
-                                                                4
-                                                            ? tierColor.paid
-                                                            : tierColor.bronze,
-                                            size: 15),
-                                      ],
+                                                            4
+                                                        ? tierColor.paid
+                                                        : tierColor.bronze,
+                                        size: 15,
+                                      ),
                                     ),
+                                    Text(
+                                      "¹",
+                                      style: TextStyle(
+                                          color: pxpColors.secondaryT,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600),
+                                    )
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                           const SizedBox(
@@ -498,7 +644,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15, right: 15),
                         child: Text(
-                          "Favourite genres",
+                          "Trending authors",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),

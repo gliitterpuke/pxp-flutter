@@ -53,8 +53,8 @@ const List pxppicks = [
     "genre": "Mystery",
     "description":
         "When a man is found murdered in an abandoned building in Osaka in 1973, unflappable detective Sasagaki is assigned to the case. He begins to piece together the connection of two young people who are inextricably linked to the crime; the dark, taciturn son of the victim and the unexpectedly captivating daughter of the main suspect. Over the next twenty years we follow their lives as Sasagaki pursues the case - which remains unsolved - to the point of obsession.",
-    "icon": FontAwesome.heart,
-    "tier": "",
+    "icon": FontAwesome.hourglass_o,
+    "tier": 0,
   },
   {
     "img": "assets/images/pachinko.jpg",
