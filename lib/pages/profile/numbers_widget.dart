@@ -6,38 +6,29 @@ class NumbersWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           buildButton(context, '35', 'Following'),
-          buildDivider(),
           buildButton(context, '50', 'Followers'),
+          buildButton(context, '2', 'Subscribed'),
         ],
-      );
-  Widget buildDivider() => Container(
-        height: 24,
-        child: VerticalDivider(),
       );
 
   Widget buildButton(BuildContext context, String value, String text) =>
       Padding(
-        padding: const EdgeInsets.only(top: 24.0, left: 42, right: 32),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisSize: MainAxisSize.max,
-          children: [
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(value,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold)),
+                Text(
+                  value,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
                 Text(text,
                     style: TextStyle(
                         color: Colors.white.withOpacity(0.8), fontSize: 12.0))
               ],
             ),
-          ],
-        ),
-      );
+          ]));
 }

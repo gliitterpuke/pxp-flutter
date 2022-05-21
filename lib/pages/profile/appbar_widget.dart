@@ -10,6 +10,11 @@ AppBar buildAppBar(BuildContext context) {
     leading: BackButton(),
     backgroundColor: Colors.transparent,
     elevation: 0,
+    title: Text(
+      "Glitterpuke",
+      style: TextStyle(
+          color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+    ),
     actions: [
       IconButton(
         icon: Icon(icon),
