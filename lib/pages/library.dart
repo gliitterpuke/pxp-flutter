@@ -566,11 +566,6 @@ class _LibraryPageState extends State<LibraryPage>
                                             creatorsSubbed[index]['img']),
                                         fit: BoxFit.cover)),
                               ),
-                              // Container(
-                              //     height: 60,
-                              //     width: 60,
-                              //     decoration: BoxDecoration(
-                              //         color: Colors.black.withOpacity(0.2)))
                             ],
                           ),
                           Container(

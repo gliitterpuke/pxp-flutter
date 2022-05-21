@@ -8,34 +8,10 @@ const List likesList = [
 const List episodesList = ["SEASONS", "MORE LIKE THIS"];
 
 const List seasonsList = [
-  {
-    "title": "Season 1",
-    "description":
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    "title": "Season 2",
-    "description":
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Metus vulputate eu scelerisque felis imperdiet proin fermentum. Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit.",
-  },
-  {
-    "title": "Season 3",
-    "description":
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Metus vulputate eu scelerisque felis imperdiet proin fermentum. Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit.",
-  },
-  {
-    "title": "Season 4",
-    "description":
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Metus vulputate eu scelerisque felis imperdiet proin fermentum. Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit.",
-  },
-  {
-    "title": "Season 5",
-    "description":
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Metus vulputate eu scelerisque felis imperdiet proin fermentum. Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit.",
-  },
-  {
-    "title": "Season 6",
-    "description":
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
+  {"season": 1, "lastupdated": "1h"},
+  {"season": 2, "lastupdated": "7 days"},
+  {"season": 3, "lastupdated": "2 weeks"},
+  {"season": 4, "lastupdated": "May 1, 2022"},
+  {"season": 5, "lastupdated": "April 24, 2022"},
+  {"season": 6, "lastupdated": "April, 1, 2022"},
 ];

@@ -369,147 +369,151 @@ class _BookDetailState extends State<BookDetail> {
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 45,
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        DefaultTabController(
-                            length: 2,
-                            initialIndex: 0,
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: <Widget>[
-                                  TabBar(
-                                    labelColor: Colors.white,
-                                    unselectedLabelColor: Colors.grey,
-                                    tabs: [
-                                      Tab(text: 'Chapters'),
-                                      Tab(text: 'Reviews'),
-                                    ],
-                                  ),
-                                  Container(
-                                      height: size.height +
-                                          61, //height of TabBarView
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              top: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 0.5))),
-                                      child: TabBarView(children: <Widget>[
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 30.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: List.generate(
-                                                seasonsList.length, (index) {
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (_) =>
-                                                              BookDetail()));
-                                                },
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 20),
-                                                  child: Column(
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          Container(
-                                                            width: (size.width -
-                                                                    30) *
-                                                                0.85,
-                                                            // height: 100,
-                                                            child: Row(
+                        Container(
+                          height: 450,
+                          child: DefaultTabController(
+                              length: 2,
+                              initialIndex: 0,
+                              child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: <Widget>[
+                                    TabBar(
+                                      labelColor: Colors.white,
+                                      labelStyle: TextStyle(
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.bold),
+                                      unselectedLabelStyle: TextStyle(
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.bold),
+                                      unselectedLabelColor: Colors.grey,
+                                      indicatorColor: Colors.grey,
+                                      tabs: [
+                                        Tab(text: 'CHAPTERS'),
+                                        Tab(text: 'REVIEWS'),
+                                      ],
+                                    ),
+                                    Container(
+                                        height: 402,
+                                        //height of TabBarView
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                top: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 0.5))),
+                                        child: TabBarView(
+                                            physics: ScrollPhysics(
+                                                parent:
+                                                    NeverScrollableScrollPhysics()),
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 30.0),
+                                                child: ListView(
+                                                  children: List.generate(
+                                                      seasonsList.length,
+                                                      (index) {
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (_) =>
+                                                                    BookDetail()));
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 20),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
                                                               children: [
                                                                 Container(
-                                                                  width: (size
-                                                                          .width) *
-                                                                      0.35,
-                                                                  child: Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
+                                                                  width: (size.width -
+                                                                          30) *
+                                                                      0.85,
+                                                                  child: Row(
                                                                     children: [
-                                                                      Text(
-                                                                        seasonsList[index]
-                                                                            [
-                                                                            'title'],
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                17,
-                                                                            height:
-                                                                                1.3,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            color: Colors.white.withOpacity(0.9)),
-                                                                      ),
+                                                                      Container(
+                                                                        width: (size.width) *
+                                                                            0.35,
+                                                                        child:
+                                                                            Column(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.center,
+                                                                          children: [
+                                                                            Text(
+                                                                              "Season " + seasonsList[index]['season'].toString(),
+                                                                              style: TextStyle(fontSize: 17, height: 1.3, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.9)),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      )
                                                                     ],
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  width: (size.width -
+                                                                          30) *
+                                                                      0.15,
+                                                                  child: Center(
+                                                                    child: Icon(
+                                                                      Feather
+                                                                          .chevron_right,
+                                                                      color: Colors
+                                                                          .white
+                                                                          .withOpacity(
+                                                                              0.7),
+                                                                    ),
                                                                   ),
                                                                 )
                                                               ],
                                                             ),
-                                                          ),
-                                                          Container(
-                                                            width: (size.width -
-                                                                    30) *
-                                                                0.15,
-                                                            // height: 100,
-                                                            child: Center(
-                                                              child: Icon(
-                                                                Icons
-                                                                    .file_download,
-                                                                color: Colors
-                                                                    .white
-                                                                    .withOpacity(
-                                                                        0.7),
-                                                              ),
+                                                            SizedBox(
+                                                              height: 2,
                                                             ),
-                                                          )
-                                                        ],
+                                                            Text(
+                                                              "Last updated " +
+                                                                  seasonsList[
+                                                                          index]
+                                                                      [
+                                                                      'lastupdated'] +
+                                                                  " ago",
+                                                              style: TextStyle(
+                                                                  height: 1.4,
+                                                                  color: Colors
+                                                                      .white
+                                                                      .withOpacity(
+                                                                          0.5)),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                      SizedBox(
-                                                        height: 15,
-                                                      ),
-                                                      Text(
-                                                        seasonsList[index]
-                                                            ['description'],
-                                                        style: TextStyle(
-                                                            height: 1.4,
-                                                            color: Colors.white
-                                                                .withOpacity(
-                                                                    0.5)),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                    );
+                                                  }),
                                                 ),
-                                              );
-                                            }),
-                                          ),
-                                        ),
-                                        Container(
-                                          child: Center(
-                                            child: Text('Display Tab 2',
-                                                style: TextStyle(
-                                                    fontSize: 22,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ),
-                                        ),
-                                      ]))
-                                ])),
+                                              ),
+                                              Container(
+                                                child: Center(
+                                                  child: Text('Display Tab 2',
+                                                      style: TextStyle(
+                                                          fontSize: 22,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ),
+                                              ),
+                                            ]))
+                                  ])),
+                        ),
                         SizedBox(
                           height: 20,
                         )

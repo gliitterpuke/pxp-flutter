@@ -498,6 +498,59 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15, right: 15),
                         child: Text(
+                          "Favourite genres",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: List.generate(authorList.length, (index) {
+                              return Column(children: [
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(99),
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              authorList[index]['img']),
+                                          fit: BoxFit.cover)),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  width: 100,
+                                  child: Center(
+                                    child: Text(
+                                      authorList[index]['author'],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          color: pxpColors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ),
+                              ]);
+                            }),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Text(
                           "New and hot",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
