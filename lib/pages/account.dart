@@ -279,6 +279,17 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           SizedBox(
+                            height: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            child: Text(
+                              "Followed authors",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
                             height: 10,
                           ),
                           SingleChildScrollView(
@@ -287,33 +298,27 @@ class _ProfilePageState extends State<ProfilePage> {
                               padding: EdgeInsets.only(left: 10),
                               child: Row(
                                 children:
-                                    List.generate(genreList.length, (index) {
+                                    List.generate(authorList.length, (index) {
                                   return Column(children: [
-                                    CircleAvatar(
-                                      radius: 30,
-                                      backgroundColor: Color(0xff161618),
-                                      child: IconButton(
-                                        icon: Icon(
-                                          genreList[index]['icon'],
-                                          color: pxpColors.secondaryT,
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      BookDetail()));
-                                        },
-                                      ),
+                                    Container(
+                                      height: 60,
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(99),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  authorList[index]['img']),
+                                              fit: BoxFit.cover)),
                                     ),
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 10,
                                     ),
                                     SizedBox(
-                                      width: 80,
+                                      width: 100,
                                       child: Center(
                                         child: Text(
-                                          genreList[index]['genre'],
+                                          authorList[index]['author'],
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                           style: TextStyle(
@@ -322,9 +327,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                               fontWeight: FontWeight.w600),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      height: 30,
                                     ),
                                   ]);
                                 }),

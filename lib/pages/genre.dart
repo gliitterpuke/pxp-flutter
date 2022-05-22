@@ -568,7 +568,6 @@ class _GenreDetailState extends State<GenreDetail>
           return [
             SliverAppBar(
               backgroundColor: Colors.black,
-              automaticallyImplyLeading: false,
               pinned: true,
               forceElevated: true,
               bottom: TabBar(
