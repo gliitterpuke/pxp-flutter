@@ -89,6 +89,12 @@ class _SearchPageState extends State<SearchPage> {
                         color: Colors.black,
                         elevation: 4,
                         child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => BookDetail()));
+                            },
                             leading: Padding(
                               padding:
                                   const EdgeInsets.only(left: 10, top: 8.0),

@@ -42,7 +42,7 @@ const List readLater = [
     "books": {
       "title": ["item2", "3", "item34"],
       "img": [
-        "assets/images/company.jpg",
+        "assets/images/hitchhiker.jpg",
         "assets/images/dorian.jpg",
         "assets/images/happy.jpg"
       ]

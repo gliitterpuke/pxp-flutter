@@ -6,6 +6,7 @@ import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:pxp_flutter/pages/genre.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -836,44 +837,52 @@ class _HomePageState extends State<HomePage> {
                           padding: EdgeInsets.only(left: 10),
                           child: Row(
                             children: List.generate(genreList.length, (index) {
-                              return Column(children: [
-                                CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Color(0xff161618),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      genreList[index]['icon'],
-                                      color: pxpColors.secondaryT,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => BookDetail()));
-                                    },
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                SizedBox(
-                                  width: 80,
-                                  child: Center(
-                                    child: Text(
-                                      genreList[index]['genre'],
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                          color: pxpColors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600),
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => GenreDetail()));
+                                },
+                                child: Column(children: [
+                                  CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Color(0xff161618),
+                                    child: IconButton(
+                                      icon: Icon(
+                                        genreList[index]['icon'],
+                                        color: pxpColors.secondaryT,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) => GenreDetail()));
+                                      },
                                     ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                              ]);
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  SizedBox(
+                                    width: 80,
+                                    child: Center(
+                                      child: Text(
+                                        genreList[index]['genre'],
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                            color: pxpColors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                ]),
+                              );
                             }),
                           ),
                         ),

@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:pxp_flutter/json/genre_list.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/json/library.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:pxp_flutter/pages/root_app.dart';
 
-class LibraryPage extends StatefulWidget {
+class GenreDetail extends StatefulWidget {
   @override
-  _LibraryPageState createState() => _LibraryPageState();
+  _GenreDetailState createState() => _GenreDetailState();
 }
 
-class _LibraryPageState extends State<LibraryPage>
+class _GenreDetailState extends State<GenreDetail>
     with SingleTickerProviderStateMixin {
   final bodyGlobalKey = GlobalKey();
+  final List<Widget> myTabs = List.generate(genreList.length, (index) {
+    return Tab(text: genreList[index]['genre'].toString().toUpperCase());
+  });
 
-  final List<Widget> myTabs = [
-    Tab(text: 'CURRENT READS'),
-    Tab(text: 'READ LATER'),
-    Tab(text: 'ARCHIVED'),
-    Tab(text: 'FOLLOWED'),
-    Tab(text: 'SUBBED'),
-  ];
   late TabController _tabController;
   late ScrollController _scrollController;
   late bool fixedScroll;
@@ -29,7 +26,7 @@ class _LibraryPageState extends State<LibraryPage>
   void initState() {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 8, vsync: this);
     _tabController.addListener(_smoothScrollToTop);
 
     super.initState();
@@ -151,35 +148,6 @@ class _LibraryPageState extends State<LibraryPage>
           }))
         ],
       );
-
-  _noCurrentlyReading() => Padding(
-      padding: const EdgeInsets.only(left: 45, right: 45),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Choose from thousands of stories to begin reading!",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
-            ),
-            SizedBox(height: 30),
-            OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                primary: Colors.white,
-                side: BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
-              ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RootApp()));
-              },
-              child: const Text("Get started",
-                  style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1)),
-            ),
-          ]));
 
 // reading list tab
 
@@ -319,12 +287,12 @@ class _LibraryPageState extends State<LibraryPage>
         ],
       );
 
-  // archived tab
+  // fantasy tab
 
-  _archived() => ListView(
+  _fantasy() => ListView(
         children: [
           Column(
-              children: List.generate(archived.length, (index) {
+              children: List.generate(fantasy.length, (index) {
             return GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -346,7 +314,7 @@ class _LibraryPageState extends State<LibraryPage>
                                     borderRadius: BorderRadius.circular(5),
                                     image: DecorationImage(
                                         image:
-                                            AssetImage(archived[index]['img']),
+                                            AssetImage(fantasy[index]['img']),
                                         fit: BoxFit.cover)),
                               ),
                               // Container(
@@ -365,20 +333,28 @@ class _LibraryPageState extends State<LibraryPage>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    archived[index]['author'],
-                                    style: TextStyle(
-                                      color: pxpColors.secondaryT,
-                                      fontSize: 11,
-                                    ),
+                                    fantasy[index]['title'],
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                   const SizedBox(
                                     height: 5,
                                   ),
-                                  Text(
-                                    archived[index]['title'],
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
+                                  SizedBox(
+                                    child: Center(
+                                      child: Text(
+                                        fantasy[index]['description'],
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: TextStyle(
+                                          color: pxpColors.secondaryT,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -394,19 +370,6 @@ class _LibraryPageState extends State<LibraryPage>
           }))
         ],
       );
-
-  _noArchived() => Padding(
-      padding: const EdgeInsets.only(left: 45, right: 45),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Archive your finished stroies and retrieve them whenever you want to.",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
-            ),
-          ]));
 
   // followed tab
 
@@ -504,35 +467,6 @@ class _LibraryPageState extends State<LibraryPage>
         ],
       );
 
-  _noFollowed() => Padding(
-      padding: const EdgeInsets.only(left: 45, right: 45),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Find your new favourite author today!",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
-            ),
-            SizedBox(height: 30),
-            OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                primary: Colors.white,
-                side: BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
-              ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RootApp()));
-              },
-              child: const Text("Discover",
-                  style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1)),
-            ),
-          ]));
-
   // subbed tab
 
   _subbed() => ListView(
@@ -624,35 +558,6 @@ class _LibraryPageState extends State<LibraryPage>
         ],
       );
 
-  _noSubbed() => Padding(
-      padding: const EdgeInsets.only(left: 45, right: 45),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "Unlock stories beyond your imagination!",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
-            ),
-            SizedBox(height: 30),
-            OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                primary: Colors.white,
-                side: BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
-              ),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RootApp()));
-              },
-              child: const Text("Get started",
-                  style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1)),
-            ),
-          ]));
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -684,13 +589,14 @@ class _LibraryPageState extends State<LibraryPage>
           child: TabBarView(
             controller: _tabController,
             children: [
-              currentReads.isEmpty
-                  ? _noCurrentlyReading()
-                  : _currentlyReading(),
-              _readingList(),
-              archived.isEmpty ? _noArchived() : _archived(),
-              _followed(),
-              _subbed()
+              _fantasy(),
+              _fantasy(),
+              _fantasy(),
+              _fantasy(),
+              _fantasy(),
+              _fantasy(),
+              _fantasy(),
+              _fantasy(),
             ],
           ),
         ),

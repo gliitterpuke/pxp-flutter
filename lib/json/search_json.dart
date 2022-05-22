@@ -131,4 +131,25 @@ const List<Map<String, dynamic>> books = [
     "genre": "Action",
     "author": "Jack Mars"
   },
+  {
+    "id": 5,
+    "img": "assets/images/morethanwords.jpg",
+    "title": "more than words",
+    "genre": "Romance",
+    "author": "Jill Santopolo"
+  },
+  {
+    "id": 6,
+    "img": "assets/images/loveunscripted.jpg",
+    "title": "Love, Unscripted",
+    "genre": "Romance",
+    "author": "Owen Nicholls"
+  },
+  {
+    "id": 7,
+    "img": "assets/images/dune.jpg",
+    "title": "Dune",
+    "genre": "Sci-fi",
+    "author": "Frank Herbert"
+  },
 ];
