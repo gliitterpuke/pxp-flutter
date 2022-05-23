@@ -17,12 +17,12 @@ class Onboarding extends StatelessWidget {
                 padding: EdgeInsets.only(
                     left: 16.0,
                     right: 16.0,
-                    top: MediaQuery.of(context).size.height * 0.15),
+                    top: MediaQuery.of(context).size.height * 0.4),
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.1,
                     ),
                     Container(
                         child: Center(
@@ -84,6 +84,9 @@ class Onboarding extends StatelessWidget {
                                     fontWeight: FontWeight.w600,
                                     letterSpacing: 1)),
                           ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1,
                         ),
                       ],
                     )

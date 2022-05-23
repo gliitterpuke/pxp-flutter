@@ -17,15 +17,15 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(30.0),
-                  child: Column(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Column(
                     children: <Widget>[
-                      SizedBox(height: 200),
                       Column(
                         children: <Widget>[
                           Center(
@@ -180,10 +180,10 @@ class _LoginState extends State<Login> {
                               ))),
                     ],
                   ),
-                )
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
         ));
   }
 }
