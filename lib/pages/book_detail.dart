@@ -5,8 +5,10 @@ import 'package:pxp_flutter/json/book_detail_json.dart';
 import 'package:pxp_flutter/json/home_json.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:epub_viewer/epub_viewer.dart';
-import 'package:pxp_flutter/pages/chapters.dart';
-// import 'package:expandable/expandable.dart';
+import 'package:pxp_flutter/pages/book/chapters.dart';
+import 'package:pxp_flutter/constants/Theme.dart';
+import 'package:pxp_flutter/pages/book/review.dart';
+import 'package:pxp_flutter/pages/book/summary.dart';
 
 class BookDetail extends StatefulWidget {
   const BookDetail({Key? key}) : super(key: key);
@@ -213,7 +215,7 @@ class _BookDetailState extends State<BookDetail> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).push(_createRoute());
+                                Navigator.of(context).push(_summaryRoute());
                               },
                               child: Text(
                                 "Read More",
@@ -507,21 +509,197 @@ class _BookDetailState extends State<BookDetail> {
                                                   }),
                                                 ),
                                               ),
-                                              Container(
-                                                child: Center(
-                                                  child: Text('Display Tab 2',
-                                                      style: TextStyle(
-                                                          fontSize: 22,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(top: 20),
+                                                child: ListView(
+                                                  children: [
+                                                    Column(
+                                                      children: List.generate(
+                                                          reviewList.length,
+                                                          (index) {
+                                                        return GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .push(
+                                                                    _reviewRoute());
+                                                          },
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    bottom: 10),
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Row(
+                                                                  children: [
+                                                                    Container(
+                                                                      height:
+                                                                          60,
+                                                                      width: 60,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(
+                                                                              99),
+                                                                          image: DecorationImage(
+                                                                              image: AssetImage(reviewList[index]['img']),
+                                                                              fit: BoxFit.cover)),
+                                                                    ),
+                                                                    Container(
+                                                                      width: (MediaQuery.of(context).size.width -
+                                                                              30) *
+                                                                          0.6,
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(left: 15.0),
+                                                                        child:
+                                                                            Column(
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Row(
+                                                                              children: [
+                                                                                Text(
+                                                                                  reviewList[index]['title'],
+                                                                                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                                                                ),
+                                                                                Text(
+                                                                                  " by " + reviewList[index]['display'],
+                                                                                  style: const TextStyle(color: pxpColors.secondaryT, fontSize: 12, fontWeight: FontWeight.w500),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                            const SizedBox(
+                                                                              height: 5,
+                                                                            ),
+                                                                            Row(children: _ratingCount(reviewList[index]['overall'])),
+                                                                            const SizedBox(
+                                                                              height: 5,
+                                                                            ),
+                                                                            Text(
+                                                                              reviewList[index]['date'] + " at Chapter " + reviewList[index]['location'].toString(),
+                                                                              style: const TextStyle(color: pxpColors.secondaryT, fontSize: 12, fontWeight: FontWeight.w500),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 10),
+                                                                Text(
+                                                                  reviewList[
+                                                                          index]
+                                                                      [
+                                                                      'review'],
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  maxLines: 3,
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 5),
+                                                                Text(
+                                                                    "Read more",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .pink,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            14)),
+                                                                SizedBox(
+                                                                    height: 5),
+                                                                Row(
+                                                                  children: [
+                                                                    Icon(
+                                                                      Feather
+                                                                          .thumbs_up,
+                                                                      size: 20,
+                                                                      color: pxpColors
+                                                                          .secondaryT,
+                                                                    ),
+                                                                    SizedBox(
+                                                                        width:
+                                                                            5),
+                                                                    Text(
+                                                                      reviewList[index]
+                                                                              [
+                                                                              'helpful']
+                                                                          .toString(),
+                                                                      style: const TextStyle(
+                                                                          color: pxpColors
+                                                                              .secondaryT,
+                                                                          fontSize:
+                                                                              12,
+                                                                          fontWeight:
+                                                                              FontWeight.w500),
+                                                                    ),
+                                                                    if (reviewList[index]
+                                                                            [
+                                                                            'award'] ==
+                                                                        true)
+                                                                      Spacer(),
+                                                                    if (reviewList[index]
+                                                                            [
+                                                                            'award'] ==
+                                                                        true)
+                                                                      Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(right: 10),
+                                                                        child:
+                                                                            Icon(
+                                                                          FontAwesome
+                                                                              .diamond,
+                                                                          size:
+                                                                              20,
+                                                                          color:
+                                                                              pxpColors.secondaryT,
+                                                                        ),
+                                                                      ),
+                                                                  ],
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 10)
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 20,
+                                                    ),
+                                                    Center(
+                                                        child: Text(
+                                                            "Read more reviews",
+                                                            style: TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white))),
+                                                  ],
                                                 ),
                                               ),
                                             ]))
                                   ])),
                         ),
-                        SizedBox(
-                          height: 20,
-                        )
                       ],
                     ),
                   ),
@@ -600,9 +778,9 @@ class _BookDetailState extends State<BookDetail> {
   }
 }
 
-Route _createRoute() {
+Route _summaryRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => Page2(),
+    pageBuilder: (context, animation, secondaryAnimation) => ReviewPage(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       var begin = Offset(0.0, 1.0);
       var end = Offset.zero;
@@ -618,88 +796,26 @@ Route _createRoute() {
   );
 }
 
-class Page2 extends StatelessWidget {
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.fitWidth,
-                  image: AssetImage("assets/images/pachinko.jpg"),
-                ),
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  color: Colors.black.withOpacity(0.9),
-                  height: size.height - 243,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "SUMMARY",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "In the early 1900s, teenaged Sunja, the adored daughter of a crippled fisherman, falls for a wealthy stranger at the seashore near her home in Korea. He promises her the world, but when she discovers she is pregnant — and that her lover is married — she refuses to be bought. Instead, she accepts an offer of marriage from a gentle, sickly minister passing through on his way to Japan. But her decision to abandon her home, and to reject her son's powerful father, sets off a dramatic saga that will echo down through the generations.\n\nRichly told and profoundly moving, Pachinko is a story of love, sacrifice, ambition, and loyalty. From bustling street markets to the halls of Japan's finest universities to the pachinko parlors of the criminal underworld, Lee's complex and passionate characters — strong, stubborn women, devoted sisters and sons, fathers shaken by moral crisis — survive and thrive against the indifferent arc of history.",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 14),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 140,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(20.0))),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+Route _reviewRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => SummaryPage(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = Offset(0.0, 1.0);
+      var end = Offset.zero;
+      var curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+List<Icon> _ratingCount(int count) {
+  return List.generate(
+          count, (i) => Icon(AntDesign.star, size: 10, color: tierColor.bronze))
+      .toList(); // replace * with your rupee or use Icon instead
 }
