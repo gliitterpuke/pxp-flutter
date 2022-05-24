@@ -5,6 +5,7 @@ import 'package:pxp_flutter/json/book_detail_json.dart';
 import 'package:pxp_flutter/json/home_json.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:epub_viewer/epub_viewer.dart';
+import 'package:pxp_flutter/pages/book/add_review.dart';
 import 'package:pxp_flutter/pages/book/chapters.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:pxp_flutter/pages/book/review.dart';
@@ -74,6 +75,7 @@ class _BookDetailState extends State<BookDetail> {
   }
 
   Widget getBody(opacity) {
+    var value = "Pachinko";
     var size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
@@ -520,10 +522,15 @@ class _BookDetailState extends State<BookDetail> {
                                                           (index) {
                                                         return GestureDetector(
                                                           onTap: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .push(
-                                                                    _reviewRoute());
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    ReviewPage(
+                                                                        reviewObj:
+                                                                            reviewList[index]),
+                                                              ),
+                                                            );
                                                           },
                                                           child: Padding(
                                                             padding:
@@ -681,19 +688,87 @@ class _BookDetailState extends State<BookDetail> {
                                                         );
                                                       }),
                                                     ),
-                                                    SizedBox(
-                                                      height: 20,
+                                                    Column(
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        SizedBox(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 40,
+                                                          child: OutlinedButton(
+                                                            style:
+                                                                OutlinedButton
+                                                                    .styleFrom(
+                                                              primary:
+                                                                  Colors.white,
+                                                              side: BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          193,
+                                                                          193,
+                                                                          193)),
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      AddReview(
+                                                                          value:
+                                                                              value),
+                                                                ),
+                                                              );
+                                                            },
+                                                            child: const Text(
+                                                                "Add a review",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .white)),
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 15),
+                                                        SizedBox(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 40,
+                                                          child: OutlinedButton(
+                                                            style:
+                                                                OutlinedButton
+                                                                    .styleFrom(
+                                                              primary:
+                                                                  Colors.white,
+                                                              side: BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          193,
+                                                                          193,
+                                                                          193)),
+                                                            ),
+                                                            onPressed: () {},
+                                                            child: const Text(
+                                                                "Read more reviews",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .white)),
+                                                          ),
+                                                        ),
+                                                        SizedBox(height: 60)
+                                                      ],
                                                     ),
-                                                    Center(
-                                                        child: Text(
-                                                            "Read more reviews",
-                                                            style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .white))),
                                                   ],
                                                 ),
                                               ),
@@ -779,24 +854,6 @@ class _BookDetailState extends State<BookDetail> {
 }
 
 Route _summaryRoute() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => ReviewPage(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = Offset(0.0, 1.0);
-      var end = Offset.zero;
-      var curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
-}
-
-Route _reviewRoute() {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => SummaryPage(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {

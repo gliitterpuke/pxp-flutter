@@ -1,87 +1,258 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:pxp_flutter/constants/Theme.dart';
 
-class ReviewPage extends StatelessWidget {
+class ReviewPage extends StatefulWidget {
+  Map<String, dynamic> reviewObj;
+  ReviewPage({Key? key, required this.reviewObj}) : super(key: key);
+
+  @override
+  _ReviewPageState createState() => _ReviewPageState();
+}
+
+class _ReviewPageState extends State<ReviewPage> {
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.black,
       ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.fitWidth,
-                  image: AssetImage("assets/images/pachinko.jpg"),
-                ),
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  color: Colors.black.withOpacity(0.9),
-                  height: size.height - 243,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 10, left: 15, right: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "SUMMARY",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "In the early 1900s, teenaged Sunja, the adored daughter of a crippled fisherman, falls for a wealthy stranger at the seashore near her home in Korea. He promises her the world, but when she discovers she is pregnant — and that her lover is married — she refuses to be bought. Instead, she accepts an offer of marriage from a gentle, sickly minister passing through on his way to Japan. But her decision to abandon her home, and to reject her son's powerful father, sets off a dramatic saga that will echo down through the generations.\n\nRichly told and profoundly moving, Pachinko is a story of love, sacrifice, ambition, and loyalty. From bustling street markets to the halls of Japan's finest universities to the pachinko parlors of the criminal underworld, Lee's complex and passionate characters — strong, stubborn women, devoted sisters and sons, fathers shaken by moral crisis — survive and thrive against the indifferent arc of history.",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 14),
+        color: Colors.black,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 60,
+                        width: 60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(99),
+                            image: DecorationImage(
+                                image: AssetImage(widget.reviewObj['img']),
+                                fit: BoxFit.cover)),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              widget.reviewObj['display'],
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                            ),
+                            if (widget.reviewObj['award'] == true)
+                              SizedBox(width: 5),
+                            if (widget.reviewObj['award'] == true)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Icon(
+                                  FontAwesome.diamond,
+                                  size: 20,
+                                  color: pxpColors.secondaryT,
+                                ),
                               ),
-                              SizedBox(
+                          ]),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        widget.reviewObj['date'] +
+                            " at Chapter " +
+                            widget.reviewObj['location'].toString(),
+                        style: const TextStyle(
+                            color: pxpColors.secondaryT,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text("Overall",
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500)),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: _ratingCount(widget.reviewObj['overall'])),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              Text("Style",
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500)),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:
+                                      _ratingCount(widget.reviewObj['style'])),
+                              const SizedBox(
                                 height: 10,
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 10,
+                          Column(
+                            children: [
+                              Text("Story",
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500)),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children:
+                                      _ratingCount(widget.reviewObj['story'])),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: [
+                              Text("Grammar",
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500)),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: _ratingCount(
+                                      widget.reviewObj['grammar'])),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Text("Content",
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500)),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: _ratingCount(
+                                      widget.reviewObj['content'])),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.reviewObj['review'],
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            OutlinedButton.icon(
+                              label: Text(
+                                "Report",
+                                style: const TextStyle(
+                                    color: pxpColors.secondaryT,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              icon: Icon(
+                                MaterialIcons.report_problem,
+                                size: 15,
+                                color: pxpColors.secondaryT,
+                              ),
+                              onPressed: () {
+                                print('Pressed');
+                              },
+                            ),
+                            OutlinedButton.icon(
+                              label: Text(
+                                widget.reviewObj['helpful'].toString() +
+                                    " Helped",
+                                style: const TextStyle(
+                                    color: pxpColors.secondaryT,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              icon: Icon(
+                                Feather.thumbs_up,
+                                size: 15,
+                                color: pxpColors.secondaryT,
+                              ),
+                              onPressed: () {
+                                print('Pressed');
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Container(
-                  height: 140,
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(20.0))),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+List<Icon> _ratingCount(int count) {
+  return List.generate(count,
+          (i) => const Icon(AntDesign.star, size: 10, color: Color(0xFFFFD700)))
+      .toList(); // replace * with your rupee or use Icon instead
 }

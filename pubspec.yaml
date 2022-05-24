@@ -41,6 +41,8 @@ dependencies:
   animated_theme_switcher: ^2.0.6
   percent_indicator: ^4.0.1
   carousel_slider: ^4.1.1
+  stream_chat_flutter: ^4.1.0
+  flutter_rating_bar: ^4.0.1
 
 
 dev_dependencies:
