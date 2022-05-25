@@ -3,6 +3,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pxp_flutter/json/book_detail_json.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:readmore/readmore.dart';
+import 'package:number_paginator/number_paginator.dart';
 
 class AllReview extends StatefulWidget {
   @override
@@ -24,18 +25,18 @@ class _AllReviewState extends State<AllReview> {
 
   @override
   void dispose() {
-    controller.dispose(); // dispose the controller
+    controller.dispose();
     super.dispose();
   }
 
-  // This function is triggered when the user presses the back-to-top button
   void _scrollToTop() {
     controller.animateTo(0,
-        duration: const Duration(seconds: 3), curve: Curves.linear);
+        duration: const Duration(milliseconds: 250), curve: Curves.linear);
   }
 
   @override
   Widget build(BuildContext context) {
+    var _numPage = (reviewList.length / _perPage).floor();
     final dataToShow =
         reviewList.sublist((_page * _perPage), ((_page * _perPage) + _perPage));
     return Scaffold(
@@ -48,11 +49,11 @@ class _AllReviewState extends State<AllReview> {
           height: double.infinity,
           color: Colors.black,
           child: SingleChildScrollView(
+            controller: controller,
             scrollDirection: Axis.vertical,
             child: Column(children: [
               ListView.builder(
-                controller: controller,
-                // physics: ClampingScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: dataToShow.length,
                 itemBuilder: (context, index) {
@@ -276,54 +277,27 @@ class _AllReviewState extends State<AllReview> {
                           ),
                           SizedBox(height: 10),
                           Divider(color: pxpColors.secondaryT),
-                          SizedBox(height: 10)
+                          SizedBox(height: 10),
                         ],
                       ),
                     ),
                   );
                 },
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                if (_page > 0)
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      primary: Colors.white,
-                      side:
-                          BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
-                    ),
-                    onPressed: () => {
-                      setState(() {
-                        _page -= 1;
-                        scrollUp;
-                      })
-                    },
-                    child: const Text('Prev'),
-                  ),
-                if (_page > 0 && _page > (reviewList.length / 5).floor() - 1)
-                  SizedBox(width: 10),
-                if (_page < (reviewList.length / 5).floor() - 1)
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      primary: Colors.white,
-                      side:
-                          BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
-                    ),
-                    onPressed: () => {
-                      setState(() {
-                        _page += 1;
-                        controller.jumpTo(
-                          0,
-                        );
-                      })
-                    },
-                    child: const Text('Next'),
-                  )
-              ]),
-              SizedBox(height: 60)
+              NumberPaginator(
+                numberPages: _numPage,
+                buttonSelectedForegroundColor: Colors.white,
+                buttonUnselectedForegroundColor: pxpColors.secondaryT,
+                buttonUnselectedBackgroundColor: Colors.transparent,
+                buttonSelectedBackgroundColor: Colors.transparent,
+                onPageChange: (int index) {
+                  setState(() {
+                    _page = index;
+                    _scrollToTop();
+                  });
+                },
+              ),
+              SizedBox(height: 60),
             ]),
           ),
         ));
@@ -339,5 +313,5 @@ class _AllReviewState extends State<AllReview> {
 List<Icon> _ratingCount(int count) {
   return List.generate(
           count, (i) => Icon(AntDesign.star, size: 10, color: Colors.amber))
-      .toList(); // replace * with your rupee or use Icon instead
+      .toList();
 }

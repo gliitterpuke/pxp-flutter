@@ -45,6 +45,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   page_view_indicators: ^2.0.0
   readmore: ^2.1.0
+  number_paginator: ^0.0.2
 
 
 dev_dependencies:
