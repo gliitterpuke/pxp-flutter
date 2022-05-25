@@ -43,6 +43,8 @@ dependencies:
   carousel_slider: ^4.1.1
   stream_chat_flutter: ^4.1.0
   flutter_rating_bar: ^4.0.1
+  page_view_indicators: ^2.0.0
+  readmore: ^2.1.0
 
 
 dev_dependencies:

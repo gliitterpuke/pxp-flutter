@@ -6,6 +6,7 @@ import 'package:pxp_flutter/json/home_json.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:epub_viewer/epub_viewer.dart';
 import 'package:pxp_flutter/pages/book/add_review.dart';
+import 'package:pxp_flutter/pages/book/all_review.dart';
 import 'package:pxp_flutter/pages/book/chapters.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:pxp_flutter/pages/book/review.dart';
@@ -77,6 +78,10 @@ class _BookDetailState extends State<BookDetail> {
   Widget getBody(opacity) {
     var value = "Pachinko";
     var size = MediaQuery.of(context).size;
+    int _page = 0;
+    final int _perPage = 5;
+    final dataToShow =
+        reviewList.sublist((_page * _perPage), ((_page * _perPage) + _perPage));
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -518,7 +523,7 @@ class _BookDetailState extends State<BookDetail> {
                                                   children: [
                                                     Column(
                                                       children: List.generate(
-                                                          reviewList.length,
+                                                          dataToShow.length,
                                                           (index) {
                                                         return GestureDetector(
                                                           onTap: () {
@@ -528,7 +533,7 @@ class _BookDetailState extends State<BookDetail> {
                                                                 builder: (context) =>
                                                                     ReviewPage(
                                                                         reviewObj:
-                                                                            reviewList[index]),
+                                                                            dataToShow[index]),
                                                               ),
                                                             );
                                                           },
@@ -552,7 +557,7 @@ class _BookDetailState extends State<BookDetail> {
                                                                           borderRadius: BorderRadius.circular(
                                                                               99),
                                                                           image: DecorationImage(
-                                                                              image: AssetImage(reviewList[index]['img']),
+                                                                              image: AssetImage(dataToShow[index]['img']),
                                                                               fit: BoxFit.cover)),
                                                                     ),
                                                                     Container(
@@ -571,11 +576,11 @@ class _BookDetailState extends State<BookDetail> {
                                                                             Row(
                                                                               children: [
                                                                                 Text(
-                                                                                  reviewList[index]['title'],
+                                                                                  dataToShow[index]['title'],
                                                                                   style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                                                                                 ),
                                                                                 Text(
-                                                                                  " by " + reviewList[index]['display'],
+                                                                                  " by " + dataToShow[index]['display'],
                                                                                   style: const TextStyle(color: pxpColors.secondaryT, fontSize: 12, fontWeight: FontWeight.w500),
                                                                                 ),
                                                                               ],
@@ -583,12 +588,12 @@ class _BookDetailState extends State<BookDetail> {
                                                                             const SizedBox(
                                                                               height: 5,
                                                                             ),
-                                                                            Row(children: _ratingCount(reviewList[index]['overall'])),
+                                                                            Row(children: _ratingCount(dataToShow[index]['overall'])),
                                                                             const SizedBox(
                                                                               height: 5,
                                                                             ),
                                                                             Text(
-                                                                              reviewList[index]['date'] + " at Chapter " + reviewList[index]['location'].toString(),
+                                                                              dataToShow[index]['date'] + " at Chapter " + dataToShow[index]['location'].toString(),
                                                                               style: const TextStyle(color: pxpColors.secondaryT, fontSize: 12, fontWeight: FontWeight.w500),
                                                                             ),
                                                                           ],
@@ -600,7 +605,7 @@ class _BookDetailState extends State<BookDetail> {
                                                                 SizedBox(
                                                                     height: 10),
                                                                 Text(
-                                                                  reviewList[
+                                                                  dataToShow[
                                                                           index]
                                                                       [
                                                                       'review'],
@@ -644,7 +649,7 @@ class _BookDetailState extends State<BookDetail> {
                                                                         width:
                                                                             5),
                                                                     Text(
-                                                                      reviewList[index]
+                                                                      dataToShow[index]
                                                                               [
                                                                               'helpful']
                                                                           .toString(),
@@ -656,12 +661,12 @@ class _BookDetailState extends State<BookDetail> {
                                                                           fontWeight:
                                                                               FontWeight.w500),
                                                                     ),
-                                                                    if (reviewList[index]
+                                                                    if (dataToShow[index]
                                                                             [
                                                                             'award'] ==
                                                                         true)
                                                                       Spacer(),
-                                                                    if (reviewList[index]
+                                                                    if (dataToShow[index]
                                                                             [
                                                                             'award'] ==
                                                                         true)
@@ -753,7 +758,16 @@ class _BookDetailState extends State<BookDetail> {
                                                                           193,
                                                                           193)),
                                                             ),
-                                                            onPressed: () {},
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          AllReview(),
+                                                                ),
+                                                              );
+                                                            },
                                                             child: const Text(
                                                                 "Read more reviews",
                                                                 style: TextStyle(
