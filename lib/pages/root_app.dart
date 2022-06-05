@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/root_app_json.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/pages/chat/main.dart';
+import 'package:pxp_flutter/pages/feed/home.dart';
 import 'package:pxp_flutter/pages/feed/main.dart';
 import 'package:pxp_flutter/pages/home.dart';
 import 'package:pxp_flutter/pages/onboarding.dart';

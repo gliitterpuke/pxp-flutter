@@ -51,91 +51,44 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  InitData? _initData;
+
+  Future<InitData> _initConnection() async {
+    final client = StreamFeedClient('rzxdu6bj5yaa');
+
+    final streamUser = await client.setUser(
+      User(
+        id: 'yo',
+        data: appUsers[0].data,
+      ),
+      Token(
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoieW8ifQ.hvUQ9d21EaGe8ONVsALu-aqLUWJBs9W7Owk8JTThp8Y'),
+    );
+    return InitData(client, streamUser);
+  }
+
+  @override
+  void initState() {
+    _initConnection().then(
+      (initData) {
+        setState(() {
+          _initData = initData;
+        });
+      },
+    );
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final _client = context.client;
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: SizedBox(
-          width: size.width,
-          height: size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Login with a User',
-                style: TextStyle(
-                  fontSize: 42,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 42),
-              for (final user in appUsers)
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Loading User'),
-                        ),
-                      );
-                      final streamUser = await _client.setUser(
-                        User(
-                          id: 'yo',
-                          data: appUsers[0].data,
-                        ),
-                        Token(
-                            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoieW8ifQ.hvUQ9d21EaGe8ONVsALu-aqLUWJBs9W7Owk8JTThp8Y'),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('User Loaded'),
-                        ),
-                      );
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (_) => HomeScreen(
-                            currentUser: streamUser,
-                          ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      primary: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 36, horizontal: 24),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            user.name,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              color: Colors.blue,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
+    return HomeScreen(currentUser: _initData!.streamUser);
   }
+}
+
+class InitData {
+  final StreamFeedClient client;
+  final StreamUser streamUser;
+
+  InitData(this.client, this.streamUser);
 }
