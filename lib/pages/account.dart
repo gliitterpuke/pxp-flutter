@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/home_json.dart';
+import 'package:pxp_flutter/json/posts_json.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/pages/profile/user.dart';
 import 'package:pxp_flutter/pages/edit_profile_page.dart';
@@ -338,208 +339,71 @@ class _ProfilePageState extends State<ProfilePage> {
                       ListView(
                         children: [
                           SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
+                            scrollDirection: Axis.vertical,
                             child: Padding(
                               padding: const EdgeInsets.only(top: 10.0),
-                              child: Row(
-                                children: List.generate(mylist.length, (index) {
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children:
+                                    List.generate(postList.length, (index) {
                                   return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (_) => BookDetail()));
-                                      },
-                                      child: Column(children: [
-                                        Container(
-                                          margin: EdgeInsets.only(right: 10),
-                                          width: 115,
-                                          height: 160,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              image: DecorationImage(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookDetail()));
+                                    },
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Card(
+                                          elevation: 4.0,
+                                          child: Column(
+                                            children: [
+                                              ListTile(
+                                                leading: Icon(
+                                                    Icons.favorite_outline),
+                                                title: Text(
+                                                    postList[index]['display']),
+                                                subtitle: Text(
+                                                    postList[index]['date']),
+                                                // trailing: Icon(
+                                                //     Icons.favorite_outline),
+                                              ),
+                                              Container(
+                                                height: 200.0,
+                                                child: Ink.image(
                                                   image: AssetImage(
                                                       mylist[index]['img']),
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: 115,
-                                              child: Text(
-                                                mylist[index]['genre'],
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            SizedBox(
-                                              width: 110,
-                                              height: 40,
-                                              child: Text(
-                                                mylist[index]['title'],
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                              Container(
+                                                padding: EdgeInsets.all(16.0),
+                                                alignment: Alignment.centerLeft,
+                                                child: Text('test'),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ]));
-                                }),
-                              ),
-                            ),
-                          ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Row(
-                                children: List.generate(mylist.length, (index) {
-                                  return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (_) => BookDetail()));
-                                      },
-                                      child: Column(children: [
-                                        Container(
-                                          margin: EdgeInsets.only(right: 10),
-                                          width: 115,
-                                          height: 160,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      mylist[index]['img']),
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: 115,
-                                              child: Text(
-                                                mylist[index]['genre'],
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            SizedBox(
-                                              width: 110,
-                                              height: 40,
-                                              child: Text(
-                                                mylist[index]['title'],
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ]));
-                                }),
-                              ),
-                            ),
-                          ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Row(
-                                children: List.generate(mylist.length, (index) {
-                                  return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (_) => BookDetail()));
-                                      },
-                                      child: Column(children: [
-                                        Container(
-                                          margin: EdgeInsets.only(right: 10),
-                                          width: 115,
-                                          height: 160,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      mylist[index]['img']),
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: 115,
-                                              child: Text(
-                                                mylist[index]['genre'],
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            SizedBox(
-                                              width: 110,
-                                              height: 40,
-                                              child: Text(
-                                                mylist[index]['title'],
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ]));
+                                              ButtonBar(
+                                                children: [
+                                                  TextButton(
+                                                    child: const Text(
+                                                        'CONTACT AGENT'),
+                                                    onPressed: () {
+                                                      /* ... */
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                    child: const Text(
+                                                        'LEARN MORE'),
+                                                    onPressed: () {
+                                                      /* ... */
+                                                    },
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          )),
+                                    ),
+                                  );
                                 }),
                               ),
                             ),
@@ -562,17 +426,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 builder: (_) => BookDetail()));
                                       },
                                       child: Column(children: [
-                                        Container(
-                                          margin: EdgeInsets.only(right: 10),
-                                          width: 115,
-                                          height: 160,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(6),
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      mylist[index]['img']),
-                                                  fit: BoxFit.cover)),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 10),
+                                              width: 115,
+                                              height: 160,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(6),
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          mylist[index]['img']),
+                                                      fit: BoxFit.cover)),
+                                            ),
+                                          ],
                                         ),
                                         const SizedBox(
                                           height: 10,

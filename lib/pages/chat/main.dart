@@ -1,26 +1,22 @@
 import 'dart:async';
 
 import 'package:pxp_flutter/pages/chat/app_config.dart';
-import 'package:pxp_flutter/pages/chat/localizations.dart';
-import 'package:pxp_flutter/pages/chat/routes/app_routes.dart';
 
-import 'package:pxp_flutter/pages/chat/choose_user_page.dart';
-import 'package:pxp_flutter/pages/chat/home_page.dart';
-import 'package:pxp_flutter/pages/chat/localizations.dart';
-import 'package:pxp_flutter/pages/chat/splash_screen.dart';
+import 'choose_user_page.dart';
+import 'home_page.dart';
+import 'localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:pxp_flutter/pages/onboarding.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:stream_chat_localizations/stream_chat_localizations.dart';
 import 'package:stream_chat_persistence/stream_chat_persistence.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
-import 'package:pxp_flutter/pages/chat/routes/app_routes.dart';
-import 'package:pxp_flutter/pages/chat/routes/routes.dart';
+import 'routes/app_routes.dart';
+import 'routes/routes.dart';
 
 final chatPersistentClient = StreamChatPersistenceClient(
   logLevel: Level.SEVERE,
@@ -30,6 +26,7 @@ final chatPersistentClient = StreamChatPersistenceClient(
 void sampleAppLogHandler(LogRecord record) async {
   if (kDebugMode) StreamChatClient.defaultLogHandler(record);
 
+  // report errors to sentry
   if (record.error != null || record.stackTrace != null) {
     await Sentry.captureException(
       record.error,
@@ -53,19 +50,25 @@ void main() async {
   const sentryDsn =
       'https://6381ef88de4140db8f5e25ab37e0f08c@o1213503.ingest.sentry.io/6352870';
 
+  /// Captures errors reported by the Flutter framework.
   FlutterError.onError = (FlutterErrorDetails details) {
     if (kDebugMode) {
+      // In development mode, simply print to console.
       FlutterError.dumpErrorToConsole(details);
     } else {
+      // In production mode, report to the application zone to report to sentry.
       Zone.current.handleUncaughtError(details.exception, details.stack!);
     }
   };
 
   Future<void> _reportError(dynamic error, StackTrace stackTrace) async {
+    // Print the exception to the console.
     if (kDebugMode) {
+      // Print the full stacktrace in debug mode.
       print(stackTrace);
       return;
     } else {
+      // Send the Exception and Stacktrace to sentry in Production mode.
       await Sentry.captureException(error, stackTrace: stackTrace);
     }
   }
@@ -86,8 +89,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp>
-    with SplashScreenStateMixin, TickerProviderStateMixin {
+class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
   InitData? _initData;
 
   Future<InitData> _initConnection() async {
@@ -95,20 +97,10 @@ class _MyAppState extends State<MyApp>
 
     if (!kIsWeb) {
       final secureStorage = FlutterSecureStorage();
-      secureStorage.write(
-        key: kStreamApiKey,
-        value: kDefaultStreamApiKey,
-      );
-      secureStorage.write(
-        key: kStreamUserId,
-        value: defaultUsers.entries.toList()[0].value.id,
-      );
-      secureStorage.write(
-        key: kStreamToken,
-        value: defaultUsers.entries.toList()[0].key,
-      );
+      apiKey = await secureStorage.read(key: kStreamApiKey);
+      userId = await secureStorage.read(key: kStreamUserId);
+      token = await secureStorage.read(key: kStreamToken);
     }
-    print(kStreamUserId);
 
     final client = buildStreamChatClient(apiKey ?? kStreamApiKey);
 
@@ -135,16 +127,6 @@ class _MyAppState extends State<MyApp>
         });
 
         final now = DateTime.now().millisecondsSinceEpoch;
-
-        if (now - timeOfStartMs > 1500) {
-          SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-            forwardAnimations();
-          });
-        } else {
-          Future.delayed(Duration(milliseconds: 1500)).then((value) {
-            forwardAnimations();
-          });
-        }
       },
     );
 
@@ -163,17 +145,44 @@ class _MyAppState extends State<MyApp>
               defaultValue: 0,
             ),
             builder: (context, snapshot) => MaterialApp(
-                debugShowCheckedModeBanner: false,
-                builder: (context, child) => StreamChatTheme(
-                      data: StreamChatThemeData(
-                        brightness: Theme.of(context).brightness,
-                      ),
-                      child: child!,
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData.light(),
+              darkTheme: ThemeData.dark(),
+              themeMode: {
+                -1: ThemeMode.dark,
+                0: ThemeMode.system,
+                1: ThemeMode.light,
+              }[snapshot],
+              supportedLocales: const [
+                Locale('en'),
+                Locale('it'),
+              ],
+              localizationsDelegates: const [
+                AppLocalizationsDelegate(),
+                GlobalStreamChatLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              builder: (context, child) => StreamChatTheme(
+                data: StreamChatThemeData(
+                  brightness: Theme.of(context).brightness,
+                ),
+                child: child!,
+              ),
+              onGenerateRoute: AppRoutes.generateRoute,
+              onGenerateInitialRoutes: (initialRouteName) {
+                return [
+                  AppRoutes.generateRoute(
+                    RouteSettings(
+                      name: Routes.HOME,
+                      arguments: HomePageArgs(_initData!.client),
                     ),
-                theme: ThemeData.dark(),
-                home: Onboarding()),
+                  )!
+                ];
+              },
+              initialRoute: Routes.HOME,
+            ),
           ),
-        if (!animationCompleted) buildAnimation(),
       ],
     );
   }
