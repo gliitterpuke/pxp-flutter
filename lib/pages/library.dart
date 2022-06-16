@@ -6,6 +6,8 @@ import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:pxp_flutter/pages/root_app.dart';
 
 class LibraryPage extends StatefulWidget {
+  const LibraryPage({Key? key}) : super(key: key);
+
   @override
   _LibraryPageState createState() => _LibraryPageState();
 }

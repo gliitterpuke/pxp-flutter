@@ -4,6 +4,7 @@ import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 
 class SearchPage extends StatefulWidget {
+  const SearchPage({Key? key}) : super(key: key);
   @override
   _SearchPageState createState() => _SearchPageState();
 }

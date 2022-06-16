@@ -72,10 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: const ProfilePage(),
-      // bottomNavigationBar: _StreamagramBottomNavBar(
-      //   pageController: pageController,
-      // ),
+      body: PageView(
+        controller: pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: HomeScreen._homePages,
+      ),
+      bottomNavigationBar: _StreamagramBottomNavBar(
+        pageController: pageController,
+      ),
     );
   }
 }

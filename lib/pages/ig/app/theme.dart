@@ -85,6 +85,7 @@ class AppTheme {
   ThemeData get darkTheme => _darkBase.copyWith(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         backgroundColor: AppColors.dark,
+        canvasColor: Colors.black,
         scaffoldBackgroundColor: AppColors.dark,
         appBarTheme: _darkBase.appBarTheme.copyWith(
           backgroundColor: AppColors.dark,

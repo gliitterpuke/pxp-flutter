@@ -12,11 +12,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:pxp_flutter/pages/ig/app/app.dart';
+import 'package:pxp_flutter/pages/ig/app/state/app_state.dart';
+import 'package:pxp_flutter/pages/login.dart';
 import 'package:pxp_flutter/pages/onboarding.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:stream_chat_localizations/stream_chat_localizations.dart';
 import 'package:stream_chat_persistence/stream_chat_persistence.dart';
+import 'package:stream_feed/stream_feed.dart';
+import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 import 'package:pxp_flutter/pages/chat/routes/app_routes.dart';
@@ -90,6 +95,14 @@ class _MyAppState extends State<MyApp>
     with SplashScreenStateMixin, TickerProviderStateMixin {
   InitData? _initData;
 
+  final _client =
+      StreamFeedClient('rzxdu6bj5yaa'); // TODO: Add Stream API Token
+  late final appState = AppState(client: _client);
+
+  // Important to only initialize this once.
+  // Unless you want to update the bloc state
+  late final feedBloc = FeedBloc(client: _client);
+
   Future<InitData> _initConnection() async {
     String? apiKey, userId, token;
 
@@ -151,6 +164,7 @@ class _MyAppState extends State<MyApp>
     super.initState();
   }
 
+  final theme = AppTheme();
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -163,17 +177,18 @@ class _MyAppState extends State<MyApp>
               defaultValue: 0,
             ),
             builder: (context, snapshot) => MaterialApp(
-                debugShowCheckedModeBanner: false,
-                builder: (context, child) => StreamChatTheme(
-                      data: StreamChatThemeData(
-                        brightness: Theme.of(context).brightness,
-                      ),
-                      child: child!,
-                    ),
-                theme: ThemeData.dark(),
-                home: Onboarding()),
+              debugShowCheckedModeBanner: false,
+              builder: (context, child) {
+                // Stream Feeds provider to give access to [FeedBloc]
+                // This class comes from Stream Feeds.
+                return FeedProvider(
+                  bloc: feedBloc,
+                  child: child!,
+                );
+              },
+              home: StreamagramApp(appTheme: theme),
+            ),
           ),
-        if (!animationCompleted) buildAnimation(),
       ],
     );
   }

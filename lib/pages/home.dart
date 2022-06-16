@@ -9,6 +9,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pxp_flutter/pages/genre.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }

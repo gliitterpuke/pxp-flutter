@@ -1,11 +1,12 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:pxp_flutter/pages/home.dart';
+import 'package:pxp_flutter/pages/login.dart';
 import 'package:pxp_flutter/pages/register.dart';
 
 class Onboarding extends StatelessWidget {
   final icon = Feather.settings;
+
+  const Onboarding({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,10 +75,14 @@ class Onboarding extends StatelessWidget {
                           child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               primary: Colors.white,
-                              side: BorderSide(
-                                  color: Color.fromARGB(255, 193, 193, 193)),
+                              side: const BorderSide(
+                                  color:
+                                      const Color.fromARGB(255, 193, 193, 193)),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const Login()));
+                            },
                             child: const Text("LOG IN",
                                 style: TextStyle(
                                     fontSize: 14.0,

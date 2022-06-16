@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pxp_flutter/pages/account.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
+import 'package:pxp_flutter/pages/onboarding.dart';
 import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 
 /// {@template app}
@@ -56,7 +56,7 @@ class _StreamagramAppState extends State<StreamagramApp> {
                 child: child!,
               );
             },
-            home: const ProfilePage(),
+            home: const Onboarding(),
           );
         },
       ),
