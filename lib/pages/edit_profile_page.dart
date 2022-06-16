@@ -1,50 +1,199 @@
 import 'package:flutter/material.dart';
-import 'package:pxp_flutter/pages/profile/user.dart';
-import 'package:pxp_flutter/pages/profile/user_preferences.dart';
-import 'package:pxp_flutter/pages/profile/appbar_widget.dart';
-import 'package:pxp_flutter/pages/profile/profile_widget.dart';
-import 'package:pxp_flutter/pages/profile/textfield_widget.dart';
+import 'package:pxp_flutter/pages/ig/app/app.dart';
 
-class EditProfilePage extends StatefulWidget {
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
+import 'package:pxp_flutter/pages/ig/components/app_widgets/app_widgets.dart';
+
+class EditProfilePage extends StatelessWidget {
+  /// {@macro edit_profile_page}
+  const EditProfilePage({
+    Key? key,
+  }) : super(key: key);
+
+  /// Custom route to this screen. Animates from the bottom up.
+  static Route get route => PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const EditProfilePage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final tween = Tween(begin: const Offset(0.0, 1.0), end: Offset.zero)
+              .chain(CurveTween(curve: Curves.easeOutQuint));
+          final offsetAnimation = animation.drive(tween);
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+      );
+
   @override
-  _EditProfilePageState createState() => _EditProfilePageState();
-}
-
-class _EditProfilePageState extends State<EditProfilePage> {
-  User user = UserPreferences.myUser;
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Colors.black,
-        appBar: buildAppBar(context),
-        body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 32),
-          physics: BouncingScrollPhysics(),
-          children: [
-            ProfileWidget(
-              imagePath: user.imagePath,
-              isEdit: true,
-            ),
-            const SizedBox(height: 24),
-            TextFieldWidget(
-              label: 'Display Name',
-              text: user.name,
-              onChanged: (name) {},
-            ),
-            const SizedBox(height: 24),
-            TextFieldWidget(
-              label: 'Handle',
-              text: user.handle,
-              onChanged: (handle) {},
-            ),
-            const SizedBox(height: 24),
-            TextFieldWidget(
-              label: 'About',
-              text: user.about,
-              maxLines: 5,
-              onChanged: (about) {},
-            ),
-          ],
+  Widget build(BuildContext context) {
+    final streamagramUser = context
+        .select<AppState, StreamagramUser?>((value) => value.streamagramUser);
+    if (streamagramUser == null) {
+      return const Scaffold(
+        body: Center(
+          child: Text('You should not see this.\nUser data is empty.'),
         ),
       );
+    }
+    return Scaffold(
+      appBar: AppBar(
+        leading: TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            'Cancel',
+            style: (Theme.of(context).brightness == Brightness.dark)
+                ? const TextStyle(color: AppColors.light)
+                : const TextStyle(color: AppColors.dark),
+          ),
+        ),
+        leadingWidth: 80,
+        title: const Text(
+          ' Edit profile',
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Done'),
+          ),
+        ],
+      ),
+      body: ListView(
+        children: [
+          const _ChangeProfilePictureButton(),
+          const Divider(
+            color: Colors.grey,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 110,
+                  child: Text(
+                    'Display Name',
+                    style: AppTextStyle.textStyleBoldMedium,
+                  ),
+                ),
+                Text(
+                  '${streamagramUser.fullName} ',
+                  // style: AppTextStyle.textStyleBoldMedium,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 110,
+                  child: Text(
+                    'Handle',
+                    style: AppTextStyle.textStyleBoldMedium,
+                  ),
+                ),
+                Text(
+                  '${context.appState.user.id} ',
+                  // style: AppTextStyle.textStyleBoldMedium,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 110,
+                  child: Text(
+                    'About',
+                    style: AppTextStyle.textStyleBoldMedium,
+                  ),
+                ),
+                Text(
+                  '${streamagramUser.userAbout} ',
+                  maxLines: 5,
+                  style: AppTextStyle.profileBody,
+                ),
+              ],
+            ),
+          ),
+          const Divider(color: Colors.grey),
+        ],
+      ),
+    );
+  }
+}
+
+class _ChangeProfilePictureButton extends StatefulWidget {
+  const _ChangeProfilePictureButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  __ChangeProfilePictureButtonState createState() =>
+      __ChangeProfilePictureButtonState();
+}
+
+class __ChangeProfilePictureButtonState
+    extends State<_ChangeProfilePictureButton> {
+  final _picker = ImagePicker();
+
+  Future<void> _changePicture() async {
+    if (context.appState.isUploadingProfilePicture == true) {
+      return;
+    }
+
+    final pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 800,
+      maxHeight: 800,
+      imageQuality: 70,
+    );
+    if (pickedFile != null) {
+      await context.appState.updateProfilePhoto(pickedFile.path);
+    } else {
+      context.removeAndShowSnackbar('No picture selected');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final streamagramUser = context
+        .select<AppState, StreamagramUser>((value) => value.streamagramUser!);
+    final isUploadingProfilePicture = context
+        .select<AppState, bool>((value) => value.isUploadingProfilePicture);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            height: 150,
+            child: Center(
+              child: isUploadingProfilePicture
+                  ? const CircularProgressIndicator()
+                  : GestureDetector(
+                      onTap: _changePicture,
+                      child: Avatar.huge(streamagramUser: streamagramUser),
+                    ),
+            ),
+          ),
+          GestureDetector(
+            onTap: _changePicture,
+            child: const Text('Change Profile Photo',
+                style: AppTextStyle.textStyleAction),
+          ),
+        ],
+      ),
+    );
+  }
 }

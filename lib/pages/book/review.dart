@@ -81,7 +81,7 @@ class _ReviewPageState extends State<ReviewPage> {
                             fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       Text("Overall",
                           style: const TextStyle(
@@ -180,6 +180,15 @@ class _ReviewPageState extends State<ReviewPage> {
                       ),
                       const SizedBox(
                         height: 30,
+                      ),
+                      Text(widget.reviewObj['title'],
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500)),
+                      const SizedBox(
+                        height: 15,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,

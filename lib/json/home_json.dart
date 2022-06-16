@@ -213,3 +213,26 @@ const List genreList = [
     "genre": "Non-fiction",
   },
 ];
+
+const List badgeList = [
+  {
+    "icon": Foundation.power,
+    "badge": "Power user",
+  },
+  {
+    "icon": AntDesign.book,
+    "badge": "Master reader",
+  },
+  {
+    "icon": AntDesign.team,
+    "badge": "Team player",
+  },
+  {
+    "icon": MaterialCommunityIcons.podium_gold,
+    "badge": "Gold contributor",
+  },
+  {
+    "icon": Foundation.social_skillshare,
+    "badge": "Social chameleon",
+  },
+];

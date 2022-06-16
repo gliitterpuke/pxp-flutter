@@ -242,67 +242,6 @@ class _NewChatScreenState extends State<NewChatScreen> {
                       setState(() => _selectedUsers.remove(user));
                     },
                   ),
-                  if (!_isSearchActive && !_selectedUsers.isNotEmpty)
-                    Container(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            Routes.NEW_GROUP_CHAT,
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Row(
-                            children: [
-                              StreamNeumorphicButton(
-                                child: Center(
-                                  child: StreamSvgIcon.contacts(
-                                    color: StreamChatTheme.of(context)
-                                        .colorTheme
-                                        .accentPrimary,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                AppLocalizations.of(context).createAGroup,
-                                style: StreamChatTheme.of(context)
-                                    .textTheme
-                                    .bodyBold,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  if (_showUserList)
-                    Container(
-                      width: double.maxFinite,
-                      decoration: BoxDecoration(
-                        gradient:
-                            StreamChatTheme.of(context).colorTheme.bgGradient,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 8,
-                        ),
-                        child: Text(
-                            _isSearchActive
-                                ? '${AppLocalizations.of(context).matchesFor} "$_userNameQuery"'
-                                : AppLocalizations.of(context).onThePlatorm,
-                            style: StreamChatTheme.of(context)
-                                .textTheme
-                                .footnote
-                                .copyWith(
-                                    color: StreamChatTheme.of(context)
-                                        .colorTheme
-                                        .textHighEmphasis
-                                        .withOpacity(.5))),
-                      ),
-                    ),
                   Expanded(
                     child: _showUserList
                         ? GestureDetector(

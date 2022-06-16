@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:pxp_flutter/pages/book_detail.dart';
 
 class AddReview extends StatefulWidget {
   String value;
@@ -35,7 +34,7 @@ class _AddReviewState extends State<AddReview> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Write a review",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -48,20 +47,20 @@ class _AddReviewState extends State<AddReview> {
                         height: 20,
                       ),
                       Container(
-                        margin: EdgeInsets.only(right: 10),
+                        margin: const EdgeInsets.only(right: 10),
                         width: 115,
                         height: 160,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
-                            image: DecorationImage(
+                            image: const DecorationImage(
                                 image: AssetImage('assets/images/pachinko.jpg'),
                                 fit: BoxFit.cover)),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      Text("Overall",
-                          style: const TextStyle(
+                      const Text("Overall",
+                          style: TextStyle(
                               color: Colors.white,
                               fontSize: 13,
                               fontWeight: FontWeight.w500)),
@@ -74,14 +73,13 @@ class _AddReviewState extends State<AddReview> {
                         minRating: 1,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => Icon(
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => const Icon(
                           Icons.star,
                           color: Colors.amber,
                         ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
+                        onRatingUpdate: (rating) {},
                       ),
                       const SizedBox(
                         height: 10,
@@ -91,8 +89,8 @@ class _AddReviewState extends State<AddReview> {
                         children: [
                           Column(
                             children: [
-                              Text("Style",
-                                  style: const TextStyle(
+                              const Text("Style",
+                                  style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w500)),
@@ -105,14 +103,12 @@ class _AddReviewState extends State<AddReview> {
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => const Icon(
                                   Icons.star,
                                   color: Colors.amber,
                                 ),
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
+                                onRatingUpdate: (rating) {},
                               ),
                               const SizedBox(
                                 height: 10,
@@ -121,8 +117,8 @@ class _AddReviewState extends State<AddReview> {
                           ),
                           Column(
                             children: [
-                              Text("Story",
-                                  style: const TextStyle(
+                              const Text("Story",
+                                  style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w500)),
@@ -135,14 +131,12 @@ class _AddReviewState extends State<AddReview> {
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => const Icon(
                                   Icons.star,
                                   color: Colors.amber,
                                 ),
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
+                                onRatingUpdate: (rating) {},
                               ),
                               const SizedBox(
                                 height: 10,
@@ -151,14 +145,14 @@ class _AddReviewState extends State<AddReview> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Column(
                             children: [
-                              Text("Grammar",
-                                  style: const TextStyle(
+                              const Text("Grammar",
+                                  style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w500)),
@@ -171,8 +165,8 @@ class _AddReviewState extends State<AddReview> {
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => const Icon(
                                   Icons.star,
                                   color: Colors.amber,
                                 ),
@@ -184,8 +178,8 @@ class _AddReviewState extends State<AddReview> {
                           ),
                           Column(
                             children: [
-                              Text("Content",
-                                  style: const TextStyle(
+                              const Text("Content",
+                                  style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w500)),
@@ -198,8 +192,8 @@ class _AddReviewState extends State<AddReview> {
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemPadding:
-                                    EdgeInsets.symmetric(horizontal: 4.0),
-                                itemBuilder: (context, _) => Icon(
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                itemBuilder: (context, _) => const Icon(
                                   Icons.star,
                                   color: Colors.amber,
                                 ),
@@ -217,7 +211,7 @@ class _AddReviewState extends State<AddReview> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          TextField(
+                          const TextField(
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
                             minLines: 5,
@@ -231,7 +225,22 @@ class _AddReviewState extends State<AddReview> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 15),
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.white,
+                          side: const BorderSide(
+                              color: Color.fromARGB(255, 193, 193, 193)),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const BookDetail()));
+                        },
+                        child: const Text('Post review'),
+                      ),
+                      const SizedBox(height: 30),
                     ],
                   ),
                 ),

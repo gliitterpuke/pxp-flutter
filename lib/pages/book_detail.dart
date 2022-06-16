@@ -575,9 +575,14 @@ class _BookDetailState extends State<BookDetail> {
                                                                           children: [
                                                                             Row(
                                                                               children: [
-                                                                                Text(
-                                                                                  dataToShow[index]['title'],
-                                                                                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                                                                Container(
+                                                                                  constraints: BoxConstraints(maxWidth: 200),
+                                                                                  child: Text(
+                                                                                    dataToShow[index]['title'],
+                                                                                    overflow: TextOverflow.ellipsis,
+                                                                                    maxLines: 1,
+                                                                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                                                                                  ),
                                                                                 ),
                                                                                 Text(
                                                                                   " by " + dataToShow[index]['display'],
@@ -823,7 +828,7 @@ class _BookDetailState extends State<BookDetail> {
                               allowSharing: true,
                             );
                             await EpubViewer.openAsset(
-                              "assets/epub/3.epub",
+                              "assets/epub/pachinko.epub",
                               lastLocation: EpubLocator.fromJson({
                                 "bookId": "2239",
                                 "href": "/OEBPS/ch06.xhtml",

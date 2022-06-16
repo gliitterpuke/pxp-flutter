@@ -5,6 +5,10 @@ class pxpColors {
 
   static const Color white = Color(0xFFFFFFFF);
 
+  static const Color darkCard = Color(0xFF161618);
+
+  static const Color lighterCard = Color(0xFF212124);
+
   static const Color defaultColor = Color.fromRGBO(136, 136, 136, 1.0);
 
   static const Color primary = Color.fromRGBO(249, 99, 50, 1.0);

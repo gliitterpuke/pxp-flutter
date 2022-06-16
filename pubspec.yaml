@@ -46,6 +46,20 @@ dependencies:
   page_view_indicators: ^2.0.0
   readmore: ^2.1.0
   number_paginator: ^0.0.2
+  flutter_app_badger: ^1.4.0
+  flutter_secure_storage: ^5.0.2
+  streaming_shared_preferences: ^2.0.0
+  flutter_local_notifications: ^9.6.0
+  yaml: ^3.1.1
+  stream_chat_localizations: ^3.1.0
+  stream_chat_persistence: ^4.1.0
+  sentry_flutter: ^6.5.1
+  stream_feed: ^0.6.0+2
+  timeago: ^3.2.2
+  flutter_dotenv: ^5.0.2
+  stream_feed_flutter_core: ^0.8.0
+  google_fonts: ^3.0.1
+  transparent_image: ^2.0.0
 
 
 dev_dependencies:

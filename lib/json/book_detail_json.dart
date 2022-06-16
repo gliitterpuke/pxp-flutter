@@ -16,6 +16,115 @@ const List seasonsList = [
   {"season": 6, "lastupdated": "April, 1, 2022"},
 ];
 
+const List userReviewList = [
+  {
+    "display": "Anya",
+    "img": "assets/images/flyanya.jpg",
+    "overall": 5,
+    "style": 5,
+    "story": 5,
+    "grammar": 5,
+    "content": 5,
+    "title": "amazing read!!",
+    "review": "loved everything about it \ntruly the best book",
+    "helpful": 12,
+    "date": "January 01, 2022",
+    "location": 6,
+    "award": true
+  },
+  {
+    "display": "Anya",
+    "img": "assets/images/flyanya.jpg",
+    "overall": 5,
+    "style": 5,
+    "story": 5,
+    "grammar": 1,
+    "content": 5,
+    "title":
+        "extremely extremely extremely extremely extremely extremely long title",
+    "review": "fix grammar and it would be amazing!!!",
+    "helpful": 12,
+    "date": "January 01, 2022",
+    "location": 2,
+    "award": false
+  },
+  {
+    "display": "Anya",
+    "img": "assets/images/flyanya.jpg",
+    "overall": 5,
+    "style": 5,
+    "story": 5,
+    "grammar": 5,
+    "content": 5,
+    "title": "amazing read!!",
+    "review": "loved everything about it \ntruly the best book",
+    "helpful": 12,
+    "date": "January 01, 2022",
+    "location": 6,
+    "award": false
+  },
+  {
+    "display": "Anya",
+    "img": "assets/images/flyanya.jpg",
+    "overall": 5,
+    "style": 5,
+    "story": 5,
+    "grammar": 5,
+    "content": 5,
+    "title": "amazing read!!",
+    "review": "loved everything about it \ntruly the best book",
+    "helpful": 12,
+    "date": "January 01, 2022",
+    "location": 6,
+    "award": true
+  },
+  {
+    "display": "Anya",
+    "img": "assets/images/flyanya.jpg",
+    "overall": 5,
+    "style": 5,
+    "story": 5,
+    "grammar": 5,
+    "content": 5,
+    "title": "amazing read!!",
+    "review": "loved everything about it \ntruly the best book",
+    "helpful": 12,
+    "date": "January 01, 2022",
+    "location": 6,
+    "award": false
+  },
+  {
+    "display": "Anya",
+    "img": "assets/images/flyanya.jpg",
+    "overall": 2,
+    "style": 3,
+    "story": 1,
+    "grammar": 4,
+    "content": 1,
+    "title": "okie",
+    "review": "was an okie book",
+    "helpful": 1,
+    "date": "January 01, 2022",
+    "location": 1,
+    "award": false
+  },
+  {
+    "display": "Anya",
+    "img": "assets/images/flyanya.jpg",
+    "overall": 5,
+    "style": 5,
+    "story": 5,
+    "grammar": 5,
+    "content": 5,
+    "title": "amazing read!!",
+    "review": "loved everything about it \ntruly the best book",
+    "helpful": 12,
+    "date": "January 01, 2022",
+    "location": 6,
+    "award": false
+  },
+];
+
 const List reviewList = [
   {
     "display": "Anya",

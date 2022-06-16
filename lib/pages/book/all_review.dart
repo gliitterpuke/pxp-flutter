@@ -6,6 +6,8 @@ import 'package:readmore/readmore.dart';
 import 'package:number_paginator/number_paginator.dart';
 
 class AllReview extends StatefulWidget {
+  const AllReview({Key? key}) : super(key: key);
+
   @override
   _AllReviewState createState() => _AllReviewState();
 }
@@ -116,7 +118,7 @@ class _AllReviewState extends State<AllReview> {
                                     fontWeight: FontWeight.w500),
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 15,
                               ),
                               Text("Overall",
                                   style: const TextStyle(
@@ -221,7 +223,16 @@ class _AllReviewState extends State<AllReview> {
                                 ],
                               ),
                               const SizedBox(
-                                height: 30,
+                                height: 20,
+                              ),
+                              Text(dataToShow[index]['title'],
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500)),
+                              const SizedBox(
+                                height: 15,
                               ),
                               ReadMoreText(
                                 dataToShow[index]['review'],

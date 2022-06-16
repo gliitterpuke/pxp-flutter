@@ -5,6 +5,8 @@ import 'package:pxp_flutter/pages/edit_profile_page.dart';
 import 'package:pxp_flutter/widgets/table-cell.dart';
 
 class Settings extends StatefulWidget {
+  const Settings({Key? key}) : super(key: key);
+
   @override
   _SettingsState createState() => _SettingsState();
 }
@@ -70,11 +72,10 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
                 TableCellSettings(
-                    title: "Edit Profile",
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => EditProfilePage()));
-                    }),
+                  title: "Edit Profile",
+                  onTap: () =>
+                      Navigator.of(context).push(EditProfilePage.route),
+                ),
                 TableCellSettings(title: "Account Settings"),
                 TableCellSettings(title: "Push Notifications"),
                 SizedBox(

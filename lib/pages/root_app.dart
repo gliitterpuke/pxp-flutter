@@ -1,12 +1,15 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, unused_import
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pxp_flutter/json/root_app_json.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/pages/chat/main.dart';
 import 'package:pxp_flutter/pages/feed/home.dart';
 import 'package:pxp_flutter/pages/feed/main.dart';
 import 'package:pxp_flutter/pages/home.dart';
+import 'package:pxp_flutter/pages/ig/app/app.dart';
+import 'package:pxp_flutter/pages/ig/app/stream_agram.dart';
 import 'package:pxp_flutter/pages/onboarding.dart';
 import 'package:pxp_flutter/pages/search.dart';
 import 'package:pxp_flutter/pages/account.dart';
@@ -14,6 +17,7 @@ import 'package:pxp_flutter/pages/library.dart';
 import 'package:pxp_flutter/pages/feed/main.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:stream_feed/stream_feed.dart';
+import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 
 class RootApp extends StatefulWidget {
   @override
@@ -21,29 +25,38 @@ class RootApp extends StatefulWidget {
 }
 
 class _RootAppState extends State<RootApp> {
+  final _client =
+      StreamFeedClient('rzxdu6bj5yaa'); // TODO: Add Stream API Token
+  late final appState = AppState(client: _client);
+
+  // Important to only initialize this once.
+  // Unless you want to update the bloc state
+  late final feedBloc = FeedBloc(client: _client);
   int activeTab = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: pxpColors.menu,
-      resizeToAvoidBottomInset: false,
-      bottomNavigationBar: getFooter(),
-      body: getBody(),
-    );
+    return ChangeNotifierProvider.value(
+        value: appState,
+        child: Scaffold(
+          backgroundColor: pxpColors.menu,
+          resizeToAvoidBottomInset: false,
+          bottomNavigationBar: getFooter(),
+          body: getBody(),
+        ));
   }
 
   Widget getBody() {
-    final client = StreamFeedClient('rzxdu6bj5yaa');
+    final theme = AppTheme();
     return IndexedStack(
       index: activeTab,
       children: [
         HomePage(),
         SearchPage(),
         LibraryPage(),
-        FeedApp(
-          client: client,
+        MyApp(),
+        StreamagramApp(
+          appTheme: theme,
         ),
-        ProfilePage()
       ],
     );
   }
