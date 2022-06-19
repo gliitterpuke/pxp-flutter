@@ -174,15 +174,16 @@ class _NewPostScreenState extends State<NewPostScreen> {
                               gradient: LinearGradient(
                                   begin: Alignment.bottomLeft,
                                   end: Alignment.topRight,
-                                  colors: [
-                                    AppColors.bottomGradient,
-                                    AppColors.topGradient
+                                  colors: <Color>[
+                                    Color(0xff12c2e9),
+                                    Color(0xffc471ed),
+                                    Color(0xfff64f59)
                                   ]),
                             ),
                             height: 300,
                             child: const Center(
                               child: Text(
-                                'Tap to select an image',
+                                'Add an image (optional)',
                                 style: TextStyle(
                                   color: AppColors.light,
                                   fontSize: 18,

@@ -1,31 +1,20 @@
 import 'dart:async';
 
 import 'package:pxp_flutter/pages/chat/app_config.dart';
-import 'package:pxp_flutter/pages/chat/localizations.dart';
-import 'package:pxp_flutter/pages/chat/routes/app_routes.dart';
 
 import 'package:pxp_flutter/pages/chat/choose_user_page.dart';
-import 'package:pxp_flutter/pages/chat/home_page.dart';
-import 'package:pxp_flutter/pages/chat/localizations.dart';
 import 'package:pxp_flutter/pages/chat/splash_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
-import 'package:pxp_flutter/pages/ig/app/state/app_state.dart';
-import 'package:pxp_flutter/pages/login.dart';
-import 'package:pxp_flutter/pages/onboarding.dart';
+import 'package:pxp_flutter/pages/ig/app/stream_agram.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
-import 'package:stream_chat_localizations/stream_chat_localizations.dart';
 import 'package:stream_chat_persistence/stream_chat_persistence.dart';
-import 'package:stream_feed/stream_feed.dart';
 import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
-
-import 'package:pxp_flutter/pages/chat/routes/app_routes.dart';
-import 'package:pxp_flutter/pages/chat/routes/routes.dart';
 
 final chatPersistentClient = StreamChatPersistenceClient(
   logLevel: Level.SEVERE,

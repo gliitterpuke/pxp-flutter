@@ -11,20 +11,15 @@ import 'package:pxp_flutter/pages/ig/components/new_post/new_post_screen.dart';
 
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
-    leading: BackButton(),
+    leading: const BackButton(),
     backgroundColor: Colors.transparent,
     elevation: 0,
     centerTitle: true,
-    title:
-        context.appState.streamagramUser!.firstName.toString().contains('null')
-            ? const SizedBox.shrink()
-            : Text(
-                context.appState.streamagramUser!.firstName.toString(),
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold),
-              ),
+    title: Text(
+      context.appState.streamagramUser!.firstName.toString(),
+      style: const TextStyle(
+          color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+    ),
     actions: [
       Padding(
         padding: const EdgeInsets.all(8),
@@ -35,10 +30,10 @@ AppBar buildAppBar(BuildContext context) {
         ),
       ),
       IconButton(
-        icon: Icon(Feather.settings),
+        icon: const Icon(Feather.settings),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => Settings()),
+            MaterialPageRoute(builder: (context) => const Settings()),
           );
         },
       ),

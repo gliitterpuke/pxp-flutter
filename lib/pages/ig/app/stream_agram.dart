@@ -30,35 +30,25 @@ class _StreamagramAppState extends State<StreamagramApp> {
   // Unless you want to update the bloc state
   late final feedBloc = FeedBloc(client: _client);
 
-  Future<bool> initData() async {
-    final initData = await appState.connect(DemoAppUser.sacha);
-    return initData;
-  }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: appState,
-      child: FutureBuilder(
-        future: initData(),
-        builder: (context, snapshot) {
-          return MaterialApp(
-            title: 'Stream-agram',
-            theme: widget.appTheme.lightTheme,
-            darkTheme: widget.appTheme.darkTheme,
-            debugShowCheckedModeBanner: false,
-            themeMode: ThemeMode.dark,
-            builder: (context, child) {
-              // Stream Feeds provider to give access to [FeedBloc]
-              // This class comes from Stream Feeds.
-              return FeedProvider(
-                bloc: feedBloc,
-                child: child!,
-              );
-            },
-            home: const Onboarding(),
+      child: MaterialApp(
+        title: 'Stream-agram',
+        theme: widget.appTheme.lightTheme,
+        darkTheme: widget.appTheme.darkTheme,
+        themeMode: ThemeMode.dark,
+        debugShowCheckedModeBanner: false,
+        builder: (context, child) {
+          // Stream Feeds provider to give access to [FeedBloc]
+          // This class comes from Stream Feeds.
+          return FeedProvider(
+            bloc: feedBloc,
+            child: child!,
           );
         },
+        home: const Onboarding(),
       ),
     );
   }

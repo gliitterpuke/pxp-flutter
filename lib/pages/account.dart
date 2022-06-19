@@ -27,6 +27,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late bool isFollowing;
+
+  Future<bool> _isFollowingUser(String userId) async {
+    return FeedProvider.of(context).bloc.isFollowingFeed(followerId: userId);
+  }
+
   final ValueNotifier<bool> _showCommentBox = ValueNotifier(false);
   final TextEditingController _commentTextController = TextEditingController();
   final FocusNode _commentFocusNode = FocusNode();
@@ -385,12 +391,39 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Stack(
                   children: [
                     FlatFeedCore(
-                      feedGroup: 'timeline',
+                      feedGroup: 'user',
+                      // userId: context.appState.client.user.toString(),
                       errorBuilder: (context, error) =>
                           const Text('Could not load profile'),
                       loadingBuilder: (context) => const SizedBox(),
-                      emptyBuilder: (context) => const Center(
-                        child: Text('No Posts\nGo and post something'),
+                      emptyBuilder: (context) => Center(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('No posts yet',
+                                  style: const TextStyle(fontSize: 16)),
+                              const SizedBox(height: 15),
+                              SizedBox(
+                                // width: double.infinity,
+                                height: 40,
+                                child: OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    primary: Colors.white,
+                                    side: const BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 193, 193, 193)),
+                                  ),
+                                  onPressed: () => Navigator.of(context)
+                                      .push(NewPostScreen.route),
+                                  child: const Text("Add a post",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white)),
+                                ),
+                              ),
+                            ]),
                       ),
                       flags: EnrichmentFlags()
                         ..withOwnReactions()
@@ -773,29 +806,6 @@ class _ProfileHeader extends StatelessWidget {
   }
 }
 
-class _NoPostsMessage extends StatelessWidget {
-  const _NoPostsMessage({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text('This is too empty'),
-        const SizedBox(height: 12),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(NewPostScreen.route); // ADD THIS
-          },
-          child: const Text('Add a post'),
-        )
-      ],
-    );
-  }
-}
-
 class _PictureViewer extends StatelessWidget {
   const _PictureViewer({
     Key? key,
@@ -962,4 +972,156 @@ List<Icon> _ratingCount(int count) {
   return List.generate(count,
           (i) => const Icon(AntDesign.star, size: 10, color: tierColor.bronze))
       .toList(); // replace * with your rupee or use Icon instead
+}
+
+class _UserProfile extends StatefulWidget {
+  const _UserProfile({
+    Key? key,
+    required this.userId,
+  }) : super(key: key);
+
+  final String userId;
+
+  @override
+  __UserProfileState createState() => __UserProfileState();
+}
+
+class __UserProfileState extends State<_UserProfile> {
+  late StreamUser streamUser;
+  late bool isFollowing;
+  late Future<StreamagramUser> userDataFuture = getUser();
+
+  Future<StreamagramUser> getUser() async {
+    final userClient = context.appState.client.user(widget.userId);
+    final futures = await Future.wait([
+      userClient.get(),
+      _isFollowingUser(widget.userId),
+    ]);
+    streamUser = futures[0] as StreamUser;
+    isFollowing = futures[1] as bool;
+
+    return StreamagramUser.fromMap(streamUser.data!);
+  }
+
+  /// Determine if the current authenticated user is following [user].
+  Future<bool> _isFollowingUser(String userId) async {
+    return FeedProvider.of(context).bloc.isFollowingFeed(followerId: userId);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<StreamagramUser>(
+      future: userDataFuture,
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return const SizedBox.shrink();
+          default:
+            if (snapshot.hasError) {
+              return const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Could not load profile'),
+              );
+            } else {
+              final userData = snapshot.data;
+              if (userData != null) {
+                return _ProfileTile(
+                  user: streamUser,
+                  userData: userData,
+                  isFollowing: isFollowing,
+                );
+              }
+              return const SizedBox.shrink();
+            }
+        }
+      },
+    );
+  }
+}
+
+class _ProfileTile extends StatefulWidget {
+  const _ProfileTile({
+    Key? key,
+    required this.user,
+    required this.userData,
+    required this.isFollowing,
+  }) : super(key: key);
+
+  final StreamUser user;
+  final StreamagramUser userData;
+  final bool isFollowing;
+
+  @override
+  __ProfileTileState createState() => __ProfileTileState();
+}
+
+class __ProfileTileState extends State<_ProfileTile> {
+  bool _isLoading = false;
+  late bool _isFollowing = widget.isFollowing;
+
+  Future<void> followOrUnfollowUser(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+    if (_isFollowing) {
+      final bloc = FeedProvider.of(context).bloc;
+      await bloc.unfollowFeed(unfolloweeId: widget.user.id);
+      _isFollowing = false;
+    } else {
+      await FeedProvider.of(context)
+          .bloc
+          .followFeed(followeeId: widget.user.id);
+      _isFollowing = true;
+    }
+    FeedProvider.of(context).bloc.queryEnrichedActivities(
+          feedGroup: 'timeline',
+          flags: EnrichmentFlags()
+            ..withOwnReactions()
+            ..withRecentReactions()
+            ..withReactionCounts(),
+        );
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Avatar.medium(streamagramUser: widget.userData),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.user.id, style: AppTextStyle.textStyleBold),
+              Text(
+                widget.userData.fullName,
+                style: AppTextStyle.textStyleFaded,
+              ),
+            ],
+          ),
+        ),
+        const Spacer(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: _isLoading
+              ? const CircularProgressIndicator(strokeWidth: 3)
+              : OutlinedButton(
+                  onPressed: () {
+                    followOrUnfollowUser(context);
+                  },
+                  child: _isFollowing
+                      ? const Text('Unfollow')
+                      : const Text('Follow'),
+                ),
+        )
+      ],
+    );
+  }
 }

@@ -4,8 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 
 class AddReview extends StatefulWidget {
-  String value;
-  AddReview({Key? key, required this.value}) : super(key: key);
+  const AddReview({Key? key}) : super(key: key);
 
   @override
   _AddReviewState createState() => _AddReviewState();
@@ -14,6 +13,7 @@ class AddReview extends StatefulWidget {
 class _AddReviewState extends State<AddReview> {
   @override
   Widget build(BuildContext context) {
+    final book = ModalRoute.of(context)!.settings.arguments as Map;
     var size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -52,8 +52,8 @@ class _AddReviewState extends State<AddReview> {
                         height: 160,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
-                            image: const DecorationImage(
-                                image: AssetImage('assets/images/pachinko.jpg'),
+                            image: DecorationImage(
+                                image: AssetImage(book['img']),
                                 fit: BoxFit.cover)),
                       ),
                       const SizedBox(

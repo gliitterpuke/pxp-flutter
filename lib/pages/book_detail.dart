@@ -76,7 +76,7 @@ class _BookDetailState extends State<BookDetail> {
   }
 
   Widget getBody(opacity) {
-    var value = "Pachinko";
+    final book = ModalRoute.of(context)!.settings.arguments as Map;
     var size = MediaQuery.of(context).size;
     int _page = 0;
     final int _perPage = 5;
@@ -92,7 +92,7 @@ class _BookDetailState extends State<BookDetail> {
               image: DecorationImage(
                 alignment: Alignment.topCenter,
                 fit: BoxFit.fitWidth,
-                image: AssetImage("assets/images/pachinko.jpg"),
+                image: AssetImage(book['img']),
               ),
             ),
           ),
@@ -139,7 +139,7 @@ class _BookDetailState extends State<BookDetail> {
                             padding: const EdgeInsets.only(
                                 left: 6, right: 6, top: 4, bottom: 4),
                             child: Text(
-                              "Completed",
+                              book['status'],
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -151,7 +151,7 @@ class _BookDetailState extends State<BookDetail> {
                           height: 5,
                         ),
                         Text(
-                          "Kill the Villainess",
+                          book['title'],
                           style: TextStyle(
                               height: 1.4,
                               fontSize: 28,
@@ -162,7 +162,7 @@ class _BookDetailState extends State<BookDetail> {
                           height: 20,
                         ),
                         Text(
-                          "Haegi, Your April >",
+                          book['author'] + " ›",
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -174,7 +174,7 @@ class _BookDetailState extends State<BookDetail> {
                         Row(
                           children: [
                             Text(
-                              "134.5k views",
+                              book['views'] + " views",
                               style: TextStyle(
                                   color: Colors.white.withOpacity(0.7),
                                   fontWeight: FontWeight.w400,
@@ -194,7 +194,7 @@ class _BookDetailState extends State<BookDetail> {
                               width: 5,
                             ),
                             Text(
-                              "Romantic Fantasy",
+                              book['genre'],
                               style: TextStyle(
                                   color: Colors.white.withOpacity(0.7),
                                   fontWeight: FontWeight.w400,
@@ -205,11 +205,13 @@ class _BookDetailState extends State<BookDetail> {
                         SizedBox(
                           height: 20,
                         ),
+
+                        // SUMMARY
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Erin Miserian just wants to die. Being overworked and underappreciated in the real world wasn't great, but living as a villainess in a romance novel is even worse. If Eris can die in the novel, she might be able to return to reality, but the novel won't let her. Desperate to escape a life as the protagonist's tormentor, she sets off on a journey with the help of a witch, a knight, and a high priest. Can she find her way back to her friends and family, or is Eris doomed to a fictional future?",
+                              book['description'],
                               overflow: TextOverflow.ellipsis,
                               maxLines: 5,
                               style: TextStyle(
@@ -246,107 +248,55 @@ class _BookDetailState extends State<BookDetail> {
                                   MaterialPageRoute(
                                       builder: (_) => BookDetail()));
                             },
+
+                            // TAGS
                             child: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2),
-                                      color: Colors.white.withOpacity(0.2)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 6, right: 6, top: 4, bottom: 4),
-                                    child: Text(
-                                      "Billionaire",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2),
-                                      color: Colors.white.withOpacity(0.2)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 6, right: 6, top: 4, bottom: 4),
-                                    child: Text(
-                                      "Depression & Anxiety",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2),
-                                      color: Colors.white.withOpacity(0.2)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 6, right: 6, top: 4, bottom: 4),
-                                    child: Text(
-                                      "Dark",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2),
-                                      color: Colors.white.withOpacity(0.2)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 6, right: 6, top: 4, bottom: 4),
-                                    child: Text(
-                                      "Love Triangle",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2),
-                                      color: Colors.white.withOpacity(0.2)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 6, right: 6, top: 4, bottom: 4),
-                                    child: Text(
-                                      "Reverse Harem",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              children:
+                                  List.generate(book['tags'].length, (index) {
+                                return GestureDetector(
+                                    onTap: () {
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (_) => BookDetail(),
+                                      //         settings: RouteSettings(
+                                      //           arguments: mylist[index],
+                                      //         )));
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(2),
+                                            color:
+                                                Colors.white.withOpacity(0.2)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 6,
+                                              right: 6,
+                                              top: 4,
+                                              bottom: 4),
+                                          child: Text(
+                                            book['tags'][index],
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                      ),
+                                    ));
+                              }),
                             ),
                           ),
                         ),
                         SizedBox(
                           height: 30,
                         ),
+
+                        // SUGGESTED
                         Text(
                           "More Like This",
                           style: TextStyle(
@@ -359,28 +309,30 @@ class _BookDetailState extends State<BookDetail> {
                         ),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => BookDetail()));
-                            },
-                            child: Row(
-                              children: List.generate(mylist.length, (index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 16),
-                                  width: 110,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      image: DecorationImage(
-                                          image:
-                                              AssetImage(mylist[index]['img']),
-                                          fit: BoxFit.cover)),
-                                );
-                              }),
-                            ),
+                          child: Row(
+                            children: List.generate(mylist.length, (index) {
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => BookDetail(),
+                                            settings: RouteSettings(
+                                              arguments: mylist[index],
+                                            )));
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 16),
+                                    width: 110,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                mylist[index]['img']),
+                                            fit: BoxFit.cover)),
+                                  ));
+                            }),
                           ),
                         ),
                         SizedBox(
@@ -723,14 +675,16 @@ class _BookDetailState extends State<BookDetail> {
                                                             ),
                                                             onPressed: () {
                                                               Navigator.push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      AddReview(
-                                                                          value:
-                                                                              value),
-                                                                ),
-                                                              );
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder:
+                                                                          (_) =>
+                                                                              AddReview(),
+                                                                      settings:
+                                                                          RouteSettings(
+                                                                        arguments:
+                                                                            book,
+                                                                      )));
                                                             },
                                                             child: const Text(
                                                                 "Add a review",
@@ -828,7 +782,7 @@ class _BookDetailState extends State<BookDetail> {
                               allowSharing: true,
                             );
                             await EpubViewer.openAsset(
-                              "assets/epub/pachinko.epub",
+                              book['epub'],
                               lastLocation: EpubLocator.fromJson({
                                 "bookId": "2239",
                                 "href": "/OEBPS/ch06.xhtml",
@@ -870,24 +824,28 @@ class _BookDetailState extends State<BookDetail> {
       ),
     );
   }
-}
 
-Route _summaryRoute() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => SummaryPage(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = Offset(0.0, 1.0);
-      var end = Offset.zero;
-      var curve = Curves.ease;
+  Route _summaryRoute() {
+    final book = ModalRoute.of(context)!.settings.arguments as Map;
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => SummaryPage(
+        book: book,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(0.0, 1.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
 
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 }
 
 List<Icon> _ratingCount(int count) {

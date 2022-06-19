@@ -18,6 +18,10 @@ class _GenreDetailState extends State<GenreDetail>
     return Tab(text: genreList[index]['genre'].toString().toUpperCase());
   });
 
+  final List myTabsName = List.generate(genreList.length, (index) {
+    return genreList[index]['genre'];
+  });
+
   late TabController _tabController;
   late ScrollController _scrollController;
   late bool fixedScroll;
@@ -26,10 +30,16 @@ class _GenreDetailState extends State<GenreDetail>
   void initState() {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
-    _tabController = TabController(length: 8, vsync: this);
+    _tabController = TabController(length: 16, vsync: this);
     _tabController.addListener(_smoothScrollToTop);
 
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final genreDetails = ModalRoute.of(context)?.settings.arguments as Map;
+      var genreIndex = genreDetails['index'] ?? 5;
+      _tabController.animateTo(genreIndex);
+    });
   }
 
   @override
@@ -57,16 +67,21 @@ class _GenreDetailState extends State<GenreDetail>
     });
   }
 
-// currently reading tab
+  // genres tab
 
-  _currentlyReading() => ListView(
+  _genre(i) => ListView(
         children: [
           Column(
-              children: List.generate(currentReads.length, (index) {
+              children: List.generate(i.length, (index) {
             return GestureDetector(
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => BookDetail()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BookDetail(),
+                        settings: RouteSettings(
+                          arguments: i[index],
+                        )));
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 18, bottom: 10),
@@ -83,8 +98,7 @@ class _GenreDetailState extends State<GenreDetail>
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5),
                                     image: DecorationImage(
-                                        image: AssetImage(
-                                            currentReads[index]['img']),
+                                        image: AssetImage(i[index]['img']),
                                         fit: BoxFit.cover)),
                               ),
                               // Container(
@@ -94,7 +108,7 @@ class _GenreDetailState extends State<GenreDetail>
                               //         color: Colors.black.withOpacity(0.2)))
                             ],
                           ),
-                          Container(
+                          SizedBox(
                             width:
                                 (MediaQuery.of(context).size.width - 30) * 0.7,
                             child: Padding(
@@ -103,237 +117,7 @@ class _GenreDetailState extends State<GenreDetail>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Chapter " + currentReads[index]['chapter'],
-                                    style: TextStyle(
-                                      color: pxpColors.secondaryT,
-                                      fontSize: 11,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    currentReads[index]['title'],
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: LinearProgressIndicator(
-                                        value: currentReads[index]['value']),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 35,
-                      height: 35,
-                      child: Icon(
-                        EvilIcons.bell,
-                        color: pxpColors.secondaryT,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }))
-        ],
-      );
-
-// reading list tab
-
-  _readingList() => ListView(
-        children: [
-          Column(
-              children: List.generate(readLater.length, (index) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => BookDetail()));
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 18, bottom: 10),
-                child: Row(
-                  children: [
-                    Container(
-                      child: Row(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                height: 110,
-                                width: 70,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    image: DecorationImage(
-                                        image: AssetImage(readLater[index]
-                                            ['books']['img'][0]),
-                                        fit: BoxFit.cover)),
-                              ),
-                              // Container(
-                              //     height: 110,
-                              //     width: 70,
-                              //     decoration: BoxDecoration(
-                              //         color: Colors.black.withOpacity(0.2)))
-                            ],
-                          ),
-                          Container(
-                            width:
-                                (MediaQuery.of(context).size.width - 30) * 0.7,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  new Text(
-                                    '${readLater[index]['books']['title'].length ?? "Empty"}' +
-                                        ' titles',
-                                    style: TextStyle(
-                                      color: pxpColors.secondaryT,
-                                      fontSize: 11,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    '${readLater[index]['name'] ?? "Empty"}',
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 35,
-                      height: 35,
-                      child: Icon(
-                        EvilIcons.bell,
-                        color: pxpColors.secondaryT,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          })),
-          Column(children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => BookDetail()));
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 18, bottom: 10),
-                child: Row(
-                  children: [
-                    Row(
-                      children: [
-                        Stack(
-                          children: [
-                            Container(
-                                height: 110,
-                                width: 70,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.white,
-                                ),
-                                child: Icon(Entypo.plus, color: Colors.grey)),
-                            // Container(
-                            //     height: 110,
-                            //     width: 70,
-                            //     decoration: BoxDecoration(
-                            //         color: Colors.black.withOpacity(0.2)))
-                          ],
-                        ),
-                        Container(
-                          width: (MediaQuery.of(context).size.width - 30) * 0.7,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 15.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Create a new reading list',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ])
-        ],
-      );
-
-  // fantasy tab
-
-  _fantasy() => ListView(
-        children: [
-          Column(
-              children: List.generate(fantasy.length, (index) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => BookDetail()));
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 18, bottom: 10),
-                child: Row(
-                  children: [
-                    Container(
-                      child: Row(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                height: 70,
-                                width: 70,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    image: DecorationImage(
-                                        image:
-                                            AssetImage(fantasy[index]['img']),
-                                        fit: BoxFit.cover)),
-                              ),
-                              // Container(
-                              //     height: 70,
-                              //     width: 70,
-                              //     decoration: BoxDecoration(
-                              //         color: Colors.black.withOpacity(0.2)))
-                            ],
-                          ),
-                          Container(
-                            width:
-                                (MediaQuery.of(context).size.width - 30) * 0.7,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    fantasy[index]['title'],
+                                    i[index]['title'],
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                     style: const TextStyle(
@@ -346,7 +130,7 @@ class _GenreDetailState extends State<GenreDetail>
                                   SizedBox(
                                     child: Center(
                                       child: Text(
-                                        fantasy[index]['description'],
+                                        i[index]['description'],
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
                                         style: TextStyle(
@@ -371,195 +155,11 @@ class _GenreDetailState extends State<GenreDetail>
         ],
       );
 
-  // followed tab
-
-  _followed() => ListView(
-        children: [
-          Column(
-              children: List.generate(creatorsFollowed.length, (index) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => BookDetail()));
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 18, bottom: 10),
-                child: Row(
-                  children: [
-                    Container(
-                      child: Row(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(99),
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            creatorsFollowed[index]['img']),
-                                        fit: BoxFit.cover)),
-                              ),
-                              // Container(
-                              //     height: 60,
-                              //     width: 60,
-                              //     decoration: BoxDecoration(
-                              //         color: Colors.black.withOpacity(0.2)))
-                            ],
-                          ),
-                          Container(
-                            width:
-                                (MediaQuery.of(context).size.width - 30) * 0.7,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    creatorsFollowed[index]['author'],
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(children: [
-                                    Text(
-                                      creatorsFollowed[index]['series'] +
-                                          " series",
-                                      style: TextStyle(
-                                        color: pxpColors.secondaryT,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      creatorsFollowed[index]['followers'] +
-                                          " followers",
-                                      style: TextStyle(
-                                        color: pxpColors.secondaryT,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ])
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 35,
-                      height: 35,
-                      child: Icon(
-                        EvilIcons.bell,
-                        color: pxpColors.secondaryT,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }))
-        ],
-      );
-
-  // subbed tab
-
-  _subbed() => ListView(
-        children: [
-          Column(
-              children: List.generate(creatorsSubbed.length, (index) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => BookDetail()));
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(left: 18, bottom: 10),
-                child: Row(
-                  children: [
-                    Container(
-                      child: Row(
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(99),
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            creatorsSubbed[index]['img']),
-                                        fit: BoxFit.cover)),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            width:
-                                (MediaQuery.of(context).size.width - 30) * 0.7,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    creatorsSubbed[index]['author'],
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(children: [
-                                    Text(
-                                      creatorsSubbed[index]['series'] +
-                                          " series",
-                                      style: TextStyle(
-                                        color: pxpColors.secondaryT,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      creatorsSubbed[index]['followers'] +
-                                          " followers",
-                                      style: TextStyle(
-                                        color: pxpColors.secondaryT,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ])
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 35,
-                      height: 35,
-                      child: Icon(
-                        EvilIcons.bell,
-                        color: pxpColors.secondaryT,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }))
-        ],
-      );
-
   @override
   Widget build(BuildContext context) {
+    var genreFilter = bookList
+        .where((f) => f['genre'].contains(myTabsName[_tabController.index]))
+        .toList(); //
     return Scaffold(
       backgroundColor: pxpColors.bgColorScreen,
       body: NestedScrollView(
@@ -588,14 +188,22 @@ class _GenreDetailState extends State<GenreDetail>
           child: TabBarView(
             controller: _tabController,
             children: [
-              _fantasy(),
-              _fantasy(),
-              _fantasy(),
-              _fantasy(),
-              _fantasy(),
-              _fantasy(),
-              _fantasy(),
-              _fantasy(),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
+              _genre(genreFilter),
             ],
           ),
         ),

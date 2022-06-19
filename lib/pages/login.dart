@@ -1,6 +1,7 @@
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
+
 import 'package:pxp_flutter/pages/register.dart';
 import 'package:pxp_flutter/pages/root_app.dart';
 
@@ -144,14 +145,10 @@ class _LoginState extends State<Login> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          context.removeAndShowSnackbar('Connecting user');
-
-                          final success =
-                              await context.appState.connect(DemoAppUser.sacha);
+                          final success = await context.appState
+                              .connect(DemoAppUser.reuben);
 
                           if (success) {
-                            context.removeAndShowSnackbar('User connected');
-
                             await Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (_) => const RootApp(),
@@ -161,9 +158,6 @@ class _LoginState extends State<Login> {
                             context.removeAndShowSnackbar(
                                 'Could not connect user');
                           }
-
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => RootApp()));
                         },
                         child: Container(
                           height: 50,

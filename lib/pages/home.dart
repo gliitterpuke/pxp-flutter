@@ -55,143 +55,6 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Stack(
-                  //   children: [
-                  //     // banner
-                  //     Container(
-                  //       height: 500,
-                  //       decoration: BoxDecoration(
-                  //           image: DecorationImage(
-                  //               image: AssetImage('assets/images/none.jpg'),
-                  //               fit: BoxFit.cover)
-                  //           // image: DecorationImage(
-                  //           //     image: NetworkImage(
-                  //           //         "https://mangaweebs.in/wp-content/uploads/7caff409-904d-4a9c-9d21-63ab4dbbf3a9.png.512.jpg"),
-                  //           //     fit: BoxFit.cover)
-                  //           ),
-                  //     ),
-
-                  //     // title
-                  //     Container(
-                  //         height: 500,
-                  //         decoration: BoxDecoration(
-                  //             gradient: LinearGradient(
-                  //                 colors: [
-                  //               Colors.black.withOpacity(0.85),
-                  //               Colors.black.withOpacity(0.3),
-                  //             ],
-                  //                 end: Alignment.topCenter,
-                  //                 begin: Alignment.bottomCenter))),
-                  //     Container(
-                  //       height: 500,
-                  //       width: size.width,
-                  //       child: Column(
-                  //         mainAxisAlignment: MainAxisAlignment.end,
-                  //         crossAxisAlignment: CrossAxisAlignment.center,
-                  //         children: [
-                  //           Padding(
-                  //               padding: const EdgeInsets.only(
-                  //                   top: 10, left: 15, right: 15),
-                  //               child: Text(
-                  //                 "Kill the Villainess",
-                  //                 style: TextStyle(
-                  //                     fontSize: 28,
-                  //                     fontWeight: FontWeight.bold),
-                  //               )),
-                  //           SizedBox(
-                  //             height: 15,
-                  //           ),
-                  //           Text(
-                  //             "Romance - Billionaire - Dark",
-                  //             style: TextStyle(
-                  //               fontSize: 11,
-                  //             ),
-                  //           ),
-                  //           SizedBox(
-                  //             height: 10,
-                  //           ),
-                  //           Row(
-                  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //             children: [
-                  //               Column(
-                  //                 children: [
-                  //                   Icon(
-                  //                     Icons.add,
-                  //                     size: 25,
-                  //                   ),
-                  //                   SizedBox(
-                  //                     height: 5,
-                  //                   ),
-                  //                   Text(
-                  //                     "My List",
-                  //                     style: TextStyle(
-                  //                         fontWeight: FontWeight.w600),
-                  //                   )
-                  //                 ],
-                  //               ),
-                  //               GestureDetector(
-                  //                 onTap: () {
-                  //                   Navigator.push(
-                  //                       context,
-                  //                       MaterialPageRoute(
-                  //                           builder: (_) => BookDetail()));
-                  //                 },
-                  //                 child: Container(
-                  //                   decoration: BoxDecoration(
-                  //                     color: Colors.white,
-                  //                     borderRadius: BorderRadius.circular(4),
-                  //                   ),
-                  //                   child: Padding(
-                  //                     padding: const EdgeInsets.only(
-                  //                         right: 13,
-                  //                         left: 8,
-                  //                         top: 2,
-                  //                         bottom: 2),
-                  //                     child: Row(
-                  //                       children: [
-                  //                         Icon(
-                  //                           Icons.play_arrow,
-                  //                           color: Colors.black,
-                  //                           size: 30,
-                  //                         ),
-                  //                         SizedBox(
-                  //                           width: 5,
-                  //                         ),
-                  //                         Text(
-                  //                           "Read",
-                  //                           style: TextStyle(
-                  //                               fontSize: 16,
-                  //                               fontWeight: FontWeight.w600,
-                  //                               color: Colors.black),
-                  //                         )
-                  //                       ],
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //               Column(
-                  //                 children: [
-                  //                   Icon(
-                  //                     Icons.info_outline,
-                  //                     size: 25,
-                  //                   ),
-                  //                   SizedBox(
-                  //                     height: 5,
-                  //                   ),
-                  //                   Text(
-                  //                     "Info",
-                  //                     style: TextStyle(
-                  //                         fontWeight: FontWeight.w600),
-                  //                   )
-                  //                 ],
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
                   SizedBox(
                     height: 100,
                   ),
@@ -203,32 +66,44 @@ class _HomePageState extends State<HomePage> {
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 10, left: 8, right: 8, bottom: 15),
-                    child: Container(
-                      child: CarouselSlider(
-                        items: imageSliders,
-                        carouselController: _controller,
-                        options: CarouselOptions(
-                            enlargeCenterPage: true,
-                            aspectRatio: 1.75,
-                            viewportFraction: 0.35,
-                            enlargeStrategy: CenterPageEnlargeStrategy.height,
-                            initialPage: 0,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _current = index;
-                              });
-                            }),
-                      ),
-                    ),
-                  ),
-
                   GestureDetector(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => BookDetail())),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BookDetail(),
+                              settings: RouteSettings(
+                                arguments: pxppicks[_current],
+                              ))),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 10, left: 8, right: 8, bottom: 15),
+                        child: Container(
+                          child: CarouselSlider(
+                            items: imageSliders,
+                            carouselController: _controller,
+                            options: CarouselOptions(
+                                enlargeCenterPage: true,
+                                aspectRatio: 1.75,
+                                viewportFraction: 0.35,
+                                enlargeStrategy:
+                                    CenterPageEnlargeStrategy.height,
+                                initialPage: 0,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    _current = index;
+                                  });
+                                }),
+                          ),
+                        ),
+                      )),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => BookDetail(),
+                            settings: RouteSettings(
+                              arguments: pxppicks[_current],
+                            ))),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -309,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                                                     Icon(FontAwesome.dollar,
                                                         color: tierColor.paid),
                                                     Text(
-                                                      ' Paid: detalis here',
+                                                      ' Paid: details here',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(
@@ -493,68 +368,71 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => BookDetail()));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: List.generate(mylist.length, (index) {
-                                return Column(children: [
-                                  Container(
-                                    margin: EdgeInsets.only(right: 10),
-                                    width: 115,
-                                    height: 160,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(6),
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                mylist[index]['img']),
-                                            fit: BoxFit.cover)),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 115,
-                                        child: Text(
-                                          mylist[index]['genre'],
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                              color: pxpColors.secondaryT,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: List.generate(mylist.length, (index) {
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => BookDetail(),
+                                            settings: RouteSettings(
+                                              arguments: mylist[index],
+                                            )));
+                                  },
+                                  child: Column(children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      width: 115,
+                                      height: 160,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  mylist[index]['img']),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: 115,
+                                          child: Text(
+                                            mylist[index]['genre'],
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                color: pxpColors.secondaryT,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600),
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      SizedBox(
-                                        width: 110,
-                                        height: 40,
-                                        child: Text(
-                                          mylist[index]['title'],
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600),
+                                        const SizedBox(
+                                          height: 5,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ]);
-                              }),
-                            ),
+                                        SizedBox(
+                                          width: 110,
+                                          height: 40,
+                                          child: Text(
+                                            mylist[index]['title'],
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ]));
+                            }),
                           ),
                         ),
                       ),
@@ -574,69 +452,72 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => BookDetail()));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              children:
-                                  List.generate(trendingList.length, (index) {
-                                return Column(children: [
-                                  Container(
-                                    margin: EdgeInsets.only(right: 10),
-                                    width: 115,
-                                    height: 160,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(6),
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                trendingList[index]['img']),
-                                            fit: BoxFit.cover)),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 110,
-                                        child: Text(
-                                          trendingList[index]['genre'],
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                              color: pxpColors.secondaryT,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children:
+                                List.generate(trendingList.length, (index) {
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => BookDetail(),
+                                            settings: RouteSettings(
+                                              arguments: trendingList[index],
+                                            )));
+                                  },
+                                  child: Column(children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      width: 115,
+                                      height: 160,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  trendingList[index]['img']),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: 110,
+                                          child: Text(
+                                            trendingList[index]['genre'],
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                color: pxpColors.secondaryT,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600),
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      SizedBox(
-                                        width: 110,
-                                        height: 50,
-                                        child: Text(
-                                          trendingList[index]['title'],
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600),
+                                        const SizedBox(
+                                          height: 5,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ]);
-                              }),
-                            ),
+                                        SizedBox(
+                                          width: 110,
+                                          height: 50,
+                                          child: Text(
+                                            trendingList[index]['title'],
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ]));
+                            }),
                           ),
                         ),
                       ),
@@ -660,35 +541,47 @@ class _HomePageState extends State<HomePage> {
                           padding: EdgeInsets.only(left: 10),
                           child: Row(
                             children: List.generate(authorList.length, (index) {
-                              return Column(children: [
-                                Container(
-                                  height: 60,
-                                  width: 60,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(99),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              authorList[index]['img']),
-                                          fit: BoxFit.cover)),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                SizedBox(
-                                  width: 100,
-                                  child: Center(
-                                    child: Text(
-                                      authorList[index]['author'],
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                          color: pxpColors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600),
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => BookDetail(),
+                                          // settings: RouteSettings(
+                                          //   arguments: mylist[index],
+                                          // )
+                                        ));
+                                  },
+                                  child: Column(children: [
+                                    Container(
+                                      height: 60,
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(99),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  authorList[index]['img']),
+                                              fit: BoxFit.cover)),
                                     ),
-                                  ),
-                                ),
-                              ]);
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      width: 100,
+                                      child: Center(
+                                        child: Text(
+                                          authorList[index]['author'],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                              color: pxpColors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ),
+                                  ]));
                             }),
                           ),
                         ),
@@ -709,30 +602,32 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => BookDetail()));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: List.generate(newList.length, (index) {
-                                return Container(
-                                  margin: EdgeInsets.only(right: 8),
-                                  width: 110,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      image: DecorationImage(
-                                          image:
-                                              AssetImage(newList[index]['img']),
-                                          fit: BoxFit.cover)),
-                                );
-                              }),
-                            ),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: List.generate(newList.length, (index) {
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => BookDetail(),
+                                            settings: RouteSettings(
+                                              arguments: newList[index],
+                                            )));
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 8),
+                                    width: 110,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                newList[index]['img']),
+                                            fit: BoxFit.cover)),
+                                  ));
+                            }),
                           ),
                         ),
                       ),
@@ -752,69 +647,72 @@ class _HomePageState extends State<HomePage> {
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => BookDetail()));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              children:
-                                  List.generate(completedList.length, (index) {
-                                return Column(children: [
-                                  Container(
-                                    margin: EdgeInsets.only(right: 10),
-                                    width: 115,
-                                    height: 160,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(6),
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                completedList[index]['img']),
-                                            fit: BoxFit.cover)),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 110,
-                                        child: Text(
-                                          completedList[index]['genre'],
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                              color: pxpColors.secondaryT,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Row(
+                            children:
+                                List.generate(completedList.length, (index) {
+                              return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => BookDetail(),
+                                            settings: RouteSettings(
+                                              arguments: completedList[index],
+                                            )));
+                                  },
+                                  child: Column(children: [
+                                    Container(
+                                      margin: EdgeInsets.only(right: 10),
+                                      width: 115,
+                                      height: 160,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  completedList[index]['img']),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: 110,
+                                          child: Text(
+                                            completedList[index]['genre'],
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                color: pxpColors.secondaryT,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w600),
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      SizedBox(
-                                        width: 110,
-                                        height: 50,
-                                        child: Text(
-                                          completedList[index]['title'],
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600),
+                                        const SizedBox(
+                                          height: 5,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ]);
-                              }),
-                            ),
+                                        SizedBox(
+                                          width: 110,
+                                          height: 50,
+                                          child: Text(
+                                            completedList[index]['title'],
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ]));
+                            }),
                           ),
                         ),
                       ),
@@ -843,7 +741,14 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => GenreDetail()));
+                                          builder: (context) => GenreDetail(),
+                                          settings: RouteSettings(
+                                            arguments: {
+                                              'genre': genreList[index]
+                                                  ['genre'],
+                                              'index': genreList[index]['id']
+                                            },
+                                          )));
                                 },
                                 child: Column(children: [
                                   CircleAvatar(
@@ -858,7 +763,16 @@ class _HomePageState extends State<HomePage> {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (_) => GenreDetail()));
+                                                builder: (context) =>
+                                                    GenreDetail(),
+                                                settings: RouteSettings(
+                                                  arguments: {
+                                                    'genre': genreList[index]
+                                                        ['genre'],
+                                                    'index': genreList[index]
+                                                        ['id']
+                                                  },
+                                                )));
                                       },
                                     ),
                                   ),

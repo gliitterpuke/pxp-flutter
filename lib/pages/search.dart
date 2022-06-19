@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/search_json.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
+import 'package:pxp_flutter/pages/genre.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -94,7 +95,10 @@ class _SearchPageState extends State<SearchPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => BookDetail()));
+                                      builder: (_) => const BookDetail(),
+                                      settings: RouteSettings(
+                                        arguments: _bookList[index],
+                                      )));
                             },
                             leading: Padding(
                               padding:
@@ -159,8 +163,14 @@ class _SearchPageState extends State<SearchPage> {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (_) =>
-                                                    const BookDetail()));
+                                                builder: (context) =>
+                                                    GenreDetail(),
+                                                settings: RouteSettings(
+                                                  arguments: {
+                                                    'genre': tags[index]['tag'],
+                                                    'index': tags[index]['id']
+                                                  },
+                                                )));
                                       },
                                     ),
                                   ),
