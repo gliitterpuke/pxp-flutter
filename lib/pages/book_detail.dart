@@ -22,6 +22,7 @@ class _BookDetailState extends State<BookDetail> {
   final ScrollController _scrollController = ScrollController();
   double _scrollPosition = 0;
   double _opacity = 0;
+  bool isBookmarked = true;
 
   _scrollListener() {
     setState(() {
@@ -66,11 +67,17 @@ class _BookDetailState extends State<BookDetail> {
           }),
       actions: [
         IconButton(
-            icon: Icon(
-              Feather.bookmark,
-              size: 28,
-            ),
-            onPressed: () {}),
+            icon: isBookmarked == true
+                ? Icon(MaterialIcons.bookmark)
+                : Icon(
+                    MaterialIcons.bookmark_border,
+                  ),
+            onPressed: () {
+              setState(() {
+                // Here we changing the icon.
+                isBookmarked = !isBookmarked;
+              });
+            }),
       ],
     );
   }
@@ -199,6 +206,179 @@ class _BookDetailState extends State<BookDetail> {
                                   color: Colors.white.withOpacity(0.7),
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "•",
+                              style: TextStyle(
+                                  color: Colors.white.withOpacity(0.7),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                      backgroundColor: Color(0xff212124),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: ListView(
+                                          shrinkWrap: true,
+                                          children: <Widget>[
+                                            SizedBox(height: 20),
+                                            Center(
+                                              child: Text(
+                                                'What are these icons?',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                            SizedBox(height: 5),
+                                            Text(
+                                              "Each icon represents a different tier of book: whether it's free, paid, or another tier.",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: [
+                                                  Icon(FontAwesome.hourglass_o,
+                                                      color: tierColor.paid),
+                                                  Text(
+                                                    ' Free: details here',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: [
+                                                  Icon(FontAwesome.dollar,
+                                                      color: tierColor.paid),
+                                                  Text(
+                                                    ' Paid: details here',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: [
+                                                  Icon(AntDesign.star,
+                                                      color: tierColor.bronze),
+                                                  Text(
+                                                    ' Bronze subscription: details',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: [
+                                                  Icon(AntDesign.star,
+                                                      color: tierColor.silver),
+                                                  Text(
+                                                    ' Silver subscription: details',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: [
+                                                  Icon(AntDesign.star,
+                                                      color: tierColor.gold),
+                                                  Text(
+                                                    ' Gold subscription: details',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(height: 20),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    book['icon'],
+                                    color: book['tier'] == 0
+                                        ? tierColor.gold
+                                        : book['tier'] == 2
+                                            ? tierColor.silver
+                                            : book['tier'] == 3
+                                                ? tierColor.gold
+                                                : book['tier'] == 4
+                                                    ? tierColor.paid
+                                                    : tierColor.bronze,
+                                    size: 15,
+                                  ),
+                                  Text(
+                                    "¹",
+                                    style: TextStyle(
+                                        color: pxpColors.secondaryT,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -382,13 +562,18 @@ class _BookDetailState extends State<BookDetail> {
                                                       seasonsList.length,
                                                       (index) {
                                                     return GestureDetector(
-                                                      onTap: () {
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (_) =>
-                                                                    Chapters()));
-                                                      },
+                                                      onTap: () =>
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          Chapters(),
+                                                                  settings:
+                                                                      RouteSettings(
+                                                                    arguments:
+                                                                        book,
+                                                                  ))),
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets

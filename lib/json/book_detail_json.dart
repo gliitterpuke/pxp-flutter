@@ -9,11 +9,23 @@ const List episodesList = ["SEASONS", "MORE LIKE THIS"];
 
 const List seasonsList = [
   {"season": 1, "lastupdated": "1h"},
-  {"season": 2, "lastupdated": "7 days"},
-  {"season": 3, "lastupdated": "2 weeks"},
+  {"season": 2, "lastupdated": "6 days"},
+  {"season": 3, "lastupdated": "1 week"},
   {"season": 4, "lastupdated": "May 1, 2022"},
   {"season": 5, "lastupdated": "April 24, 2022"},
   {"season": 6, "lastupdated": "April, 1, 2022"},
+];
+
+const List chapterList = [
+  {"chapter": 1, "lastupdated": "1h", "coins": 0},
+  {"chapter": 2, "lastupdated": "6 days", "coins": 0},
+  {"chapter": 3, "lastupdated": "1 week", "coins": 0},
+  {"chapter": 4, "lastupdated": "May 1, 2022", "coins": 0},
+  {"chapter": 5, "lastupdated": "April 24, 2022", "coins": 0},
+  {"chapter": 6, "lastupdated": "April, 1, 2022", "coins": 0},
+  {"chapter": 7, "lastupdated": "May 1, 2022", "coins": 3},
+  {"chapter": 8, "lastupdated": "June 1, 2022", "coins": 3},
+  {"chapter": 9, "lastupdated": "July 1, 2022", "coins": 3},
 ];
 
 const List userReviewList = [
