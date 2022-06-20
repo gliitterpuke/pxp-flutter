@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/root_app_json.dart';
 import 'package:pxp_flutter/pages/chat/main.dart';
 import 'package:pxp_flutter/pages/home.dart';
-import 'package:pxp_flutter/pages/search.dart';
+import 'package:pxp_flutter/pages/notifications.dart';
 import 'package:pxp_flutter/pages/account.dart';
 import 'package:pxp_flutter/pages/library.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
@@ -13,10 +13,10 @@ class RootApp extends StatefulWidget {
   /// List of pages available from the home screen.
   static const List<Widget> _homePages = <Widget>[
     _KeepAlivePage(child: HomePage()),
-    _KeepAlivePage(child: SearchPage()),
     _KeepAlivePage(child: LibraryPage()),
     _KeepAlivePage(child: MyApp()),
-    _KeepAlivePage(child: ProfilePage())
+    _KeepAlivePage(child: ProfilePage()),
+    _KeepAlivePage(child: NotificationPage()),
   ];
 
   @override

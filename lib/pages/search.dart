@@ -13,6 +13,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   List<Map<String, dynamic>> _bookList = [];
   bool _emptyBooks = false;
+  bool isOpen = true;
   @override
   initState() {
     _bookList = [];
@@ -27,15 +28,25 @@ class _SearchPageState extends State<SearchPage> {
       results = [];
     } else {
       results = books
-          .where((book) => book["title"]
-              .toLowerCase()
-              .contains(enteredKeyword.toLowerCase()))
+          .where((book) => (book["title"]
+                  .toLowerCase()
+                  .contains(enteredKeyword.toLowerCase()) ||
+              book["author"]
+                  .toLowerCase()
+                  .contains(enteredKeyword.toLowerCase()) ||
+              // book["genre"]
+              //     .toLowerCase()
+              //     .contains(enteredKeyword.toLowerCase()) ||
+              book["tags"]
+                  .toString()
+                  .toLowerCase()
+                  .contains(enteredKeyword.toLowerCase())))
           .toList();
     }
 
     // Refresh the UI
     setState(() {
-      if (enteredKeyword.isNotEmpty && results.length == 0) {
+      if (enteredKeyword.isNotEmpty && results.isEmpty) {
         _emptyBooks = true;
         _bookList = results;
       } else {
@@ -57,22 +68,34 @@ class _SearchPageState extends State<SearchPage> {
       automaticallyImplyLeading: false,
       backgroundColor: Colors.black,
       elevation: 0,
-      title: Container(
-        width: size.width,
-        height: 35,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: Colors.grey.withOpacity(0.25)),
-        child: TextField(
-          onChanged: (value) => _runFilter(value),
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: "Search",
-              prefixIcon: Icon(
-                Icons.search,
-                color: Colors.grey.withOpacity(0.7),
-              )),
-        ),
+      title: Row(
+        children: [
+          Container(
+            width: size.width - 90,
+            height: 35,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.grey.withOpacity(0.25)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: TextField(
+                onChanged: (value) => _runFilter(value),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Search title, creator or tag!",
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 10),
+          GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: const Text('Cancel',
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey))),
+        ],
       ),
     );
   }

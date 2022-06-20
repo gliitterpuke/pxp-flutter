@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
-import 'package:pxp_flutter/pages/ig/app/stream_agram.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:stream_chat_persistence/stream_chat_persistence.dart';

@@ -4,8 +4,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 
 List items = [
   {"icon": AntDesign.home, "text": "Home"},
-  {"icon": AntDesign.search1, "text": "Search"},
   {"icon": Entypo.book, "text": "Library"},
   {"icon": Entypo.chat, "text": "Hub"},
   {"icon": Feather.user, "text": "User"},
+  {"icon": Feather.bell, "text": "Notifications"},
 ];

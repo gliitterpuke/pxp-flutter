@@ -7,6 +7,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pxp_flutter/pages/genre.dart';
+import 'package:pxp_flutter/pages/search.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,6 +21,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(EvilIcons.search),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: pxpColors.darkCard,
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20))),
+                  builder: (context) {
+                    return FractionallySizedBox(
+                        heightFactor: 0.95, child: SearchPage());
+                  },
+                );
+              },
+            ),
+          ],
+        ),
         backgroundColor: Colors.black,
         resizeToAvoidBottomInset: false,
         body: getBody());
@@ -56,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 100,
+                    height: 10,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15),
