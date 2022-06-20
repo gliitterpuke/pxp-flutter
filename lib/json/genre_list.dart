@@ -48,7 +48,7 @@ const List bookList = [
     "description":
         "When a man is found murdered in an abandoned building in Osaka in 1973, unflappable detective Sasagaki is assigned to the case. He begins to piece together the connection of two young people who are inextricably linked to the crime; the dark, taciturn son of the victim and the unexpectedly captivating daughter of the main suspect. Over the next twenty years we follow their lives as Sasagaki pursues the case - which remains unsolved - to the point of obsession.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": FontAwesome.hourglass_o,
+    "tierIcon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "100,000",
     "tier": 0,
@@ -62,7 +62,7 @@ const List bookList = [
     "description":
         "In the early 1900s, teenaged Sunja, the adored daughter of a crippled fisherman, falls for a wealthy stranger at the seashore near her home in Korea. He promises her the world, but when she discovers she is pregnant — and that her lover is married — she refuses to be bought. Instead, she accepts an offer of marriage from a gentle, sickly minister passing through on his way to Japan. But her decision to abandon her home, and to reject her son's powerful father, sets off a dramatic saga that will echo down through the generations.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": AntDesign.star,
+    "tierIcon": AntDesign.star,
     "status": "Completed",
     "views": "100,000",
     "tier": 2,
@@ -77,7 +77,7 @@ const List bookList = [
     "description":
         "As a botanist, Robin Wall Kimmerer has been trained to ask questions of nature with the tools of science. As a member of the Citizen Potawatomi Nation, she embraces the notion that plants and animals are our oldest teachers. In Braiding Sweetgrass, Kimmerer brings these lenses of knowledge together to show that the awakening of a wider ecological consciousness requires the acknowledgment and celebration of our reciprocal relationship with the rest of the living world. For only when we can hear the languages of other beings are we capable of understanding the generosity of the earth, and learning to give our own gifts in return.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": AntDesign.star,
+    "tierIcon": AntDesign.star,
     "status": "Completed",
     "views": "100,000",
     "tier": 3,
@@ -100,7 +100,7 @@ const List bookList = [
     "description":
         "Lily hasn’t always had it easy, but that’s never stopped her from working hard for the life she wants. She’s come a long way from the small town in Maine where she grew up — she graduated from college, moved to Boston, and started her own business. So when she feels a spark with a gorgeous neurosurgeon named Ryle Kincaid, everything in Lily’s life suddenly seems almost too good to be true.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": FontAwesome.dollar,
+    "tierIcon": FontAwesome.dollar,
     "status": "Completed",
     "views": "100,000",
     "tier": 4,
@@ -123,6 +123,7 @@ const List bookList = [
     "icon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
+    "tierIcon": FontAwesome.hourglass_o,
     "tier": 0,
     "tags": ["Fantasy", "Classics", "Childrens", "Christian", "Magic"],
   },
@@ -134,6 +135,8 @@ const List bookList = [
     "epub": "assets/epub/pachinko.epub",
     "status": "Completed",
     "views": "100,000",
+    "tierIcon": FontAwesome.hourglass_o,
+    "tier": 0,
     "tags": ["Humor", "Classics", "Fantasy", "Science Fiction"],
   },
   {
@@ -144,6 +147,8 @@ const List bookList = [
     "epub": "assets/epub/pachinko.epub",
     "status": "Completed",
     "views": "100,000",
+    "tierIcon": FontAwesome.hourglass_o,
+    "tier": 0,
     "tags": [""],
   },
   {
@@ -158,6 +163,7 @@ const List bookList = [
     "icon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
+    "tierIcon": FontAwesome.hourglass_o,
     "tier": 0,
     "tags": [
       "Women's Fiction",
@@ -177,6 +183,7 @@ const List bookList = [
     "icon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
+    "tierIcon": FontAwesome.hourglass_o,
     "tier": 0,
     "tags": [
       "Romance",

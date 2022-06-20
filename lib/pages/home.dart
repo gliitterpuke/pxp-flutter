@@ -272,7 +272,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: const EdgeInsets.only(
                                           left: 8.0, right: 1),
                                       child: Icon(
-                                        pxppicks[_current]['icon'],
+                                        pxppicks[_current]['tierIcon'],
                                         color: pxppicks[_current]['tier'] == 0
                                             ? tierColor.gold
                                             : pxppicks[_current]['tier'] == 2

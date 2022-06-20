@@ -15,6 +15,7 @@ class AllReview extends StatefulWidget {
 class _AllReviewState extends State<AllReview> {
   int _page = 0;
   final int _perPage = 5;
+  bool isHelpful = false;
 
   late ScrollController controller;
 
@@ -259,12 +260,26 @@ class _AllReviewState extends State<AllReview> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(
-                                  Feather.thumbs_up,
-                                  size: 20,
-                                  color: pxpColors.secondaryT,
+                                IconButton(
+                                  icon: isHelpful == true
+                                      ? Icon(
+                                          MaterialCommunityIcons.thumb_up,
+                                          size: 20,
+                                          color: pxpColors.secondaryT,
+                                        )
+                                      : Icon(
+                                          MaterialCommunityIcons
+                                              .thumb_up_outline,
+                                          size: 20,
+                                          color: pxpColors.secondaryT,
+                                        ),
+                                  onPressed: () {
+                                    setState(() {
+                                      isHelpful = !isHelpful;
+                                    });
+                                  },
                                 ),
-                                SizedBox(width: 5),
+                                // SizedBox(width: 5),
                                 Text(
                                   dataToShow[index]['helpful'].toString(),
                                   style: const TextStyle(

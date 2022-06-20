@@ -55,7 +55,7 @@ const List pxppicks = [
     "description":
         "When a man is found murdered in an abandoned building in Osaka in 1973, unflappable detective Sasagaki is assigned to the case. He begins to piece together the connection of two young people who are inextricably linked to the crime; the dark, taciturn son of the victim and the unexpectedly captivating daughter of the main suspect. Over the next twenty years we follow their lives as Sasagaki pursues the case - which remains unsolved - to the point of obsession.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": FontAwesome.hourglass_o,
+    "tierIcon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "100,000",
     "tier": 0,
@@ -69,7 +69,7 @@ const List pxppicks = [
     "description":
         "In the early 1900s, teenaged Sunja, the adored daughter of a crippled fisherman, falls for a wealthy stranger at the seashore near her home in Korea. He promises her the world, but when she discovers she is pregnant — and that her lover is married — she refuses to be bought. Instead, she accepts an offer of marriage from a gentle, sickly minister passing through on his way to Japan. But her decision to abandon her home, and to reject her son's powerful father, sets off a dramatic saga that will echo down through the generations.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": AntDesign.star,
+    "tierIcon": AntDesign.star,
     "status": "Completed",
     "views": "100,000",
     "tier": 2,
@@ -83,7 +83,7 @@ const List pxppicks = [
     "description":
         "Lily hasn’t always had it easy, but that’s never stopped her from working hard for the life she wants. She’s come a long way from the small town in Maine where she grew up — she graduated from college, moved to Boston, and started her own business. So when she feels a spark with a gorgeous neurosurgeon named Ryle Kincaid, everything in Lily’s life suddenly seems almost too good to be true.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": FontAwesome.dollar,
+    "tierIcon": FontAwesome.dollar,
     "status": "Completed",
     "views": "100,000",
     "tier": 4,
@@ -104,7 +104,7 @@ const List pxppicks = [
     "description":
         "As a botanist, Robin Wall Kimmerer has been trained to ask questions of nature with the tools of science. As a member of the Citizen Potawatomi Nation, she embraces the notion that plants and animals are our oldest teachers. In Braiding Sweetgrass, Kimmerer brings these lenses of knowledge together to show that the awakening of a wider ecological consciousness requires the acknowledgment and celebration of our reciprocal relationship with the rest of the living world. For only when we can hear the languages of other beings are we capable of understanding the generosity of the earth, and learning to give our own gifts in return.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": AntDesign.star,
+    "tierIcon": AntDesign.star,
     "status": "Completed",
     "views": "100,000",
     "tier": 3,
@@ -130,7 +130,7 @@ const List mylist = [
     "description":
         "Lily hasn’t always had it easy, but that’s never stopped her from working hard for the life she wants. She’s come a long way from the small town in Maine where she grew up — she graduated from college, moved to Boston, and started her own business. So when she feels a spark with a gorgeous neurosurgeon named Ryle Kincaid, everything in Lily’s life suddenly seems almost too good to be true.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": FontAwesome.dollar,
+    "tierIcon": FontAwesome.dollar,
     "status": "Completed",
     "views": "100,000",
     "tier": 4,
@@ -150,7 +150,7 @@ const List mylist = [
     "description":
         "Narnia… the land beyond the wardrobe door, a secret place frozen in eternal winter, a magical country waiting to be set free.\n\nLucy is the first to find the secret of the wardrobe in the professor's mysterious old house. At first her brothers and sister don't believe her when she tells of her visit to the land of Narnia. But soon Edmund, then Peter and Susan step through the wardrobe themselves. In Narnia they find a country buried under the evil enchantment of the White Witch. When they meet the Lion Aslan, they realize they've been called to a great adventure and bravely join the battle to free Narnia from the Witch's sinister spell.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": FontAwesome.hourglass_o,
+    "tierIcon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
     "tier": 0,
@@ -164,7 +164,7 @@ const List mylist = [
     "description":
         "First, there were ten—a curious assortment of strangers summoned as weekend guests to a little private island off the coast of Devon. Their host, an eccentric millionaire unknown to all of them, is nowhere to be found. All that the guests have in common is a wicked past they're unwilling to reveal—and a secret that will seal their fate. For each has been marked for murder. A famous nursery rhyme is framed and hung in every room of the mansion:\n\nTen little boys went out to dine; One choked his little self and then there were nine. Nine little boys sat up very late; One overslept himself and then there were eight. Eight little boys traveling in Devon; One said he'd stay there then there were seven. Seven little boys chopping up sticks; One chopped himself in half and then there were six. Six little boys playing with a hive; A bumblebee stung one and then there were five. Five little boys going in for law; One got in Chancery and then there were four. Four little boys going out to sea; A red herring swallowed one and then there were three. Three little boys walking in the zoo; A big bear hugged one and then there were two. Two little boys sitting in the sun; One got frizzled up and then there was one. One little boy left all alone; He went out and hanged himself and then there were none.\n\nWhen they realize that murders are occurring as described in the rhyme, terror mounts. One by one they fall prey. Before the weekend is out, there will be none. Who has choreographed this dastardly scheme? And who will be left to tell the tale? Only the dead are above suspicion.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": FontAwesome.hourglass_o,
+    "tierIcon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
     "tier": 0,
@@ -178,7 +178,7 @@ const List mylist = [
     "description":
         "In PRIMARY THREAT (The Forging of Luke Stone—Book #3), a ground-breaking action thriller by #1 bestseller Jack Mars, elite Delta Force veteran Luke Stone, 29, leads the FBI’s Special Response Team as they respond to a hostage situation on an oil rig in the remote Arctic.Yet what at first seems like a simple terrorist event may, it turns out, be much more.\n\nWith a Russian master plan unfolding rapidly in the Arctic, Luke may have arrived at the precipice of the next world war.\n\nAnd Luke Stone may just be the only man standing in its way.\n\nPRIMARY THREAT is a standalone, un-putdownable military thriller, a wild action ride that will leave you turning pages late into the night. The precursor to the #1 bestselling LUKE STONE THRILLER SERIES, this series takes us back to how it all began, a riveting series by bestseller Jack Mars, dubbed one of the best thriller authors out there.",
     "epub": "assets/epub/pachinko.epub",
-    "icon": FontAwesome.hourglass_o,
+    "tierIcon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
     "tier": 0,

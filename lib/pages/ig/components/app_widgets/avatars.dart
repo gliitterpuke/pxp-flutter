@@ -159,7 +159,7 @@ class _CircularProfilePicture extends StatelessWidget {
             width: size,
             height: size,
             decoration: const BoxDecoration(
-              color: AppColors.secondary,
+              color: Color(0xff5e5ce6),
               shape: BoxShape.circle,
             ),
             child: Center(

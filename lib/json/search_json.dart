@@ -115,7 +115,8 @@ const List<Map<String, dynamic>> books = [
     "icon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "100,000",
-    "tier": 0,
+    "tierIcon": AntDesign.star,
+    "tier": 3,
     "tags": ["Cultural", "Thriller", "Japan", "Detective", "Crime"]
   },
   {
@@ -130,7 +131,8 @@ const List<Map<String, dynamic>> books = [
     "icon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
-    "tier": 0,
+    "tierIcon": AntDesign.star,
+    "tier": 3,
     "tags": ["Fantasy", "Classics", "Childrens", "Christian", "Magic"],
   },
   {
@@ -145,7 +147,8 @@ const List<Map<String, dynamic>> books = [
     "icon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
-    "tier": 0,
+    "tierIcon": AntDesign.star,
+    "tier": 3,
     "tags": ["Mystery", "Classics", "Crime", "Suspense", "Adult"],
   },
   {
@@ -160,7 +163,8 @@ const List<Map<String, dynamic>> books = [
     "icon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
-    "tier": 0,
+    "tierIcon": AntDesign.star,
+    "tier": 3,
     "tags": ["Thriller", "Fiction"],
   },
   {
@@ -175,7 +179,8 @@ const List<Map<String, dynamic>> books = [
     "icon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
-    "tier": 0,
+    "tierIcon": AntDesign.star,
+    "tier": 3,
     "tags": [
       "Women's Fiction",
       "New York",
@@ -194,7 +199,8 @@ const List<Map<String, dynamic>> books = [
     "icon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
-    "tier": 0,
+    "tierIcon": AntDesign.star,
+    "tier": 3,
     "tags": [
       "Romance",
       "Contemporary",
@@ -215,7 +221,8 @@ const List<Map<String, dynamic>> books = [
     "icon": FontAwesome.hourglass_o,
     "status": "Completed",
     "views": "80,000",
-    "tier": 0,
+    "tierIcon": AntDesign.star,
+    "tier": 3,
     "tags": ["Science Fiction Fantasy", "Space Opera", "Classics", "Adult"],
   },
 ];

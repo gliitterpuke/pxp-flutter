@@ -74,7 +74,6 @@ class _BookDetailState extends State<BookDetail> {
                   ),
             onPressed: () {
               setState(() {
-                // Here we changing the icon.
                 isBookmarked = !isBookmarked;
               });
             }),
@@ -358,7 +357,7 @@ class _BookDetailState extends State<BookDetail> {
                               child: Row(
                                 children: [
                                   Icon(
-                                    book['icon'],
+                                    book['tierIcon'],
                                     color: book['tier'] == 0
                                         ? tierColor.gold
                                         : book['tier'] == 2

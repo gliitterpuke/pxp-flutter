@@ -28,6 +28,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late bool isFollowing;
+  bool isHelpful = false;
 
   Future<bool> _isFollowingUser(String userId) async {
     return FeedProvider.of(context).bloc.isFollowingFeed(followerId: userId);
@@ -130,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: OutlinedButton(
                               style: OutlinedButton.styleFrom(
                                 primary: Colors.white,
-                                backgroundColor: Colors.blue,
+                                backgroundColor: Color(0xff5e5ce6),
                               ),
                               onPressed: () {},
                               child: const Text("Subscribe",
@@ -581,10 +582,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                 const SizedBox(height: 5),
                                 Row(
                                   children: [
-                                    const Icon(
-                                      Feather.thumbs_up,
-                                      size: 20,
-                                      color: pxpColors.secondaryT,
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          isHelpful = !isHelpful;
+                                        });
+                                      },
+                                      child: const Icon(
+                                        Feather.thumbs_up,
+                                        size: 20,
+                                        color: pxpColors.secondaryT,
+                                      ),
                                     ),
                                     const SizedBox(width: 5),
                                     Text(
