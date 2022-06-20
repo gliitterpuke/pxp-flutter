@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/genre_list.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
-import 'package:pxp_flutter/json/library.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
-import 'package:pxp_flutter/pages/root_app.dart';
 
 class GenreDetail extends StatefulWidget {
+  const GenreDetail({Key? key}) : super(key: key);
+
   @override
   _GenreDetailState createState() => _GenreDetailState();
 }
@@ -30,15 +29,21 @@ class _GenreDetailState extends State<GenreDetail>
   void initState() {
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
-    _tabController = TabController(length: 16, vsync: this);
+    _tabController = TabController(
+      length: 16,
+      vsync: this,
+    );
     _tabController.addListener(_smoothScrollToTop);
 
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final genreDetails = ModalRoute.of(context)?.settings.arguments as Map;
-      var genreIndex = genreDetails['index'] ?? 5;
-      _tabController.animateTo(genreIndex);
+      var genreIndex = genreDetails['index'] ?? 0;
+      _tabController.animateTo(
+        genreIndex,
+        duration: Duration(microseconds: 0),
+      );
     });
   }
 

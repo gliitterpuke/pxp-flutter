@@ -132,6 +132,8 @@ const List bookList = [
     "title": "The Hitchhiker's Guide to the Galaxy",
     "genre": "Sci-fi",
     "author": "Douglas Adams",
+    "description":
+        "Seconds before the Earth is demolished to make way for a galactic freeway, Arthur Dent is plucked off the planet by his friend Ford Prefect, a researcher for the revised edition of the The Hitch Hiker's Guide to the Galaxy who, for the last fifteen years, has been posing as an out of work actor.\n\nTogether this dynamic pair begin their journey through space aided by quotes from The Hitch Hiker's Guide A towel is about the most massively useful thing an interstellar hitchhiker can have and a galaxy-full of fellow travellers: Zaphod Beeblebrox - the two-headed, three-armed ex-hippie and totally out to lunch president of the galaxy; Trillian, Zaphod's girlfriend (formally Tricia McMillan), whom Arthur tried to pick up at a cocktail party once upon a time zone; Marvin, a paranoid, brilliant and chronically depressed robot; Veet Voojagig, a former graduate student who is obsessed with the disappearance of all the ball-point pens he has bought over the years.",
     "epub": "assets/epub/pachinko.epub",
     "status": "Completed",
     "views": "100,000",
