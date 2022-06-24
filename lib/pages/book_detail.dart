@@ -33,6 +33,9 @@ class _BookDetailState extends State<BookDetail> {
   @override
   void initState() {
     _scrollController.addListener(_scrollListener);
+
+    // descending updates for chapters
+    chapterList.sort((a, b) => b['chapter'].compareTo(a['chapter']));
     super.initState();
   }
 
@@ -554,104 +557,151 @@ class _BookDetailState extends State<BookDetail> {
                                                     NeverScrollableScrollPhysics()),
                                             children: <Widget>[
                                               Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 30.0),
-                                                child: ListView(
-                                                  children: List.generate(
-                                                      seasonsList.length,
-                                                      (index) {
-                                                    return GestureDetector(
-                                                      onTap: () =>
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          Chapters(),
-                                                                  settings:
-                                                                      RouteSettings(
-                                                                    arguments:
-                                                                        book,
-                                                                  ))),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 20),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Row(
-                                                              children: [
-                                                                Container(
-                                                                  width: (size.width -
-                                                                          30) *
-                                                                      0.85,
-                                                                  child: Row(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      vertical: 15.0),
+                                                  child: Column(
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 8,
+                                                        child: ListView.builder(
+                                                            physics:
+                                                                NeverScrollableScrollPhysics(),
+                                                            shrinkWrap: true,
+                                                            // reverse: true,
+                                                            itemCount: 5,
+                                                            itemBuilder:
+                                                                (BuildContext
+                                                                        ctxt,
+                                                                    int index) {
+                                                              return GestureDetector(
+                                                                onTap: () => Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder: (context) => Chapters(),
+                                                                        settings: RouteSettings(
+                                                                          arguments:
+                                                                              book,
+                                                                        ))),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      bottom:
+                                                                          15),
+                                                                  child: Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
                                                                     children: [
-                                                                      Container(
-                                                                        width: (size.width) *
-                                                                            0.35,
-                                                                        child:
-                                                                            Column(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.start,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Text(
-                                                                              "Season " + seasonsList[index]['season'].toString(),
-                                                                              style: TextStyle(fontSize: 16, height: 1.3, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.9)),
+                                                                      Row(
+                                                                        children: [
+                                                                          Container(
+                                                                            width:
+                                                                                (size.width - 30) * 0.85,
+                                                                            child:
+                                                                                Row(
+                                                                              children: [
+                                                                                Container(
+                                                                                  width: (size.width) * 0.35,
+                                                                                  child: Column(
+                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                                                    children: [
+                                                                                      Text(
+                                                                                        "Chapter " + chapterList[index]['chapter'].toString(),
+                                                                                        style: TextStyle(fontSize: 16, height: 1.3, fontWeight: FontWeight.bold, color: Colors.white.withOpacity(0.9)),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                )
+                                                                              ],
                                                                             ),
-                                                                          ],
-                                                                        ),
-                                                                      )
+                                                                          ),
+                                                                          if (chapterList[index]['coins'] >
+                                                                              0)
+                                                                            Row(
+                                                                              children: [
+                                                                                Icon(
+                                                                                  MaterialCommunityIcons.cash,
+                                                                                ),
+                                                                                SizedBox(width: 5),
+                                                                                Text(
+                                                                                  chapterList[index]['coins'].toString(),
+                                                                                )
+                                                                              ],
+                                                                            ),
+                                                                        ],
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            2,
+                                                                      ),
+                                                                      chapterList[index]['lastupdated'].length >
+                                                                              6
+                                                                          ? Text(
+                                                                              "Last updated " + chapterList[index]['lastupdated'],
+                                                                              style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.5)),
+                                                                            )
+                                                                          : Text(
+                                                                              "Last updated " + chapterList[index]['lastupdated'] + " ago",
+                                                                              style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.5)),
+                                                                            ),
                                                                     ],
                                                                   ),
                                                                 ),
-                                                                Container(
-                                                                  width: (size.width -
-                                                                          30) *
-                                                                      0.15,
-                                                                  child: Center(
-                                                                    child: Icon(
-                                                                      Feather
-                                                                          .chevron_right,
-                                                                      color: Colors
-                                                                          .white
-                                                                          .withOpacity(
-                                                                              0.7),
-                                                                    ),
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            SizedBox(
-                                                              height: 2,
-                                                            ),
-                                                            Text(
-                                                              "Last updated " +
-                                                                  seasonsList[
-                                                                          index]
-                                                                      [
-                                                                      'lastupdated'] +
-                                                                  " ago",
-                                                              style: TextStyle(
-                                                                  fontSize: 12,
-                                                                  color: Colors
-                                                                      .white
-                                                                      .withOpacity(
-                                                                          0.5)),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                              );
+                                                            }),
                                                       ),
-                                                    );
-                                                  }),
-                                                ),
-                                              ),
+                                                      Column(
+                                                        children: [
+                                                          SizedBox(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 40,
+                                                            child:
+                                                                OutlinedButton(
+                                                              style:
+                                                                  OutlinedButton
+                                                                      .styleFrom(
+                                                                primary: Colors
+                                                                    .white,
+                                                                side: BorderSide(
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                            255,
+                                                                            193,
+                                                                            193,
+                                                                            193)),
+                                                              ),
+                                                              onPressed: () {
+                                                                Navigator.push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (_) =>
+                                                                                Chapters(),
+                                                                        settings:
+                                                                            RouteSettings(
+                                                                          arguments:
+                                                                              book,
+                                                                        )));
+                                                              },
+                                                              child: const Text(
+                                                                  "See all chapters",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      color: Colors
+                                                                          .white)),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )),
                                               Padding(
                                                 padding:
                                                     EdgeInsets.only(top: 20),
@@ -923,7 +973,6 @@ class _BookDetailState extends State<BookDetail> {
                                                                         .white)),
                                                           ),
                                                         ),
-                                                        SizedBox(height: 60)
                                                       ],
                                                     ),
                                                   ],

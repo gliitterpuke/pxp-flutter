@@ -118,13 +118,11 @@ class _ChaptersState extends State<Chapters> {
                             children: [
                               Icon(
                                 MaterialCommunityIcons.cash,
-                                color: Colors.pink,
                               ),
                               SizedBox(width: 5),
-                              Text(chapterList[index]['coins'].toString(),
-                                  style: TextStyle(
-                                    color: Colors.pink,
-                                  ))
+                              Text(
+                                chapterList[index]['coins'].toString(),
+                              )
                             ],
                           ),
                       ],

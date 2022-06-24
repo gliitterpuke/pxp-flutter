@@ -16,7 +16,7 @@ const List seasonsList = [
   {"season": 6, "lastupdated": "April, 1, 2022"},
 ];
 
-const List chapterList = [
+List chapterList = [
   {"chapter": 1, "lastupdated": "1h", "coins": 0},
   {"chapter": 2, "lastupdated": "6 days", "coins": 0},
   {"chapter": 3, "lastupdated": "1 week", "coins": 0},
