@@ -61,6 +61,7 @@ dependencies:
   google_fonts: ^3.0.1
   transparent_image: ^2.0.0
   in_app_purchase: ^3.0.6
+  flutter_awesome_select: ^6.4.0
 
 
 dev_dependencies:

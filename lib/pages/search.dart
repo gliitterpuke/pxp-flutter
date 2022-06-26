@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/search_json.dart';
+import 'package:pxp_flutter/pages/advanced_search.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:pxp_flutter/pages/genre.dart';
@@ -14,6 +15,7 @@ class _SearchPageState extends State<SearchPage> {
   List<Map<String, dynamic>> _bookList = [];
   bool _emptyBooks = false;
   bool isOpen = true;
+
   @override
   initState() {
     _bookList = [];
@@ -106,6 +108,7 @@ class _SearchPageState extends State<SearchPage> {
       child: Column(
         children: [
           Expanded(
+              flex: 4,
               child: _bookList.isNotEmpty
                   ? ListView.builder(
                       itemCount: _bookList.length,
@@ -170,6 +173,7 @@ class _SearchPageState extends State<SearchPage> {
                                 ),
                           Expanded(
                             child: GridView.count(
+                              physics: NeverScrollableScrollPhysics(),
                               childAspectRatio: 0.8,
                               crossAxisCount: 4,
                               children: List.generate(tags.length, (index) {
@@ -216,8 +220,22 @@ class _SearchPageState extends State<SearchPage> {
                                 ]);
                               }),
                             ),
-                          )
+                          ),
                         ])),
+          Expanded(
+            flex: 1,
+            child: GestureDetector(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const AdvancedSearchPage(),
+                    )),
+                child: const Text('Advanced Search',
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey))),
+          ),
         ],
       ),
     );
