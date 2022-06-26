@@ -22,7 +22,8 @@ class _BookDetailState extends State<BookDetail> {
   final ScrollController _scrollController = ScrollController();
   double _scrollPosition = 0;
   double _opacity = 0;
-  bool isBookmarked = true;
+  bool isBookmarked = false;
+  bool isHelpful = false;
 
   _scrollListener() {
     setState(() {
@@ -829,13 +830,27 @@ class _BookDetailState extends State<BookDetail> {
                                                                     height: 5),
                                                                 Row(
                                                                   children: [
-                                                                    Icon(
-                                                                      Feather
-                                                                          .thumbs_up,
-                                                                      size: 20,
-                                                                      color: pxpColors
-                                                                          .secondaryT,
-                                                                    ),
+                                                                    GestureDetector(
+                                                                        onTap:
+                                                                            () {
+                                                                          setState(
+                                                                              () {
+                                                                            isHelpful =
+                                                                                !isHelpful;
+                                                                          });
+                                                                        },
+                                                                        child: isHelpful ==
+                                                                                true
+                                                                            ? Icon(
+                                                                                Feather.thumbs_up,
+                                                                                size: 20,
+                                                                                color: Colors.white,
+                                                                              )
+                                                                            : Icon(
+                                                                                Feather.thumbs_up,
+                                                                                size: 20,
+                                                                                color: pxpColors.secondaryT,
+                                                                              )),
                                                                     SizedBox(
                                                                         width:
                                                                             5),

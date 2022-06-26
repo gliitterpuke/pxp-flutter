@@ -12,6 +12,8 @@ class ReviewPage extends StatefulWidget {
 }
 
 class _ReviewPageState extends State<ReviewPage> {
+  bool isAdvanced = false;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -57,15 +59,18 @@ class _ReviewPageState extends State<ReviewPage> {
                                   fontSize: 16),
                             ),
                             if (widget.reviewObj['award'] == true)
-                              SizedBox(width: 5),
-                            if (widget.reviewObj['award'] == true)
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Icon(
-                                  FontAwesome.diamond,
-                                  size: 20,
-                                  color: pxpColors.secondaryT,
-                                ),
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    child: Icon(
+                                      FontAwesome.diamond,
+                                      size: 20,
+                                      color: pxpColors.secondaryT,
+                                    ),
+                                  ),
+                                ],
                               ),
                           ]),
                       const SizedBox(
@@ -97,90 +102,99 @@ class _ReviewPageState extends State<ReviewPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              Text("Style",
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500)),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children:
-                                      _ratingCount(widget.reviewObj['style'])),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text("Story",
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500)),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children:
-                                      _ratingCount(widget.reviewObj['story'])),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              Text("Grammar",
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500)),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: _ratingCount(
-                                      widget.reviewObj['grammar'])),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text("Content",
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500)),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: _ratingCount(
-                                      widget.reviewObj['content'])),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      if (isAdvanced == true)
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text("Style",
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500)),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: _ratingCount(
+                                            widget.reviewObj['style'])),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text("Story",
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500)),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: _ratingCount(
+                                            widget.reviewObj['story'])),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  children: [
+                                    Text("Grammar",
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500)),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: _ratingCount(
+                                            widget.reviewObj['grammar'])),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text("Content",
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500)),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: _ratingCount(
+                                            widget.reviewObj['content'])),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                          ],
+                        ),
                       Text(widget.reviewObj['title'],
                           textAlign: TextAlign.center,
                           style: const TextStyle(
@@ -223,9 +237,7 @@ class _ReviewPageState extends State<ReviewPage> {
                                 size: 15,
                                 color: pxpColors.secondaryT,
                               ),
-                              onPressed: () {
-                                print('Pressed');
-                              },
+                              onPressed: () {},
                             ),
                             OutlinedButton.icon(
                               label: Text(
@@ -241,9 +253,7 @@ class _ReviewPageState extends State<ReviewPage> {
                                 size: 15,
                                 color: pxpColors.secondaryT,
                               ),
-                              onPressed: () {
-                                print('Pressed');
-                              },
+                              onPressed: () {},
                             ),
                           ],
                         ),
