@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:pxp_flutter/json/book_detail_json.dart';
 import 'package:pxp_flutter/json/home_json.dart';
 import 'package:pxp_flutter/json/library.dart';
-import 'package:pxp_flutter/pages/book/all_review.dart';
 import 'package:pxp_flutter/pages/book/all_user_review.dart';
 import 'package:pxp_flutter/pages/book/review.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
@@ -15,6 +14,7 @@ import 'package:pxp_flutter/pages/profile/user_preferences.dart';
 import 'package:pxp_flutter/pages/profile/appbar_widget.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:pxp_flutter/pages/reading_list.dart';
 import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 
 import 'ig/components/timeline/widgets/post_card.dart';
@@ -270,7 +270,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => const BookDetail()));
+                                          builder: (context) =>
+                                              ReadingListPage(),
+                                          settings: RouteSettings(
+                                            arguments: readLater[index],
+                                          )));
                                 },
                                 child: Column(children: [
                                   Container(
@@ -281,7 +285,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         borderRadius: BorderRadius.circular(6),
                                         image: DecorationImage(
                                             image: AssetImage(readLater[index]
-                                                ['books']['img'][0]),
+                                                ['books'][index]['img']),
                                             fit: BoxFit.cover)),
                                   ),
                                   const SizedBox(
@@ -294,7 +298,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       SizedBox(
                                         width: 115,
                                         child: Text(
-                                          '${readLater[index]['books']['title'].length ?? "Empty"}' +
+                                          '${readLater[index]['books'].length ?? "Empty"}' +
                                               ' titles',
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
@@ -311,7 +315,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         width: 110,
                                         height: 40,
                                         child: Text(
-                                          '${readLater[index]['name'] ?? "Empty"}',
+                                          readLater[index]['name'] ?? 'Empty',
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                           style: const TextStyle(

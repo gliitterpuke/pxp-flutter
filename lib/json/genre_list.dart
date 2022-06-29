@@ -269,13 +269,13 @@ const List newList = [
   },
   {
     "img": "assets/images/housel.jpg",
-    "title": "Think Outisde the Box",
+    "title": "Think Outside the Box",
     "genre": "Non-fiction",
     "author": "Author"
   },
   {
     "img": "assets/images/motivate.jpg",
-    "title": "Think Outisde the Box",
+    "title": "Think Outside the Box",
     "genre": "Non-fiction",
     "author": "Author"
   },
@@ -284,19 +284,19 @@ const List newList = [
 const List completedList = [
   {
     "img": "assets/images/scifi.png",
-    "title": "Think Outisde the Box",
+    "title": "Think Outside the Box",
     "genre": "Non-fiction",
     "author": "Author"
   },
   {
     "img": "assets/images/sky.jpg",
-    "title": "Think Outisde the Box",
+    "title": "Think Outside the Box",
     "genre": "Non-fiction",
     "author": "Author"
   },
   {
     "img": "assets/images/storytelling.jpg",
-    "title": "Think Outisde the Box",
+    "title": "Think Outside the Box",
     "genre": "Non-fiction",
     "author": "Author"
   },

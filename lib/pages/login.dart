@@ -145,8 +145,8 @@ class _LoginState extends State<Login> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          final success = await context.appState
-                              .connect(DemoAppUser.reuben);
+                          final success =
+                              await context.appState.connect(DemoAppUser.sacha);
 
                           if (success) {
                             await Navigator.of(context).pushReplacement(
