@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:pxp_flutter/pages/login.dart';
-import 'package:pxp_flutter/pages/register.dart';
+import 'package:pxp_flutter/pages/auth/login.dart';
+import 'package:pxp_flutter/pages/auth/register.dart';
 
 class Onboarding extends StatelessWidget {
   final icon = Feather.settings;

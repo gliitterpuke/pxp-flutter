@@ -2,7 +2,7 @@
 
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:pxp_flutter/pages/login.dart';
+import 'package:pxp_flutter/pages/auth/login.dart';
 import 'package:pxp_flutter/pages/root_app.dart';
 
 class Register extends StatefulWidget {
@@ -150,6 +150,9 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: TextField(
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autocorrect: false,
                           style: TextStyle(fontSize: 14),
                           decoration: InputDecoration(
                               border: InputBorder.none,
@@ -167,6 +170,9 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: TextField(
+                          obscureText: true,
+                          enableSuggestions: false,
+                          autocorrect: false,
                           style: TextStyle(fontSize: 14),
                           decoration: InputDecoration(
                               border: InputBorder.none,

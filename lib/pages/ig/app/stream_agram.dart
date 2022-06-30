@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
-import 'package:pxp_flutter/pages/onboarding.dart';
+import 'package:pxp_flutter/pages/auth/onboarding.dart';
 import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 
 /// {@template app}
