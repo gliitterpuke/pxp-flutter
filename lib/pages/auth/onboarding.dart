@@ -29,18 +29,17 @@ class Onboarding extends StatelessWidget {
                         child: Center(
                             child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            child: const FittedBox(
-                                fit: BoxFit.contain,
-                                child: Text(
-                                    "You want it. We got it." +
-                                        '\n' +
-                                        "Stories of tomorrow, today.",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 24)))),
+                      children: const [
+                        FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(
+                                "You want it. We got it.\nStories of tomorrow, today.",
+                                // '\n' +
+                                // "Stories of tomorrow, today.",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 24))),
                       ],
                     ))),
                     Column(

@@ -1,8 +1,11 @@
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
+import 'package:pxp_flutter/json/profile.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:pxp_flutter/json/library.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
+import 'package:pxp_flutter/pages/profile/my_store.dart';
 import 'package:pxp_flutter/pages/reading_list.dart';
 import 'package:pxp_flutter/pages/root_app.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -20,14 +23,13 @@ class _LibraryPageState extends State<LibraryPage>
   final bodyGlobalKey = GlobalKey();
 
   final List<Widget> myTabs = [
-    Tab(text: 'CURRENT READS'),
-    Tab(text: 'READ LATER'),
-    Tab(text: 'ARCHIVED'),
-    Tab(text: 'FOLLOWED'),
-    Tab(text: 'SUBBED'),
+    const Tab(text: 'CURRENT READS'),
+    const Tab(text: 'READ LATER'),
+    const Tab(text: 'ARCHIVED'),
+    const Tab(text: 'FOLLOWED'),
+    const Tab(text: 'SUBBED'),
   ];
   late TabController _tabController;
-  late ScrollController _scrollController;
   late bool fixedScroll;
 
   late TextEditingController controller;
@@ -37,10 +39,7 @@ class _LibraryPageState extends State<LibraryPage>
 
   @override
   void initState() {
-    _scrollController = ScrollController();
-    _scrollController.addListener(_scrollListener);
     _tabController = TabController(length: 5, vsync: this);
-    _tabController.addListener(_smoothScrollToTop);
 
     super.initState();
     controller = TextEditingController();
@@ -49,28 +48,74 @@ class _LibraryPageState extends State<LibraryPage>
   @override
   void dispose() {
     _tabController.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
-  _scrollListener() {
-    if (fixedScroll) {
-      _scrollController.jumpTo(0);
-    }
-  }
+  List<Widget> buildSliverHeader() {
+    final List<Widget> widgets = <Widget>[];
 
-  _smoothScrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: Duration(microseconds: 300),
-      curve: Curves.ease,
+    widgets.add(
+      const SliverAppBar(
+        pinned: true,
+        automaticallyImplyLeading: false,
+      ),
     );
 
-    setState(() {
-      fixedScroll = _tabController.index == 2;
-    });
-  }
+    widgets.add(
+      SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext c, int i) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(coinBalance.toString(),
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                height: 1.2)),
+                        const Text('COINS',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                height: 1.2)),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: TextButton(
+                      child: const Text('STORE'),
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 15),
+                          primary: Colors.white,
+                          backgroundColor: const Color(0xff8f94fb),
+                          onSurface: Colors.grey,
+                          textStyle: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        Navigator.of(context).push(_createRoute());
+                      },
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
+          childCount: 1,
+        ),
+      ),
+    );
 
+    return widgets;
+  }
 // currently reading tab
 
   _currentlyReading() => ListView(
@@ -79,8 +124,8 @@ class _LibraryPageState extends State<LibraryPage>
               children: List.generate(currentReads.length, (index) {
             return GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => BookDetail()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const BookDetail()));
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 18, bottom: 10),
@@ -89,7 +134,7 @@ class _LibraryPageState extends State<LibraryPage>
                   endActionPane: ActionPane(
                     motion: const DrawerMotion(),
                     children: [
-                      SlidableAction(
+                      const SlidableAction(
                         onPressed: _onShare,
                         backgroundColor: Color(0xFF21B7CA),
                         foregroundColor: Colors.white,
@@ -106,7 +151,7 @@ class _LibraryPageState extends State<LibraryPage>
                         //   setState() =>
                         //       currentReads.remove(currentReads[index]);
                         // },
-                        backgroundColor: Color(0xFFFE4A49),
+                        backgroundColor: const Color(0xFFFE4A49),
                         foregroundColor: Colors.white,
                         icon: Icons.delete,
                         label: 'Delete',
@@ -141,7 +186,7 @@ class _LibraryPageState extends State<LibraryPage>
                                 children: [
                                   Text(
                                     "Chapter " + currentReads[index]['chapter'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: pxpColors.secondaryT,
                                       fontSize: 11,
                                     ),
@@ -179,12 +224,12 @@ class _LibraryPageState extends State<LibraryPage>
                             width: 35,
                             height: 35,
                             child: isNotify == true
-                                ? Icon(
+                                ? const Icon(
                                     MaterialCommunityIcons.bell_ring_outline,
                                     color: Color(0xff8f94fb),
                                     size: 20,
                                   )
-                                : Icon(
+                                : const Icon(
                                     MaterialCommunityIcons.bell_outline,
                                     color: pxpColors.secondaryT,
                                     size: 20,
@@ -205,20 +250,21 @@ class _LibraryPageState extends State<LibraryPage>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Choose from thousands of stories to begin reading!",
               textAlign: TextAlign.center,
               style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             OutlinedButton(
               style: OutlinedButton.styleFrom(
                 primary: Colors.white,
-                side: BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
+                side:
+                    const BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RootApp()));
+                    MaterialPageRoute(builder: (context) => const RootApp()));
               },
               child: const Text("Get started",
                   style: TextStyle(
@@ -239,7 +285,7 @@ class _LibraryPageState extends State<LibraryPage>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ReadingListPage(),
+                        builder: (context) => const ReadingListPage(),
                         settings: RouteSettings(
                           arguments: readLater[index],
                         )));
@@ -247,9 +293,9 @@ class _LibraryPageState extends State<LibraryPage>
               child: Padding(
                 padding: const EdgeInsets.only(left: 18, bottom: 10),
                 child: Slidable(
-                  endActionPane: ActionPane(
-                    motion: const DrawerMotion(),
-                    children: const [
+                  endActionPane: const ActionPane(
+                    motion: DrawerMotion(),
+                    children: [
                       SlidableAction(
                         onPressed: doNothing,
                         backgroundColor: Color(0xFFFE4A49),
@@ -288,7 +334,7 @@ class _LibraryPageState extends State<LibraryPage>
                                   Text(
                                     '${readLater[index]['books'].length ?? "Empty"}' +
                                         ' titles',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: pxpColors.secondaryT,
                                       fontSize: 11,
                                     ),
@@ -318,12 +364,12 @@ class _LibraryPageState extends State<LibraryPage>
                             width: 35,
                             height: 35,
                             child: isNotify == true
-                                ? Icon(
+                                ? const Icon(
                                     MaterialCommunityIcons.bell_ring_outline,
                                     color: Color(0xff8f94fb),
                                     size: 20,
                                   )
-                                : Icon(
+                                : const Icon(
                                     MaterialCommunityIcons.bell_outline,
                                     color: pxpColors.secondaryT,
                                     size: 20,
@@ -358,7 +404,8 @@ class _LibraryPageState extends State<LibraryPage>
                                   borderRadius: BorderRadius.circular(5),
                                   color: Colors.white,
                                 ),
-                                child: Icon(Entypo.plus, color: Colors.grey)),
+                                child: const Icon(Entypo.plus,
+                                    color: Colors.grey)),
                           ],
                         ),
                         SizedBox(
@@ -367,8 +414,8 @@ class _LibraryPageState extends State<LibraryPage>
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
+                              children: const [
+                                Text(
                                   'Create a new reading list',
                                   style: TextStyle(
                                       fontSize: 14,
@@ -396,15 +443,15 @@ class _LibraryPageState extends State<LibraryPage>
               children: List.generate(archived.length, (index) {
             return GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => BookDetail()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const BookDetail()));
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 18, bottom: 10),
                 child: Slidable(
-                  endActionPane: ActionPane(
-                    motion: const DrawerMotion(),
-                    children: const [
+                  endActionPane: const ActionPane(
+                    motion: DrawerMotion(),
+                    children: [
                       SlidableAction(
                         onPressed: _onShare,
                         backgroundColor: Color(0xFF21B7CA),
@@ -423,58 +470,56 @@ class _LibraryPageState extends State<LibraryPage>
                   ),
                   child: Row(
                     children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Stack(
-                              children: [
-                                Container(
-                                  height: 70,
-                                  width: 70,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              archived[index]['img']),
-                                          fit: BoxFit.cover)),
-                                ),
-                                // Container(
-                                //     height: 70,
-                                //     width: 70,
-                                //     decoration: BoxDecoration(
-                                //         color: Colors.black.withOpacity(0.2)))
-                              ],
-                            ),
-                            Container(
-                              width: (MediaQuery.of(context).size.width - 30) *
-                                  0.7,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      archived[index]['author'],
-                                      style: TextStyle(
-                                        color: pxpColors.secondaryT,
-                                        fontSize: 11,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      archived[index]['title'],
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
+                      Row(
+                        children: [
+                          Stack(
+                            children: [
+                              Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    image: DecorationImage(
+                                        image:
+                                            AssetImage(archived[index]['img']),
+                                        fit: BoxFit.cover)),
                               ),
-                            )
-                          ],
-                        ),
+                              // Container(
+                              //     height: 70,
+                              //     width: 70,
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.black.withOpacity(0.2)))
+                            ],
+                          ),
+                          Container(
+                            width:
+                                (MediaQuery.of(context).size.width - 30) * 0.7,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    archived[index]['author'],
+                                    style: const TextStyle(
+                                      color: pxpColors.secondaryT,
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    archived[index]['title'],
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ],
                   ),
@@ -490,7 +535,7 @@ class _LibraryPageState extends State<LibraryPage>
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: const [
             Text(
               "Archive your finished stroies and retrieve them whenever you want to.",
               textAlign: TextAlign.center,
@@ -506,8 +551,8 @@ class _LibraryPageState extends State<LibraryPage>
               children: List.generate(creatorsFollowed.length, (index) {
             return GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => BookDetail()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const BookDetail()));
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 18, bottom: 10),
@@ -556,16 +601,16 @@ class _LibraryPageState extends State<LibraryPage>
                                     Text(
                                       creatorsFollowed[index]['series'] +
                                           " series",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: pxpColors.secondaryT,
                                         fontSize: 12,
                                       ),
                                     ),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     Text(
                                       creatorsFollowed[index]['followers'] +
                                           " followers",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: pxpColors.secondaryT,
                                         fontSize: 12,
                                       ),
@@ -588,12 +633,12 @@ class _LibraryPageState extends State<LibraryPage>
                           width: 35,
                           height: 35,
                           child: isNotify == true
-                              ? Icon(
+                              ? const Icon(
                                   MaterialCommunityIcons.bell_ring_outline,
                                   color: Color(0xff8f94fb),
                                   size: 20,
                                 )
-                              : Icon(
+                              : const Icon(
                                   MaterialCommunityIcons.bell_outline,
                                   color: pxpColors.secondaryT,
                                   size: 20,
@@ -613,20 +658,21 @@ class _LibraryPageState extends State<LibraryPage>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Find your new favourite author today!",
               textAlign: TextAlign.center,
               style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             OutlinedButton(
               style: OutlinedButton.styleFrom(
                 primary: Colors.white,
-                side: BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
+                side:
+                    const BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RootApp()));
+                    MaterialPageRoute(builder: (context) => const RootApp()));
               },
               child: const Text("Discover",
                   style: TextStyle(
@@ -644,8 +690,8 @@ class _LibraryPageState extends State<LibraryPage>
               children: List.generate(creatorsSubbed.length, (index) {
             return GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => BookDetail()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const BookDetail()));
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 18, bottom: 10),
@@ -689,16 +735,16 @@ class _LibraryPageState extends State<LibraryPage>
                                     Text(
                                       creatorsSubbed[index]['series'] +
                                           " series",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: pxpColors.secondaryT,
                                         fontSize: 12,
                                       ),
                                     ),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     Text(
                                       creatorsSubbed[index]['followers'] +
                                           " followers",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: pxpColors.secondaryT,
                                         fontSize: 12,
                                       ),
@@ -721,12 +767,12 @@ class _LibraryPageState extends State<LibraryPage>
                           width: 35,
                           height: 35,
                           child: isNotify == true
-                              ? Icon(
+                              ? const Icon(
                                   MaterialCommunityIcons.bell_ring_outline,
                                   color: Color(0xff8f94fb),
                                   size: 20,
                                 )
-                              : Icon(
+                              : const Icon(
                                   MaterialCommunityIcons.bell_outline,
                                   color: pxpColors.secondaryT,
                                   size: 20,
@@ -746,20 +792,21 @@ class _LibraryPageState extends State<LibraryPage>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Unlock stories beyond your imagination!",
               textAlign: TextAlign.center,
               style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             OutlinedButton(
               style: OutlinedButton.styleFrom(
                 primary: Colors.white,
-                side: BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
+                side:
+                    const BorderSide(color: Color.fromARGB(255, 193, 193, 193)),
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RootApp()));
+                    MaterialPageRoute(builder: (context) => const RootApp()));
               },
               child: const Text("Get started",
                   style: TextStyle(
@@ -771,59 +818,61 @@ class _LibraryPageState extends State<LibraryPage>
 
   @override
   Widget build(BuildContext context) {
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final double pinnedHeaderHeight = statusBarHeight + kToolbarHeight;
+
     return Scaffold(
-      backgroundColor: pxpColors.bgColorScreen,
-      body: NestedScrollView(
-        controller: _scrollController,
-        headerSliverBuilder: (context, value) {
-          return [
-            SliverAppBar(
-              backgroundColor: Colors.black,
-              automaticallyImplyLeading: false,
-              pinned: true,
-              forceElevated: true,
-              bottom: TabBar(
+        backgroundColor: pxpColors.bgColorScreen,
+        body: ExtendedNestedScrollView(
+          headerSliverBuilder: (BuildContext c, bool f) {
+            return buildSliverHeader();
+          },
+          pinnedHeaderSliverHeightBuilder: () {
+            return pinnedHeaderHeight;
+          },
+          onlyOneScrollInBody: true,
+          body: Column(
+            children: <Widget>[
+              TabBar(
                 controller: _tabController,
                 labelColor: Colors.white,
-                labelStyle:
-                    TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
-                unselectedLabelStyle:
-                    TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+                labelStyle: const TextStyle(
+                    fontSize: 12.0, fontWeight: FontWeight.bold),
+                unselectedLabelStyle: const TextStyle(
+                    fontSize: 12.0, fontWeight: FontWeight.bold),
                 indicatorColor: Colors.grey,
                 isScrollable: true,
                 tabs: myTabs,
               ),
-            ),
-          ];
-        },
-        body: Container(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              currentReads.isEmpty
-                  ? _noCurrentlyReading()
-                  : _currentlyReading(),
-              _readingList(),
-              archived.isEmpty ? _noArchived() : _archived(),
-              _followed(),
-              _subbed()
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    currentReads.isEmpty
+                        ? _noCurrentlyReading()
+                        : _currentlyReading(),
+                    _readingList(),
+                    archived.isEmpty ? _noArchived() : _archived(),
+                    _followed(),
+                    _subbed()
+                  ],
+                ),
+              )
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   Future<String?> openDialog() => showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(16.0))),
-            titlePadding: EdgeInsets.only(top: 40),
-            contentPadding: EdgeInsets.all(20),
+            titlePadding: const EdgeInsets.only(top: 40),
+            contentPadding: const EdgeInsets.all(20),
             backgroundColor: pxpColors.lighterCard,
             title: Column(
-              children: [
+              children: const [
                 Text('Create a reading list'),
                 SizedBox(height: 5),
                 Text('Enter your reading list name',
@@ -832,15 +881,16 @@ class _LibraryPageState extends State<LibraryPage>
             ),
             content: TextField(
               autofocus: true,
-              decoration: InputDecoration(hintText: 'E.g. Best books!!'),
+              decoration: const InputDecoration(hintText: 'E.g. Best books!!'),
               controller: controller,
               onSubmitted: (_) => submit(),
             ),
             actions: [
-              TextButton(onPressed: cancel, child: Text('Cancel')),
+              TextButton(onPressed: cancel, child: const Text('Cancel')),
               TextButton(
                   onPressed: submit,
-                  child: Text('Create', style: TextStyle(color: Colors.white)))
+                  child: const Text('Create',
+                      style: TextStyle(color: Colors.white)))
             ],
           ));
 
@@ -848,7 +898,7 @@ class _LibraryPageState extends State<LibraryPage>
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ReadingListPage(),
+            builder: (context) => const ReadingListPage(),
             settings: RouteSettings(
               arguments: {'newList': controller.text},
             )));
@@ -874,3 +924,22 @@ void _onShare(BuildContext context) async {
 }
 
 void doNothing(BuildContext context) {}
+
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        MyStorePage(coin: coinBalance),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
