@@ -1,6 +1,8 @@
 import 'dart:ui' show Color;
 
 class pxpColors {
+  static const Color accent = Color(0xff8f94fb);
+
   static const Color black = Color(0xFF000000);
 
   static const Color white = Color(0xFFFFFFFF);

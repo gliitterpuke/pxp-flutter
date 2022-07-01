@@ -93,54 +93,68 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const _ProfileHeader(numberOfPosts: 0),
-                    // SizedBox(height: 20),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                        child: Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 24.0, right: 24, top: 30, bottom: 24),
-                            child: Text(
-                              user.about,
-                              style: const TextStyle(fontSize: 16, height: 1.4),
-                            ),
-                          ),
-                        ])),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  primary: Colors.white,
-                                  side: const BorderSide(
-                                      color: Colors.grey, width: .75)),
-                              onPressed: () {},
-                              child: const Text("Follow",
-                                  style: TextStyle(fontSize: 13.0)),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
+                    _ProfileHeader(),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
                                 primary: Colors.white,
-                                backgroundColor: Color(0xff5e5ce6),
-                              ),
-                              onPressed: () {},
-                              child: const Text("Subscribe",
-                                  style: TextStyle(fontSize: 13.0)),
-                            ),
+                                side: const BorderSide(
+                                    color: Colors.grey, width: .75)),
+                            onPressed: () {},
+                            child: const Text("Follow",
+                                style: TextStyle(fontSize: 13.0)),
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                                primary: Colors.white,
+                                side: const BorderSide(
+                                    color: Colors.grey, width: .75)),
+                            onPressed: () {},
+                            child: const Text("Subscribe",
+                                style: TextStyle(fontSize: 13.0)),
+                          ),
+                        ),
+                      ],
                     ),
+                    // Align(
+                    //   alignment: Alignment.center,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     mainAxisSize: MainAxisSize.max,
+                    //     children: [
+                    //       SizedBox(
+                    //         width: double.maxFinite, // set width to maxFinite
+                    //         child: OutlinedButton(
+                    //           style: OutlinedButton.styleFrom(
+                    //               primary: Colors.white,
+                    //               side: const BorderSide(
+                    //                   color: Colors.grey, width: .75)),
+                    //           onPressed: () {},
+                    //           child: const Text("Follow",
+                    //               style: TextStyle(fontSize: 13.0)),
+                    //         ),
+                    //       ),
+                    // SizedBox(
+                    //   width: double.maxFinite, // set width to maxFinite
+                    //   child: OutlinedButton(
+                    //     style: OutlinedButton.styleFrom(
+                    //         primary: Colors.white,
+                    //         side: const BorderSide(
+                    //             color: Colors.grey, width: .75)),
+                    //     onPressed: () {},
+                    //     child: const Text("Subscribe",
+                    //         style: TextStyle(fontSize: 13.0)),
+                    //   ),
+                    // ),
+                    // ],
+                    //   ),
+                    // ),
                     const SizedBox(height: 10),
                   ],
                 ),
@@ -736,10 +750,7 @@ class _ProfilePageState extends State<ProfilePage> {
 class _ProfileHeader extends StatelessWidget {
   const _ProfileHeader({
     Key? key,
-    required this.numberOfPosts,
   }) : super(key: key);
-
-  final int numberOfPosts;
 
   static const _statitisticsPadding =
       EdgeInsets.symmetric(horizontal: 12, vertical: 8.0);
@@ -751,68 +762,71 @@ class _ProfileHeader extends StatelessWidget {
     if (streamagramUser == null) return const SizedBox.shrink();
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Avatar.big(
-            streamagramUser: streamagramUser,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(streamagramUser.fullName,
-              style: AppTextStyle.textStyleBoldMedium),
-        ),
-        const SizedBox(height: 10),
         Row(
-          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: _statitisticsPadding,
-              child: Column(
-                children: [
-                  Text(
-                    '$numberOfPosts',
-                    style: AppTextStyle.textStyleBold,
-                  ),
-                  const Text(
-                    'Posts',
-                    style: AppTextStyle.textStyleLight,
-                  ),
-                ],
+              padding: const EdgeInsets.all(8.0),
+              child: Avatar.big(
+                streamagramUser: streamagramUser,
               ),
             ),
-            Padding(
-              padding: _statitisticsPadding,
-              child: Column(
-                children: [
-                  Text(
-                    '${FeedProvider.of(context).bloc.currentUser?.followersCount ?? 0}',
-                    style: AppTextStyle.textStyleBold,
+            const Spacer(),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: _statitisticsPadding,
+                  child: Column(
+                    children: [
+                      Text(
+                        '${FeedProvider.of(context).bloc.currentUser?.followersCount ?? 0}',
+                        style: AppTextStyle.textStyleBold,
+                      ),
+                      const Text(
+                        'Followers',
+                        style: AppTextStyle.textStyleLight,
+                      ),
+                    ],
                   ),
-                  const Text(
-                    'Followers',
-                    style: AppTextStyle.textStyleLight,
+                ),
+                Padding(
+                  padding: _statitisticsPadding,
+                  child: Column(
+                    children: [
+                      Text(
+                        '${FeedProvider.of(context).bloc.currentUser?.followingCount ?? 0}',
+                        style: AppTextStyle.textStyleBold,
+                      ),
+                      const Text(
+                        'Following',
+                        style: AppTextStyle.textStyleLight,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: _statitisticsPadding,
-              child: Column(
-                children: [
-                  Text(
-                    '${FeedProvider.of(context).bloc.currentUser?.followingCount ?? 0}',
-                    style: AppTextStyle.textStyleBold,
-                  ),
-                  const Text(
-                    'Following',
-                    style: AppTextStyle.textStyleLight,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(top: 8.0, right: 8, left: 8, bottom: 4),
+            child: Text(streamagramUser.fullName,
+                style: AppTextStyle.textStyleBoldMedium),
+          ),
+        ),
+        // if (streamagramUser.userAbout != null)
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+            child: Text(
+              'placeholder text',
+            ),
+          ),
+        )
       ],
     );
   }
@@ -1121,19 +1135,47 @@ class __ProfileTileState extends State<_ProfileTile> {
         ),
         const Spacer(),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: _isLoading
-              ? const CircularProgressIndicator(strokeWidth: 3)
-              : OutlinedButton(
-                  onPressed: () {
-                    followOrUnfollowUser(context);
-                  },
-                  child: _isFollowing
-                      ? const Text('Unfollow')
-                      : const Text('Follow'),
-                ),
-        )
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: _isLoading
+                ? const CircularProgressIndicator(strokeWidth: 3)
+                : _isFollowing == false
+                    ? OutlinedButton(
+                        onPressed: () {
+                          followOrUnfollowUser(context);
+                        },
+                        child: Text('Unfollow'))
+                    : TextButton(
+                        child: const Text('STORE'),
+                        style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
+                            primary: Colors.white,
+                            backgroundColor: const Color(0xff8f94fb),
+                            onSurface: Colors.grey,
+                            textStyle: const TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold)),
+                        onPressed: () {
+                          // Navigator.of(context).push(_createRoute());
+                        },
+                      ))
       ],
+    );
+  }
+}
+
+class _EditProfileButton extends StatelessWidget {
+  const _EditProfileButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: OutlinedButton(
+        onPressed: () {
+          // Navigator.of(context).push(EditProfileScreen.route);
+        },
+        child: const Text('Edit Profile'),
+      ),
     );
   }
 }

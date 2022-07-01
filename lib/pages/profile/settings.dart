@@ -68,7 +68,7 @@ class _SettingsState extends State<Settings> {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
-                            fontSize: 12)),
+                            fontSize: 14)),
                   ),
                 ),
                 TableCellSettings(
@@ -77,33 +77,33 @@ class _SettingsState extends State<Settings> {
                       Navigator.of(context).push(EditProfilePage.route),
                 ),
                 TableCellSettings(title: "Account Settings"),
-                TableCellSettings(title: "Push Notifications"),
+                // TableCellSettings(title: "Push Notifications"),
                 SizedBox(
                   height: 36.0,
                 ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Text("PRIVACY AND SAFETY",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12)),
-                  ),
-                ),
-                TableCellSettings(
-                    title: "Blocked Accounts",
-                    onTap: () {
-                      Navigator.pushNamed(context, '/pro');
-                    }),
-                TableCellSettings(
-                    title: "Do not sell my info",
-                    onTap: () {
-                      Navigator.pushNamed(context, '/pro');
-                    }),
-                SizedBox(
-                  height: 36.0,
-                ),
+                // Center(
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(top: 16.0),
+                //     child: Text("PRIVACY AND SAFETY",
+                //         style: TextStyle(
+                //             color: Colors.white,
+                //             fontWeight: FontWeight.w600,
+                //             fontSize: 12)),
+                //   ),
+                // ),
+                // TableCellSettings(
+                //     title: "Blocked Accounts",
+                //     onTap: () {
+                //       Navigator.pushNamed(context, '/pro');
+                //     }),
+                // TableCellSettings(
+                //     title: "Do not sell my info",
+                //     onTap: () {
+                //       Navigator.pushNamed(context, '/pro');
+                //     }),
+                // SizedBox(
+                //   height: 36.0,
+                // ),
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 16.0),
@@ -111,7 +111,7 @@ class _SettingsState extends State<Settings> {
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
-                            fontSize: 12)),
+                            fontSize: 14)),
                   ),
                 ),
                 TableCellSettings(
@@ -125,36 +125,18 @@ class _SettingsState extends State<Settings> {
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.only(top: 16.0),
-                    child: Text("SOCIALS",
+                    child: Text("PxP",
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
-                            fontSize: 12)),
+                            fontSize: 14)),
                   ),
                 ),
-                TableCellSettings(
-                    title: "Linked Accounts",
-                    onTap: () {
-                      Navigator.pushNamed(context, '/pro');
-                    }),
                 TableCellSettings(
                     title: "Invite Friends",
                     onTap: () {
                       Navigator.pushNamed(context, '/pro');
                     }),
-                SizedBox(
-                  height: 36.0,
-                ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Text("PxP",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12)),
-                  ),
-                ),
                 TableCellSettings(
                     title: "About",
                     onTap: () {
