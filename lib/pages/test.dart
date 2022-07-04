@@ -19,20 +19,15 @@ import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 
 import 'ig/components/timeline/widgets/post_card.dart';
 
-class NewProfilePage extends StatefulWidget {
-  const NewProfilePage({
-    Key? key,
-    required this.userId,
-  }) : super(key: key);
-
-  final String userId;
+class NewTestPage extends StatefulWidget {
+  const NewTestPage({Key? key}) : super(key: key);
 
   @override
-  _NewProfilePageState createState() => _NewProfilePageState();
+  _NewTestPageState createState() => _NewTestPageState();
 }
 
 /// Page to find other users and follow/unfollow.
-class _NewProfilePageState extends State<NewProfilePage> {
+class _NewTestPageState extends State<NewTestPage> {
   late bool isFollowing;
   bool isHelpful = false;
 
@@ -110,18 +105,19 @@ class _NewProfilePageState extends State<NewProfilePage> {
         body: DefaultTabController(
           length: 4,
           child: Column(children: [
-            TabBar(
-                labelStyle: const TextStyle(
-                    fontSize: 12.0, fontWeight: FontWeight.bold),
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.grey.shade600,
-                indicatorColor: Colors.grey,
-                tabs: const [
+            Container(
+                child: TabBar(
+                    labelStyle: const TextStyle(
+                        fontSize: 12.0, fontWeight: FontWeight.bold),
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.grey.shade600,
+                    indicatorColor: Colors.grey,
+                    tabs: const [
                   Tab(text: "BOOKS"),
                   Tab(text: "WALL"),
                   Tab(text: "REVIEWS"),
                   Tab(text: "BADGES"),
-                ]),
+                ])),
             Expanded(
                 child: TabBarView(children: [
               // BOOKS
@@ -900,6 +896,41 @@ class __ProfileTileState extends State<_ProfileTile> {
         ),
       ],
     );
+    // Row(
+    //   children: [
+    //     Padding(
+    //       padding: const EdgeInsets.all(8.0),
+    //       child: Avatar.medium(streamagramUser: widget.userData),
+    //     ),
+    //     Padding(
+    //       padding: const EdgeInsets.all(8.0),
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           Text(widget.user.id, style: AppTextStyle.textStyleBold),
+    //           Text(
+    //             widget.userData.fullName,
+    //             style: AppTextStyle.textStyleFaded,
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //     const Spacer(),
+    //     Padding(
+    //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    //       child: _isLoading
+    //           ? const CircularProgressIndicator(strokeWidth: 3)
+    //           : OutlinedButton(
+    //               onPressed: () {
+    //                 followOrUnfollowUser(context);
+    //               },
+    //               child: _isFollowing
+    //                   ? const Text('Unfollow')
+    //                   : const Text('Follow'),
+    //             ),
+    //     )
+    //   ],
+    // );
   }
 }
 

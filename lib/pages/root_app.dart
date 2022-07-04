@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/root_app_json.dart';
 import 'package:pxp_flutter/pages/chat/main.dart';
 import 'package:pxp_flutter/pages/home.dart';
+import 'package:pxp_flutter/pages/ig/app/app.dart';
 import 'package:pxp_flutter/pages/notifications.dart';
 import 'package:pxp_flutter/pages/account.dart';
 import 'package:pxp_flutter/pages/library.dart';
@@ -11,13 +12,6 @@ class RootApp extends StatefulWidget {
   const RootApp({Key? key}) : super(key: key);
 
   /// List of pages available from the home screen.
-  static const List<Widget> _homePages = <Widget>[
-    _KeepAlivePage(child: HomePage()),
-    _KeepAlivePage(child: LibraryPage()),
-    _KeepAlivePage(child: MyApp()),
-    _KeepAlivePage(child: ProfilePage()),
-    _KeepAlivePage(child: NotificationPage()),
-  ];
 
   @override
   _RootAppState createState() => _RootAppState();
@@ -28,11 +22,19 @@ class _RootAppState extends State<RootApp> {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _homePages = <Widget>[
+      const _KeepAlivePage(child: HomePage()),
+      const _KeepAlivePage(child: LibraryPage()),
+      const _KeepAlivePage(child: MyApp()),
+      _KeepAlivePage(child: NewProfilePage(userId: context.appState.user.id)),
+      const _KeepAlivePage(child: NotificationPage()),
+    ];
+
     return Scaffold(
       body: PageView(
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: RootApp._homePages,
+        children: _homePages,
       ),
       bottomNavigationBar: _StreamagramBottomNavBar(
         pageController: pageController,
@@ -70,7 +72,7 @@ class _StreamagramBottomNavBarState extends State<_StreamagramBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: pxpColors.menu),
+      decoration: const BoxDecoration(color: pxpColors.menu),
       child: BottomNavigationBar(
         backgroundColor: Colors.black,
         onTap: _onNavigationItemTapped,

@@ -133,9 +133,8 @@ class MyStorePage extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 5, horizontal: 15),
                                           primary: Colors.white,
-                                          backgroundColor:
-                                              const Color(0xff8f94fb)
-                                                  .withOpacity(0.75),
+                                          backgroundColor: pxpColors.accent
+                                              .withOpacity(0.75),
                                           onSurface: Colors.grey,
                                           textStyle: const TextStyle(
                                               fontSize: 14,
@@ -167,7 +166,109 @@ class MyStorePage extends StatelessWidget {
                                                     .toStringAsFixed(0) +
                                                 '\% OFF',
                                             style: TextStyle(
-                                              color: Color(0xff8f94fb),
+                                              color: pxpColors.accent,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold,
+                                              fontStyle: FontStyle.italic,
+                                            )),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ))),
+              ),
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'SUBSCRIBE & SAVE',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                color: pxpColors.darkCard,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 10),
+                    child: Column(
+                        children: List.generate(
+                      specialOffer.length,
+                      (index) {
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, right: 10),
+                                child: Icon(Icons.generating_tokens_outlined),
+                              ),
+                              Text(subscribeSave[index]['coins'].toString(),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              Text(' coins / month',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  )),
+                              Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Column(
+                                  children: [
+                                    TextButton(
+                                      child: Text('\$' +
+                                          (subscribeSave[index]['final'])
+                                              .toString()),
+                                      style: TextButton.styleFrom(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5, horizontal: 15),
+                                          primary: Colors.white,
+                                          backgroundColor: pxpColors.accent
+                                              .withOpacity(0.75),
+                                          onSurface: Colors.grey,
+                                          textStyle: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold)),
+                                      onPressed: () {},
+                                    ),
+                                    Row(
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 5.0),
+                                            child: Text(
+                                                '\$' +
+                                                    subscribeSave[index]['og']
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    color: pxpColors.secondaryT,
+                                                    fontSize: 10,
+                                                    decoration: TextDecoration
+                                                        .lineThrough))),
+                                        Text(
+                                            (((subscribeSave[index]['og'] -
+                                                                subscribeSave[
+                                                                        index]
+                                                                    ['final']) /
+                                                            subscribeSave[index]
+                                                                ['og']) *
+                                                        100)
+                                                    .toStringAsFixed(0) +
+                                                '\% OFF',
+                                            style: TextStyle(
+                                              color: pxpColors.accent,
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold,
                                               fontStyle: FontStyle.italic,
@@ -244,7 +345,7 @@ class MyStorePage extends StatelessWidget {
                                                   .toStringAsFixed(0) +
                                               '\% OFF',
                                           style: TextStyle(
-                                            color: Color(0xff8f94fb),
+                                            color: pxpColors.accent,
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold,
                                             fontStyle: FontStyle.italic,
@@ -263,9 +364,8 @@ class MyStorePage extends StatelessWidget {
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5, horizontal: 15),
                                             primary: Colors.white,
-                                            backgroundColor:
-                                                const Color(0xff8f94fb)
-                                                    .withOpacity(0.75),
+                                            backgroundColor: pxpColors.accent
+                                                .withOpacity(0.75),
                                             onSurface: Colors.grey,
                                             textStyle: const TextStyle(
                                                 fontSize: 14,
@@ -299,106 +399,10 @@ class MyStorePage extends StatelessWidget {
                 },
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  'SUBSCRIBE & SAVE',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16),
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                color: pxpColors.darkCard,
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 10),
-                    child: Column(
-                        children: List.generate(
-                      specialOffer.length,
-                      (index) {
-                        return GestureDetector(
-                          onTap: () {},
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, right: 10),
-                                child: Icon(Icons.generating_tokens_outlined),
-                              ),
-                              Text(subscribeSave[index]['coins'].toString(),
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold)),
-                              Text(' coins / month',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  )),
-                              Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Column(
-                                  children: [
-                                    TextButton(
-                                      child: Text('\$' +
-                                          (subscribeSave[index]['final'])
-                                              .toString()),
-                                      style: TextButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 15),
-                                          primary: Colors.white,
-                                          backgroundColor:
-                                              const Color(0xff8f94fb)
-                                                  .withOpacity(0.75),
-                                          onSurface: Colors.grey,
-                                          textStyle: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold)),
-                                      onPressed: () {},
-                                    ),
-                                    Row(
-                                      children: [
-                                        Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 5.0),
-                                            child: Text(
-                                                '\$' +
-                                                    subscribeSave[index]['og']
-                                                        .toString(),
-                                                style: TextStyle(
-                                                    color: pxpColors.secondaryT,
-                                                    fontSize: 10,
-                                                    decoration: TextDecoration
-                                                        .lineThrough))),
-                                        Text(
-                                            (((subscribeSave[index]['og'] -
-                                                                subscribeSave[
-                                                                        index]
-                                                                    ['final']) /
-                                                            subscribeSave[index]
-                                                                ['og']) *
-                                                        100)
-                                                    .toStringAsFixed(0) +
-                                                '\% OFF',
-                                            style: TextStyle(
-                                              color: Color(0xff8f94fb),
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.italic,
-                                            )),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ))),
+                padding: const EdgeInsets.all(8.0),
+                child: Text('hi',
+                    style:
+                        TextStyle(color: pxpColors.secondaryT, fontSize: 12)),
               ),
               SizedBox(height: 40),
             ],

@@ -11,7 +11,8 @@ import 'package:pxp_flutter/pages/ig/components/new_post/new_post_screen.dart';
 
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
-    leading: const BackButton(),
+    // leading: const BackButton(),
+    automaticallyImplyLeading: false,
     backgroundColor: Colors.transparent,
     elevation: 0,
     centerTitle: true,
@@ -31,6 +32,7 @@ AppBar buildAppBar(BuildContext context) {
       ),
       IconButton(
         icon: const Icon(Feather.settings),
+        iconSize: 20,
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const Settings()),
