@@ -869,22 +869,31 @@ class __ProfileTileState extends State<_ProfileTile> {
         Row(
           children: <Widget>[
             Expanded(
-              child: _isLoading
-                  ? const CircularProgressIndicator(strokeWidth: 3)
-                  : OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          primary: Colors.white,
-                          side:
-                              const BorderSide(color: Colors.grey, width: .75)),
-                      onPressed: () {
-                        followOrUnfollowUser(context);
-                      },
-                      child: _isFollowing
-                          ? const Text("Unfollow",
-                              style: TextStyle(fontSize: 13.0))
-                          : const Text("Follow",
-                              style: TextStyle(fontSize: 13.0))),
-            ),
+                child: _isLoading
+                    ? const CircularProgressIndicator(strokeWidth: 3)
+                    : _isFollowing
+                        ? OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                                primary: Colors.white,
+                                side: const BorderSide(
+                                    color: Colors.grey, width: .75)),
+                            onPressed: () {
+                              followOrUnfollowUser(context);
+                            },
+                            child: const Text("Unfollow",
+                                style: TextStyle(fontSize: 13.0)))
+                        : TextButton(
+                            child: Text('Follow'),
+                            style: TextButton.styleFrom(
+                              textStyle: TextStyle(fontSize: 13),
+                              primary: Colors.white,
+                              backgroundColor: pxpColors.accent,
+                              onSurface: Colors.grey,
+                            ),
+                            onPressed: () {
+                              followOrUnfollowUser(context);
+                            },
+                          )),
             SizedBox(width: 10),
             Expanded(
               child: OutlinedButton(

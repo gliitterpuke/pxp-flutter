@@ -12,12 +12,12 @@ import 'package:pxp_flutter/pages/ig/components/new_post/new_post_screen.dart';
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
     // leading: const BackButton(),
-    automaticallyImplyLeading: false,
+    // automaticallyImplyLeading: false,
     backgroundColor: Colors.transparent,
     elevation: 0,
     centerTitle: true,
     title: Text(
-      context.appState.streamagramUser!.firstName.toString(),
+      context.appState.user.id,
       style: const TextStyle(
           color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
     ),

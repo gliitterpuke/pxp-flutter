@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pxp_flutter/pages/auth/first_social.dart';
 import 'package:pxp_flutter/pages/profile/appbar_widget.dart';
 import 'package:pxp_flutter/pages/edit_profile_page.dart';
 
@@ -72,10 +73,13 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
                 TableCellSettings(
-                  title: "Edit Profile",
-                  onTap: () =>
-                      Navigator.of(context).push(EditProfilePage.route),
-                ),
+                    title: "Edit Profile",
+                    onTap: () =>
+                        // Navigator.of(context).push(EditProfilePage.route),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const FirstSocialPage()))),
                 TableCellSettings(title: "Account Settings"),
                 // TableCellSettings(title: "Push Notifications"),
                 SizedBox(
