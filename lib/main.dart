@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:form_builder_validators/localization/l10n.dart';
 import 'package:pxp_flutter/pages/chat/app_config.dart';
 
 import 'package:pxp_flutter/pages/chat/choose_user_page.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:stream_chat_localizations/stream_chat_localizations.dart';
 import 'package:stream_chat_persistence/stream_chat_persistence.dart';
 import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
@@ -165,6 +167,14 @@ class _MyAppState extends State<MyApp>
               defaultValue: 0,
             ),
             builder: (context, snapshot) => MaterialApp(
+              supportedLocales: [
+                Locale('en'),
+              ],
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                FormBuilderLocalizations.delegate,
+              ],
               debugShowCheckedModeBanner: false,
               builder: (context, child) {
                 // Stream Feeds provider to give access to [FeedBloc]
