@@ -1,12 +1,17 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pxp_flutter/pages/auth/login.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
 import 'package:pxp_flutter/pages/root_app.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:twitter_login/twitter_login.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -15,6 +20,16 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormBuilderState>();
+
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: <String>[
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
+
+  GoogleSignInAccount? _currentUser;
+  String _contactText = '';
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +57,6 @@ class _RegisterState extends State<Register> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        // Expanded(
-                        //     child: Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: Divider(color: Colors.white, thickness: 2),
-                        // )),
-                        // ]),
                         SizedBox(height: 40),
                         FittedBox(
                           child: Row(
@@ -55,7 +64,17 @@ class _RegisterState extends State<Register> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               RawMaterialButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  final LoginResult result =
+                                      await FacebookAuth.i.login();
+                                  if (result.status == LoginStatus.success) {
+                                    final AccessToken accessToken =
+                                        result.accessToken!;
+                                  } else {
+                                    print(result.status);
+                                    print(result.message);
+                                  }
+                                },
                                 fillColor: Color(0xFF4267B2),
                                 child: Icon(FontAwesome.facebook,
                                     size: 16.0, color: Colors.white),
@@ -63,15 +82,39 @@ class _RegisterState extends State<Register> {
                                 shape: CircleBorder(),
                               ),
                               RawMaterialButton(
-                                onPressed: () {},
-                                fillColor: Color(0xFF1DA1F2),
-                                child: Icon(Feather.twitter,
+                                onPressed: () async {
+                                  final twitterLogin = TwitterLogin(
+                                    apiKey: FlutterConfig.get('TWITTER_API'),
+                                    apiSecretKey:
+                                        FlutterConfig.get('TWITTER_SECRET'),
+                                    redirectURI: 'scheme://',
+                                  );
+                                  final authResult = await twitterLogin.login();
+                                  switch (authResult.status) {
+                                    case TwitterLoginStatus.loggedIn:
+                                      break;
+                                    case TwitterLoginStatus.cancelledByUser:
+                                      break;
+                                    case TwitterLoginStatus.error:
+                                      break;
+                                    case null:
+                                      break;
+                                  }
+                                },
+                                fillColor: const Color(0xFF1DA1F2),
+                                child: const Icon(Feather.twitter,
                                     size: 16.0, color: Colors.white),
-                                padding: EdgeInsets.all(15.0),
-                                shape: CircleBorder(),
+                                padding: const EdgeInsets.all(15.0),
+                                shape: const CircleBorder(),
                               ),
                               RawMaterialButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  try {
+                                    await _googleSignIn.signIn();
+                                  } catch (error) {
+                                    print(error);
+                                  }
+                                },
                                 fillColor: Color(0xFFDB4437),
                                 child: Icon(AntDesign.google,
                                     size: 16.0, color: Colors.white),
@@ -79,7 +122,17 @@ class _RegisterState extends State<Register> {
                                 shape: CircleBorder(),
                               ),
                               RawMaterialButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  final credential = await SignInWithApple
+                                      .getAppleIDCredential(
+                                    scopes: [
+                                      AppleIDAuthorizationScopes.email,
+                                      AppleIDAuthorizationScopes.fullName,
+                                    ],
+                                  );
+
+                                  print(credential);
+                                },
                                 fillColor: Color(0xFF555555),
                                 child: Icon(AntDesign.apple1,
                                     size: 16.0, color: Colors.white),

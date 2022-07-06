@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_config/flutter_config.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
 import 'package:pxp_flutter/pages/chat/app_config.dart';
 
@@ -70,6 +71,9 @@ void main() async {
       await SentryFlutter.init(
         (options) => options.dsn = sentryDsn,
       );
+      WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
+      await FlutterConfig.loadEnvVariables();
+
       runApp(MyApp());
     },
     _reportError,
