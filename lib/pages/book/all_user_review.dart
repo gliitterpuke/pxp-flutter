@@ -13,6 +13,7 @@ class AllUserReview extends StatefulWidget {
 class _AllUserReviewState extends State<AllUserReview> {
   int _page = 0;
   final int _perPage = 5;
+  bool isHelpful = false;
 
   late ScrollController controller;
 
@@ -36,7 +37,7 @@ class _AllUserReviewState extends State<AllUserReview> {
 
   @override
   Widget build(BuildContext context) {
-    var _numPage = (reviewList.length / _perPage).floor();
+    var _numPage = (userReviewList.length / _perPage).floor();
     final dataToShow = userReviewList.sublist(
         (_page * _perPage), ((_page * _perPage) + _perPage));
     return Scaffold(
@@ -255,21 +256,40 @@ class _AllUserReviewState extends State<AllUserReview> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(
-                                  Feather.thumbs_up,
-                                  size: 20,
-                                  color: pxpColors.secondaryT,
-                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isHelpful = !isHelpful;
+                                      });
+                                    },
+                                    child: isHelpful == true
+                                        ? Icon(
+                                            Feather.thumbs_up,
+                                            size: 20,
+                                            color: Colors.white,
+                                          )
+                                        : Icon(
+                                            Feather.thumbs_up,
+                                            size: 20,
+                                            color: pxpColors.secondaryT,
+                                          )),
                                 SizedBox(width: 5),
-                                Text(
-                                  dataToShow[index]['helpful'].toString(),
-                                  style: const TextStyle(
-                                      color: pxpColors.secondaryT,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500),
-                                ),
+                                isHelpful == true
+                                    ? Text(
+                                        dataToShow[index]['helpful'].toString(),
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    : Text(
+                                        dataToShow[index]['helpful'].toString(),
+                                        style: const TextStyle(
+                                            color: pxpColors.secondaryT,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                 if (dataToShow[index]['award'] == true)
                                   Spacer(),
                                 if (dataToShow[index]['award'] == true)

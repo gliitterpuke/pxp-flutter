@@ -854,19 +854,22 @@ class _BookDetailState extends State<BookDetail> {
                                                                     SizedBox(
                                                                         width:
                                                                             5),
-                                                                    Text(
-                                                                      dataToShow[index]
-                                                                              [
-                                                                              'helpful']
-                                                                          .toString(),
-                                                                      style: const TextStyle(
-                                                                          color: pxpColors
-                                                                              .secondaryT,
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
-                                                                    ),
+                                                                    isHelpful ==
+                                                                            true
+                                                                        ? Text(
+                                                                            dataToShow[index]['helpful'].toString(),
+                                                                            style: const TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontSize: 12,
+                                                                                fontWeight: FontWeight.w500),
+                                                                          )
+                                                                        : Text(
+                                                                            dataToShow[index]['helpful'].toString(),
+                                                                            style: const TextStyle(
+                                                                                color: pxpColors.secondaryT,
+                                                                                fontSize: 12,
+                                                                                fontWeight: FontWeight.w500),
+                                                                          ),
                                                                     if (dataToShow[index]
                                                                             [
                                                                             'award'] ==

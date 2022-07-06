@@ -258,35 +258,40 @@ class _AllReviewState extends State<AllReview> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                IconButton(
-                                  icon: isHelpful == true
-                                      ? Icon(
-                                          MaterialCommunityIcons.thumb_up,
-                                          size: 20,
-                                          color: pxpColors.secondaryT,
-                                        )
-                                      : Icon(
-                                          MaterialCommunityIcons
-                                              .thumb_up_outline,
-                                          size: 20,
-                                          color: pxpColors.secondaryT,
-                                        ),
-                                  onPressed: () {
-                                    setState(() {
-                                      isHelpful = !isHelpful;
-                                    });
-                                  },
-                                ),
-                                // SizedBox(width: 5),
-                                Text(
-                                  dataToShow[index]['helpful'].toString(),
-                                  style: const TextStyle(
-                                      color: pxpColors.secondaryT,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500),
-                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        isHelpful = !isHelpful;
+                                      });
+                                    },
+                                    child: isHelpful == true
+                                        ? Icon(
+                                            Feather.thumbs_up,
+                                            size: 20,
+                                            color: Colors.white,
+                                          )
+                                        : Icon(
+                                            Feather.thumbs_up,
+                                            size: 20,
+                                            color: pxpColors.secondaryT,
+                                          )),
+                                SizedBox(width: 5),
+                                isHelpful == true
+                                    ? Text(
+                                        dataToShow[index]['helpful'].toString(),
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    : Text(
+                                        dataToShow[index]['helpful'].toString(),
+                                        style: const TextStyle(
+                                            color: pxpColors.secondaryT,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                 if (dataToShow[index]['award'] == true)
                                   Spacer(),
                                 if (dataToShow[index]['award'] == true)

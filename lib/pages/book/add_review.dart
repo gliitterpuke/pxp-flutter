@@ -96,7 +96,7 @@ class _AddReviewState extends State<AddReview> {
                               shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.zero)),
                             ),
-                            child: const Text('Advanced Search',
+                            child: const Text('Advanced Review',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -109,7 +109,7 @@ class _AddReviewState extends State<AddReview> {
                               shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.zero)),
                             ),
-                            child: const Text('Simple Search',
+                            child: const Text('Simple Review',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
