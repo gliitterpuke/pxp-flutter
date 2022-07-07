@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pxp_flutter/pages/auth/first_social.dart';
+import 'package:pxp_flutter/pages/profile/settings_about.dart';
+import 'package:pxp_flutter/pages/profile/settings_account.dart';
 import 'package:pxp_flutter/pages/profile/appbar_widget.dart';
 import 'package:pxp_flutter/pages/edit_profile_page.dart';
 
 import 'package:pxp_flutter/widgets/table-cell.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -73,14 +75,16 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
                 TableCellSettings(
-                    title: "Edit Profile",
-                    onTap: () =>
-                        // Navigator.of(context).push(EditProfilePage.route),
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const FirstSocialPage()))),
-                TableCellSettings(title: "Account Settings"),
+                  title: "Edit Profile",
+                  onTap: () =>
+                      Navigator.of(context).push(EditProfilePage.route),
+                ),
+                TableCellSettings(
+                    title: "Account Settings",
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const AccountSettings()))),
                 // TableCellSettings(title: "Push Notifications"),
                 SizedBox(
                   height: 36.0,
@@ -137,15 +141,13 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
                 TableCellSettings(
-                    title: "Invite Friends",
-                    onTap: () {
-                      Navigator.pushNamed(context, '/pro');
-                    }),
+                    title: "Invite Friends", onTap: () => _onShare(context)),
                 TableCellSettings(
                     title: "About",
-                    onTap: () {
-                      Navigator.pushNamed(context, '/pro');
-                    }),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const AboutSettings()))),
                 TableCellSettings(
                     title: "Help & Support",
                     onTap: () {
@@ -156,4 +158,12 @@ class _SettingsState extends State<Settings> {
           ),
         )));
   }
+}
+
+void _onShare(BuildContext context) async {
+  final box = context.findRenderObject() as RenderBox?;
+
+  await Share.share('Read and write more at http://pxp.fan',
+      subject: 'Check out PxP!',
+      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
 }

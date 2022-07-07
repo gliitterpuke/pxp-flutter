@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:pxp_flutter/json/profile.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 class MyStorePage extends StatelessWidget {
   MyStorePage({Key? key, required this.coin}) : super(key: key);
@@ -397,12 +396,6 @@ class MyStorePage extends StatelessWidget {
                     ),
                   );
                 },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('hi',
-                    style:
-                        TextStyle(color: pxpColors.secondaryT, fontSize: 12)),
               ),
               SizedBox(height: 40),
             ],

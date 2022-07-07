@@ -895,7 +895,8 @@ class __ProfileTileState extends State<_ProfileTile> {
                         : TextButton(
                             child: Text('Follow'),
                             style: TextButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 13),
+                              textStyle: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.w500),
                               primary: Colors.white,
                               backgroundColor: pxpColors.accent,
                               onSurface: Colors.grey,
