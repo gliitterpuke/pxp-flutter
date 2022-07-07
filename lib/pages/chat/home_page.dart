@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:pxp_flutter/pages/auth/login.dart';
 import 'package:pxp_flutter/pages/chat/app_config.dart';
-import 'package:pxp_flutter/pages/chat/main.dart';
 
 import 'channel_page.dart';
 import 'notifications_service.dart';

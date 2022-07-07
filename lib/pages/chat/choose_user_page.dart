@@ -1,3 +1,5 @@
+import 'package:pxp_flutter/pages/auth/login.dart';
+
 import 'app_config.dart';
 import 'home_page.dart';
 import 'localizations.dart';
@@ -8,7 +10,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
-import 'main.dart';
 import 'routes/routes.dart';
 
 const kStreamApiKey = 'STREAM_API_KEY';

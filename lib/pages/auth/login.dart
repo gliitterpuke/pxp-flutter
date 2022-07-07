@@ -1,21 +1,86 @@
+import 'dart:async';
 import 'dart:ffi';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pxp_flutter/pages/auth/forgot_password.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:pxp_flutter/pages/chat/app_config.dart';
+import 'package:pxp_flutter/pages/chat/choose_user_page.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
 
 import 'package:pxp_flutter/pages/auth/register.dart';
 import 'package:pxp_flutter/pages/root_app.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:flutter_config/flutter_config.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:stream_chat_persistence/stream_chat_persistence.dart';
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:twitter_login/twitter_login.dart';
 
 import 'new_password.dart';
+
+final chatPersistentClient = StreamChatPersistenceClient(
+  logLevel: Level.SEVERE,
+  connectionMode: ConnectionMode.regular,
+);
+
+void sampleAppLogHandler(LogRecord record) async {
+  if (kDebugMode) StreamChatClient.defaultLogHandler(record);
+
+  // report errors to sentry
+  if (record.error != null || record.stackTrace != null) {
+    await Sentry.captureException(
+      record.error,
+      stackTrace: record.stackTrace,
+    );
+  }
+}
+
+StreamChatClient buildStreamChatClient(
+  String apiKey, {
+  Level logLevel = Level.SEVERE,
+}) {
+  return StreamChatClient(
+    apiKey,
+    logLevel: logLevel,
+    logHandlerFunction: sampleAppLogHandler,
+  )..chatPersistenceClient = chatPersistentClient;
+}
+
+void main() async {
+  const sentryDsn =
+      'https://6381ef88de4140db8f5e25ab37e0f08c@o1213503.ingest.sentry.io/6352870';
+
+  /// Captures errors reported by the Flutter framework.
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (kDebugMode) {
+      // In development mode, simply print to console.
+      FlutterError.dumpErrorToConsole(details);
+    } else {
+      // In production mode, report to the application zone to report to sentry.
+      Zone.current.handleUncaughtError(details.exception, details.stack!);
+    }
+  };
+
+  Future<void> _reportError(dynamic error, StackTrace stackTrace) async {
+    // Print the exception to the console.
+    if (kDebugMode) {
+      // Print the full stacktrace in debug mode.
+      print(stackTrace);
+      return;
+    } else {
+      // Send the Exception and Stacktrace to sentry in Production mode.
+      await Sentry.captureException(error, stackTrace: stackTrace);
+    }
+  }
+}
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -35,6 +100,49 @@ class _LoginState extends State<Login> {
 
   GoogleSignInAccount? _currentUser;
   String _contactText = '';
+
+  InitData? _initData;
+
+  Future<InitData> _initConnection() async {
+    String? apiKey, userId, token;
+
+    if (!kIsWeb) {
+      final secureStorage = FlutterSecureStorage();
+      apiKey = await secureStorage.read(key: kStreamApiKey);
+      userId = await secureStorage.read(key: kStreamUserId);
+      token = await secureStorage.read(key: kStreamToken);
+    }
+
+    final client = buildStreamChatClient(apiKey ?? kStreamApiKey);
+
+    if (userId != null && token != null) {
+      await client.connectUser(
+        defaultUsers.entries.toList()[0].value,
+        defaultUsers.entries.toList()[0].key,
+      );
+    }
+
+    final prefs = await StreamingSharedPreferences.instance;
+
+    return InitData(client, prefs);
+  }
+
+  // @override
+  // void initState() {
+  //   final timeOfStartMs = DateTime.now().millisecondsSinceEpoch;
+
+  //   _initConnection().then(
+  //     (initData) {
+  //       setState(() {
+  //         _initData = initData;
+  //       });
+
+  //       final now = DateTime.now().millisecondsSinceEpoch;
+  //     },
+  //   );
+
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -246,11 +354,13 @@ class _LoginState extends State<Login> {
                                   .connect(DemoAppUser.sacha);
 
                               if (success) {
-                                await Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (_) => const RootApp(),
-                                  ),
-                                );
+                                _initConnection().then((value) async =>
+                                    await Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                            builder: (context) => RootApp(),
+                                            settings: RouteSettings(
+                                              arguments: value!.client,
+                                            ))));
                               } else {
                                 context.removeAndShowSnackbar(
                                     'Could not connect user');
@@ -310,4 +420,11 @@ class _LoginState extends State<Login> {
           ),
         ));
   }
+}
+
+class InitData {
+  final StreamChatClient client;
+  final StreamingSharedPreferences preferences;
+
+  InitData(this.client, this.preferences);
 }

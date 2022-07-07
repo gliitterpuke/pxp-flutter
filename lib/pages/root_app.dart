@@ -7,11 +7,10 @@ import 'package:pxp_flutter/pages/notifications.dart';
 import 'package:pxp_flutter/pages/account.dart';
 import 'package:pxp_flutter/pages/library.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({Key? key}) : super(key: key);
-
-  /// List of pages available from the home screen.
 
   @override
   _RootAppState createState() => _RootAppState();
@@ -22,10 +21,12 @@ class _RootAppState extends State<RootApp> {
 
   @override
   Widget build(BuildContext context) {
+    final client =
+        ModalRoute.of(context)!.settings.arguments as StreamChatClient;
     List<Widget> _homePages = <Widget>[
       const _KeepAlivePage(child: HomePage()),
       const _KeepAlivePage(child: LibraryPage()),
-      const _KeepAlivePage(child: MyApp()),
+      _KeepAlivePage(child: MyApp(client: client)),
       _KeepAlivePage(child: NewProfilePage(userId: context.appState.user.id)),
       const _KeepAlivePage(child: NotificationPage()),
     ];

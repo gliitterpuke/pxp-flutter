@@ -1,3 +1,5 @@
+import 'package:pxp_flutter/pages/auth/login.dart';
+
 import 'home_page.dart';
 import 'localizations.dart';
 import 'routes/routes.dart';
@@ -7,7 +9,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import 'choose_user_page.dart';
-import 'main.dart';
 
 class AdvancedOptionsPage extends StatefulWidget {
   @override
