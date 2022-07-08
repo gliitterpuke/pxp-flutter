@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -12,8 +15,11 @@ import 'package:pxp_flutter/pages/ig/app/app.dart';
 import 'package:pxp_flutter/pages/root_app.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:twitter_login/twitter_login.dart';
+import 'package:http/http.dart' as http;
 
 class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
+
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -21,7 +27,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final _formKey = GlobalKey<FormBuilderState>();
 
-  GoogleSignIn _googleSignIn = GoogleSignIn(
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: <String>[
       'email',
       'https://www.googleapis.com/auth/contacts.readonly',
@@ -29,7 +35,43 @@ class _RegisterState extends State<Register> {
   );
 
   GoogleSignInAccount? _currentUser;
-  String _contactText = '';
+  final String _contactText = '';
+
+  Future<void> createUser(Map<String, dynamic> value) async {
+    final url = Uri.parse('http://localhost:5000/api/v1/users/');
+    final headers = {"Content-type": "application/json"};
+    final newValue = {...value, 'is_creator': true};
+    var jsonBody = jsonEncode(newValue);
+
+    try {
+      final response = await http.post(url, headers: headers, body: jsonBody);
+      if (kDebugMode) {
+        print('Status code: ${response.statusCode}');
+        print('Body: ${response.body}');
+      }
+
+      if (response.statusCode != 200) {
+        var error = json.decode(response.body);
+        context.removeAndShowSnackbar(error['detail']);
+      } else {
+        final success = await context.appState.connect(DemoAppUser.sacha);
+
+        if (success) {
+          await Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => const RootApp(),
+            ),
+          );
+        } else {
+          context.removeAndShowSnackbar(response.body);
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    } finally {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +154,9 @@ class _RegisterState extends State<Register> {
                                   try {
                                     await _googleSignIn.signIn();
                                   } catch (error) {
-                                    print(error);
+                                    if (kDebugMode) {
+                                      print(error);
+                                    }
                                   }
                                 },
                                 fillColor: Color(0xFFDB4437),
@@ -131,7 +175,9 @@ class _RegisterState extends State<Register> {
                                     ],
                                   );
 
-                                  print(credential);
+                                  if (kDebugMode) {
+                                    print(credential);
+                                  }
                                 },
                                 fillColor: Color(0xFF555555),
                                 child: Icon(AntDesign.apple1,
@@ -176,6 +222,7 @@ class _RegisterState extends State<Register> {
                           ),
                           child: FormBuilderTextField(
                               name: 'username',
+                              initialValue: 'demo',
                               style: TextStyle(fontSize: 14),
                               decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -194,6 +241,7 @@ class _RegisterState extends State<Register> {
                           ),
                           child: FormBuilderTextField(
                             name: 'email',
+                            initialValue: 'demo@demo.com',
                             style: TextStyle(fontSize: 14),
                             decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -215,7 +263,8 @@ class _RegisterState extends State<Register> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: FormBuilderTextField(
-                            name: 'pw',
+                            name: 'password',
+                            initialValue: 'testing123',
                             obscureText: true,
                             enableSuggestions: false,
                             autocorrect: false,
@@ -242,6 +291,7 @@ class _RegisterState extends State<Register> {
                           ),
                           child: FormBuilderTextField(
                             name: 'confirm',
+                            initialValue: 'testing123',
                             obscureText: true,
                             enableSuggestions: false,
                             autocorrect: false,
@@ -252,7 +302,8 @@ class _RegisterState extends State<Register> {
                                 hintStyle: TextStyle(
                                     color: Colors.grey[400], fontSize: 14)),
                             validator: (val) {
-                              if (_formKey.currentState?.fields['pw']?.value !=
+                              if (_formKey.currentState?.fields['password']
+                                      ?.value !=
                                   val) {
                                 return 'Passwords do not match';
                               }
@@ -269,23 +320,7 @@ class _RegisterState extends State<Register> {
                       onTap: () async {
                         _formKey.currentState!.save();
                         if (_formKey.currentState!.validate()) {
-                          print(_formKey.currentState!.value);
-
-                          final success =
-                              await context.appState.connect(DemoAppUser.sacha);
-
-                          if (success) {
-                            await Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (_) => const RootApp(),
-                              ),
-                            );
-                          } else {
-                            context.removeAndShowSnackbar(
-                                'Could not connect user');
-                          }
-                        } else {
-                          print("validation failed");
+                          createUser(_formKey.currentState!.value);
                         }
                       },
                       child: Container(

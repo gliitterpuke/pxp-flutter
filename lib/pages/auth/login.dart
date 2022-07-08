@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:ffi';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -7,7 +7,6 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:pxp_flutter/pages/auth/forgot_password.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:pxp_flutter/pages/chat/app_config.dart';
@@ -24,7 +23,9 @@ import 'package:stream_chat_persistence/stream_chat_persistence.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:twitter_login/twitter_login.dart';
 
+import '../../constants/Theme.dart';
 import 'new_password.dart';
+import 'package:http/http.dart' as http;
 
 final chatPersistentClient = StreamChatPersistenceClient(
   logLevel: Level.SEVERE,
@@ -54,10 +55,9 @@ StreamChatClient buildStreamChatClient(
   )..chatPersistenceClient = chatPersistentClient;
 }
 
-void main() async {
-  const sentryDsn =
-      'https://6381ef88de4140db8f5e25ab37e0f08c@o1213503.ingest.sentry.io/6352870';
+const accessToken = '';
 
+void main() async {
   /// Captures errors reported by the Flutter framework.
   FlutterError.onError = (FlutterErrorDetails details) {
     if (kDebugMode) {
@@ -68,18 +68,6 @@ void main() async {
       Zone.current.handleUncaughtError(details.exception, details.stack!);
     }
   };
-
-  Future<void> _reportError(dynamic error, StackTrace stackTrace) async {
-    // Print the exception to the console.
-    if (kDebugMode) {
-      // Print the full stacktrace in debug mode.
-      print(stackTrace);
-      return;
-    } else {
-      // Send the Exception and Stacktrace to sentry in Production mode.
-      await Sentry.captureException(error, stackTrace: stackTrace);
-    }
-  }
 }
 
 class Login extends StatefulWidget {
@@ -91,7 +79,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormBuilderState>();
-  GoogleSignIn _googleSignIn = GoogleSignIn(
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: <String>[
       'email',
       'https://www.googleapis.com/auth/contacts.readonly',
@@ -99,9 +87,7 @@ class _LoginState extends State<Login> {
   );
 
   GoogleSignInAccount? _currentUser;
-  String _contactText = '';
-
-  InitData? _initData;
+  final String _contactText = '';
 
   Future<InitData> _initConnection() async {
     String? apiKey, userId, token;
@@ -127,27 +113,57 @@ class _LoginState extends State<Login> {
     return InitData(client, prefs);
   }
 
-  // @override
-  // void initState() {
-  //   final timeOfStartMs = DateTime.now().millisecondsSinceEpoch;
+  Future<void> loginUser(Map<String, dynamic> value) async {
+    final url = Uri.parse('http://localhost:5000/api/v1/auth/token');
+    final headers = {
+      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+    };
+    var parts = [];
+    value.forEach((key, value) {
+      parts.add('${Uri.encodeQueryComponent(key)}='
+          '${Uri.encodeQueryComponent(value)}');
+    });
+    var formData = parts.join('&');
+    try {
+      final response = await http.post(url, headers: headers, body: formData);
+      if (kDebugMode) {
+        print('Status code: ${response.statusCode}');
+        print('Body: ${response.body}');
+      }
 
-  //   _initConnection().then(
-  //     (initData) {
-  //       setState(() {
-  //         _initData = initData;
-  //       });
+      if (response.statusCode != 200) {
+        var error = json.decode(response.body);
+        context.removeAndShowSnackbar(error['detail']);
+      } else {
+        final secureStorage = FlutterSecureStorage();
+        secureStorage.write(
+          key: accessToken,
+          value: json.decode(response.body)['access_token'],
+        );
 
-  //       final now = DateTime.now().millisecondsSinceEpoch;
-  //     },
-  //   );
+        final success = await context.appState.connect(DemoAppUser.sacha);
 
-  //   super.initState();
-  // }
+        if (success) {
+          await Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (_) => const RootApp(),
+            ),
+          );
+        } else {
+          context.removeAndShowSnackbar(response.body);
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    } finally {}
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: pxpColors.darkBasePrimary,
         body: FormBuilder(
           key: _formKey,
           autovalidateMode: AutovalidateMode.disabled,
@@ -190,7 +206,7 @@ class _LoginState extends State<Login> {
                                         print(result.message);
                                       }
                                     },
-                                    fillColor: const Color(0xFF4267B2),
+                                    fillColor: pxpColors.facebook,
                                     child: const Icon(FontAwesome.facebook,
                                         size: 16.0, color: Colors.white),
                                     padding: const EdgeInsets.all(15.0),
@@ -218,7 +234,7 @@ class _LoginState extends State<Login> {
                                           break;
                                       }
                                     },
-                                    fillColor: const Color(0xFF1DA1F2),
+                                    fillColor: pxpColors.twitter,
                                     child: const Icon(Feather.twitter,
                                         size: 16.0, color: Colors.white),
                                     padding: const EdgeInsets.all(15.0),
@@ -232,7 +248,7 @@ class _LoginState extends State<Login> {
                                         print(error);
                                       }
                                     },
-                                    fillColor: const Color(0xFFDB4437),
+                                    fillColor: pxpColors.google,
                                     child: const Icon(AntDesign.google,
                                         size: 16.0, color: Colors.white),
                                     padding: const EdgeInsets.all(15.0),
@@ -250,7 +266,7 @@ class _LoginState extends State<Login> {
 
                                       print(credential);
                                     },
-                                    fillColor: const Color(0xFF555555),
+                                    fillColor: pxpColors.apple,
                                     child: const Icon(AntDesign.apple1,
                                         size: 16.0, color: Colors.white),
                                     padding: const EdgeInsets.all(15.0),
@@ -265,13 +281,14 @@ class _LoginState extends State<Login> {
                                   child: const Padding(
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Divider(
-                                    color: Color(0xFFBFBFBF), thickness: 1.25),
+                                    color: pxpColors.dividerColor,
+                                    thickness: 1.25),
                               )),
                               const Center(
                                 child: Text(
                                   "OR",
                                   style: TextStyle(
-                                      color: Color(0xFFBFBFBF),
+                                      color: pxpColors.dividerColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -280,7 +297,8 @@ class _LoginState extends State<Login> {
                                   child: const Padding(
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Divider(
-                                    color: Color(0xFFBFBFBF), thickness: 1.25),
+                                    color: pxpColors.dividerColor,
+                                    thickness: 1.25),
                               )),
                             ]),
                             const SizedBox(height: 20),
@@ -291,11 +309,11 @@ class _LoginState extends State<Login> {
                                   left: 15.0,
                                   right: 15.0),
                               decoration: BoxDecoration(
-                                color: const Color(0xFF212124),
+                                color: pxpColors.darkElevatedSecondary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: FormBuilderTextField(
-                                name: 'email',
+                                name: 'username',
                                 style: const TextStyle(fontSize: 14),
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -317,7 +335,7 @@ class _LoginState extends State<Login> {
                                   left: 15.0,
                                   right: 15.0),
                               decoration: BoxDecoration(
-                                color: const Color(0xFF212124),
+                                color: pxpColors.darkElevatedSecondary,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: FormBuilderTextField(
@@ -348,23 +366,7 @@ class _LoginState extends State<Login> {
                           onTap: () async {
                             _formKey.currentState!.save();
                             if (_formKey.currentState!.validate()) {
-                              print(_formKey.currentState!.value);
-
-                              final success = await context.appState
-                                  .connect(DemoAppUser.sacha);
-
-                              if (success) {
-                                _initConnection().then((value) async =>
-                                    await Navigator.of(context)
-                                        .pushReplacement(MaterialPageRoute(
-                                            builder: (context) => RootApp(),
-                                            settings: RouteSettings(
-                                              arguments: value!.client,
-                                            ))));
-                              } else {
-                                context.removeAndShowSnackbar(
-                                    'Could not connect user');
-                              }
+                              loginUser(_formKey.currentState!.value);
                             } else {
                               print("validation failed");
                             }
@@ -374,7 +376,7 @@ class _LoginState extends State<Login> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 gradient: const LinearGradient(colors: [
-                                  Color.fromRGBO(143, 148, 251, 1),
+                                  pxpColors.accent,
                                   Color.fromRGBO(143, 148, 251, .6),
                                 ])),
                             child: const Center(
@@ -397,7 +399,7 @@ class _LoginState extends State<Login> {
                             },
                             child: const Text("Forgot your password?",
                                 style: TextStyle(
-                                  color: Color.fromRGBO(143, 148, 251, 1),
+                                  color: pxpColors.accent,
                                 ))),
                         const SizedBox(
                           height: 20,
@@ -409,7 +411,7 @@ class _LoginState extends State<Login> {
                             },
                             child: const Text("Create an account",
                                 style: TextStyle(
-                                  color: Color.fromRGBO(143, 148, 251, 1),
+                                  color: pxpColors.accent,
                                 ))),
                       ],
                     ),
@@ -427,4 +429,18 @@ class InitData {
   final StreamingSharedPreferences preferences;
 
   InitData(this.client, this.preferences);
+}
+
+class Album {
+  final int id;
+  final String title;
+
+  const Album({required this.id, required this.title});
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      id: json['id'],
+      title: json['title'],
+    );
+  }
 }
