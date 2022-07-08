@@ -881,39 +881,33 @@ class __ProfileTileState extends State<_ProfileTile> {
             Expanded(
                 child: _isLoading
                     ? const CircularProgressIndicator(strokeWidth: 3)
-                    : _isFollowing
-                        ? OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                                primary: Colors.white,
-                                side: const BorderSide(
-                                    color: Colors.grey, width: .75)),
-                            onPressed: () {
-                              followOrUnfollowUser(context);
-                            },
-                            child: const Text("Unfollow",
-                                style: TextStyle(fontSize: 13.0)))
-                        : TextButton(
-                            child: Text('Follow'),
-                            style: TextButton.styleFrom(
-                              textStyle: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w500),
-                              primary: Colors.white,
-                              backgroundColor: pxpColors.accent,
-                              onSurface: Colors.grey,
-                            ),
-                            onPressed: () {
-                              followOrUnfollowUser(context);
-                            },
-                          )),
+                    : TextButton(
+                        child: _isFollowing ? Text('Follow') : Text('Unfollow'),
+                        style: TextButton.styleFrom(
+                          textStyle: TextStyle(
+                              fontSize: 13, fontWeight: FontWeight.bold),
+                          primary: Colors.white,
+                          backgroundColor: _isFollowing
+                              ? pxpColors.accent
+                              : pxpColors.darkElevatedSecondary,
+                          onSurface: Colors.grey,
+                        ),
+                        onPressed: () {
+                          followOrUnfollowUser(context);
+                        },
+                      )),
             SizedBox(width: 10),
             Expanded(
-              child: OutlinedButton(
+              child: TextButton(
                 style: OutlinedButton.styleFrom(
-                    primary: Colors.white,
-                    side: const BorderSide(color: Colors.grey, width: .75)),
+                  primary: Colors.white,
+                  backgroundColor: pxpColors.darkElevatedSecondary,
+                  onSurface: Colors.grey,
+                ),
                 onPressed: () {},
-                child:
-                    const Text("Subscribe", style: TextStyle(fontSize: 13.0)),
+                child: const Text("Subscribe",
+                    style:
+                        TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold)),
               ),
             ),
           ],

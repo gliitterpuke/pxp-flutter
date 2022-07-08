@@ -187,7 +187,7 @@ class _LibraryPageState extends State<LibraryPage>
                                   Text(
                                     "Chapter " + currentReads[index]['chapter'],
                                     style: const TextStyle(
-                                      color: pxpColors.secondaryT,
+                                      color: pxpColors.darkTextSecondary,
                                       fontSize: 11,
                                     ),
                                   ),
@@ -231,7 +231,7 @@ class _LibraryPageState extends State<LibraryPage>
                                   )
                                 : const Icon(
                                     MaterialCommunityIcons.bell_outline,
-                                    color: pxpColors.secondaryT,
+                                    color: pxpColors.darkTextSecondary,
                                     size: 20,
                                   )),
                       ),
@@ -253,7 +253,8 @@ class _LibraryPageState extends State<LibraryPage>
             const Text(
               "Choose from thousands of stories to begin reading!",
               textAlign: TextAlign.center,
-              style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
+              style:
+                  TextStyle(color: pxpColors.darkTextSecondary, fontSize: 14),
             ),
             const SizedBox(height: 30),
             OutlinedButton(
@@ -335,7 +336,7 @@ class _LibraryPageState extends State<LibraryPage>
                                     '${readLater[index]['books'].length ?? "Empty"}' +
                                         ' titles',
                                     style: const TextStyle(
-                                      color: pxpColors.secondaryT,
+                                      color: pxpColors.darkTextSecondary,
                                       fontSize: 11,
                                     ),
                                   ),
@@ -371,7 +372,7 @@ class _LibraryPageState extends State<LibraryPage>
                                   )
                                 : const Icon(
                                     MaterialCommunityIcons.bell_outline,
-                                    color: pxpColors.secondaryT,
+                                    color: pxpColors.darkTextSecondary,
                                     size: 20,
                                   )),
                       ),
@@ -502,7 +503,7 @@ class _LibraryPageState extends State<LibraryPage>
                                   Text(
                                     archived[index]['author'],
                                     style: const TextStyle(
-                                      color: pxpColors.secondaryT,
+                                      color: pxpColors.darkTextSecondary,
                                       fontSize: 11,
                                     ),
                                   ),
@@ -539,7 +540,8 @@ class _LibraryPageState extends State<LibraryPage>
             Text(
               "Archive your finished stroies and retrieve them whenever you want to.",
               textAlign: TextAlign.center,
-              style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
+              style:
+                  TextStyle(color: pxpColors.darkTextSecondary, fontSize: 14),
             ),
           ]));
 
@@ -602,7 +604,7 @@ class _LibraryPageState extends State<LibraryPage>
                                       creatorsFollowed[index]['series'] +
                                           " series",
                                       style: const TextStyle(
-                                        color: pxpColors.secondaryT,
+                                        color: pxpColors.darkTextSecondary,
                                         fontSize: 12,
                                       ),
                                     ),
@@ -611,7 +613,7 @@ class _LibraryPageState extends State<LibraryPage>
                                       creatorsFollowed[index]['followers'] +
                                           " followers",
                                       style: const TextStyle(
-                                        color: pxpColors.secondaryT,
+                                        color: pxpColors.darkTextSecondary,
                                         fontSize: 12,
                                       ),
                                     ),
@@ -640,7 +642,7 @@ class _LibraryPageState extends State<LibraryPage>
                                 )
                               : const Icon(
                                   MaterialCommunityIcons.bell_outline,
-                                  color: pxpColors.secondaryT,
+                                  color: pxpColors.darkTextSecondary,
                                   size: 20,
                                 )),
                     ),
@@ -661,7 +663,8 @@ class _LibraryPageState extends State<LibraryPage>
             const Text(
               "Find your new favourite author today!",
               textAlign: TextAlign.center,
-              style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
+              style:
+                  TextStyle(color: pxpColors.darkTextSecondary, fontSize: 14),
             ),
             const SizedBox(height: 30),
             OutlinedButton(
@@ -736,7 +739,7 @@ class _LibraryPageState extends State<LibraryPage>
                                       creatorsSubbed[index]['series'] +
                                           " series",
                                       style: const TextStyle(
-                                        color: pxpColors.secondaryT,
+                                        color: pxpColors.darkTextSecondary,
                                         fontSize: 12,
                                       ),
                                     ),
@@ -745,7 +748,7 @@ class _LibraryPageState extends State<LibraryPage>
                                       creatorsSubbed[index]['followers'] +
                                           " followers",
                                       style: const TextStyle(
-                                        color: pxpColors.secondaryT,
+                                        color: pxpColors.darkTextSecondary,
                                         fontSize: 12,
                                       ),
                                     ),
@@ -774,7 +777,7 @@ class _LibraryPageState extends State<LibraryPage>
                                 )
                               : const Icon(
                                   MaterialCommunityIcons.bell_outline,
-                                  color: pxpColors.secondaryT,
+                                  color: pxpColors.darkTextSecondary,
                                   size: 20,
                                 )),
                     ),
@@ -795,7 +798,8 @@ class _LibraryPageState extends State<LibraryPage>
             const Text(
               "Unlock stories beyond your imagination!",
               textAlign: TextAlign.center,
-              style: TextStyle(color: pxpColors.secondaryT, fontSize: 14),
+              style:
+                  TextStyle(color: pxpColors.darkTextSecondary, fontSize: 14),
             ),
             const SizedBox(height: 30),
             OutlinedButton(
@@ -927,8 +931,10 @@ void doNothing(BuildContext context) {}
 
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        MyStorePage(coin: coinBalance),
+    pageBuilder: (context, animation, secondaryAnimation) => MyStorePage(),
+    settings: const RouteSettings(
+      arguments: coinBalance,
+    ),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;

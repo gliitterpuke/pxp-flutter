@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                                 maxLines: 2,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: pxpColors.secondaryT,
+                                    color: pxpColors.darkTextSecondary,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600),
                               ),
@@ -151,7 +151,8 @@ class _HomePageState extends State<HomePage> {
                                     context: context,
                                     builder: (context) {
                                       return Dialog(
-                                        backgroundColor: Color(0xff212124),
+                                        backgroundColor:
+                                            pxpColors.darkElevatedPrimary,
                                         child: Padding(
                                           padding: EdgeInsets.all(8.0),
                                           child: ListView(
@@ -314,7 +315,7 @@ class _HomePageState extends State<HomePage> {
                                     Text(
                                       "¹",
                                       style: TextStyle(
-                                          color: pxpColors.secondaryT,
+                                          color: pxpColors.darkTextSecondary,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w600),
                                     )
@@ -345,7 +346,7 @@ class _HomePageState extends State<HomePage> {
                             maxLines: 4,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: pxpColors.secondaryT,
+                                color: pxpColors.darkTextSecondary,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600),
                           ),
@@ -432,7 +433,8 @@ class _HomePageState extends State<HomePage> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(
-                                                color: pxpColors.secondaryT,
+                                                color:
+                                                    pxpColors.darkTextSecondary,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w600),
                                           ),
@@ -517,7 +519,8 @@ class _HomePageState extends State<HomePage> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(
-                                                color: pxpColors.secondaryT,
+                                                color:
+                                                    pxpColors.darkTextSecondary,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w600),
                                           ),
@@ -712,7 +715,8 @@ class _HomePageState extends State<HomePage> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(
-                                                color: pxpColors.secondaryT,
+                                                color:
+                                                    pxpColors.darkTextSecondary,
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w600),
                                           ),
@@ -780,7 +784,7 @@ class _HomePageState extends State<HomePage> {
                                     child: IconButton(
                                       icon: Icon(
                                         genreList[index]['icon'],
-                                        color: pxpColors.secondaryT,
+                                        color: pxpColors.darkTextSecondary,
                                       ),
                                       onPressed: () {
                                         Navigator.push(

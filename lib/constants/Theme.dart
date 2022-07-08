@@ -3,14 +3,48 @@ import 'dart:ui' show Color;
 class pxpColors {
   static const Color accent = Color(0xff8f94fb);
 
-  static const Color black = Color(0xFF000000);
+  static const Color sysRed = Color(0xffFF453A);
+  static const Color sysOrange = Color(0xffFF9F0A);
+  static const Color sysYellow = Color(0xffFFD60A);
+  static const Color sysGreen = Color(0xff30D158);
+  static const Color sysMint = Color(0xff63E6E2);
+  static const Color sysTeal = Color(0xff40CBE0);
+  static const Color sysIndigo = Color(0xff5E5CE6);
+  static const Color sysPurple = Color(0xffBF5AF2);
+  static const Color sysPink = Color(0xffFF375F);
+  static const Color sysBrown = Color(0xffAC8E68);
 
+  static const Color sysGrey = Color(0xff8E8E93);
+  static const Color sysGrey2 = Color(0xff636366);
+  static const Color sysGrey3 = Color(0xff48484A);
+  static const Color sysGrey4 = Color(0xff3A3A3C);
+  static const Color sysGrey5 = Color(0xff2C2C2E);
+  static const Color sysGrey6 = Color(0xff1C1C1E);
+  static const Color userAccent = Color(0xff0084FF);
+  static const Color dividerColor = Color(0xFFBFBFBF);
+
+  static const Color darkElevatedPrimary = Color(0xff1C1C1E);
+  static const Color darkElevatedSecondary = Color(0xff2C2C2E);
+  static const Color darkElevatedTertiary = Color(0xff3A3A3C);
+
+  static const Color darkBasePrimary = Color(0xff000000);
+  static const Color darkBaseSecondary = Color(0xff1C1C1E);
+  static const Color darkBaseTertiary = Color(0xff2C2C2E);
+
+  static const Color darkTextPrimary = Color(0xffFFFFFF);
+  static const Color darkTextSecondary = Color(0x99EBEBF5);
+  static const Color darkTextTertiary = Color(0x4DEBEBF5);
+  static const Color darkTextQuartnerary = Color(0x26EBEBF5);
+
+  static const Color opSep = Color(0xff38383A);
+  static const Color nonOpSep = Color(0xa6545458);
+
+  static const Color black = Color(0xFF000000);
   static const Color white = Color(0xFFFFFFFF);
 
   static const Color darkCard = Color(0xFF161618);
 
   static const Color lighterCard = Color(0xFF212124);
-
   static const Color defaultColor = Color.fromRGBO(136, 136, 136, 1.0);
 
   static const Color primary = Color.fromRGBO(249, 99, 50, 1.0);
@@ -71,9 +105,11 @@ class pxpColors {
 
   static const Color gradientEnd = Color.fromRGBO(172, 38, 136, 1.0);
 
-  static const Color socialFacebook = Color.fromRGBO(59, 89, 152, 1.0);
+  static const Color twitter = Color(0xFF1DA1F2);
 
-  static const Color socialTwitter = Color.fromRGBO(91, 192, 222, 1.0);
+  static const Color facebook = Color(0xFF4267B2);
 
-  static const Color socialDribbble = Color.fromRGBO(234, 76, 137, 1.0);
+  static const Color google = Color(0xFFDB4437);
+
+  static const Color apple = Color(0xFF555555);
 }

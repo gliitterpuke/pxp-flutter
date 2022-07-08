@@ -3,11 +3,16 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:pxp_flutter/json/profile.dart';
 
-class MyStorePage extends StatelessWidget {
-  MyStorePage({Key? key, required this.coin}) : super(key: key);
-  var coin = 0;
+class MyStorePage extends StatefulWidget {
+  MyStorePage({Key? key}) : super(key: key);
 
+  @override
+  _MyStorePageState createState() => _MyStorePageState();
+}
+
+class _MyStorePageState extends State<MyStorePage> {
   Widget build(BuildContext context) {
+    final coin = ModalRoute.of(context)!.settings.arguments as int;
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
