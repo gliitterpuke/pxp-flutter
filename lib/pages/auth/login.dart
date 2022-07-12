@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:pxp_flutter/pages/auth/demo_page.dart';
 import 'package:pxp_flutter/pages/chat/app_config.dart';
 import 'package:pxp_flutter/pages/chat/choose_user_page.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
@@ -93,7 +94,7 @@ class _LoginState extends State<Login> {
     String? apiKey, userId, token;
 
     if (!kIsWeb) {
-      final secureStorage = FlutterSecureStorage();
+      final secureStorage = const FlutterSecureStorage();
       apiKey = await secureStorage.read(key: kStreamApiKey);
       userId = await secureStorage.read(key: kStreamUserId);
       token = await secureStorage.read(key: kStreamToken);
@@ -135,7 +136,7 @@ class _LoginState extends State<Login> {
         var error = json.decode(response.body);
         context.removeAndShowSnackbar(error['detail']);
       } else {
-        final secureStorage = FlutterSecureStorage();
+        final secureStorage = const FlutterSecureStorage();
         secureStorage.write(
           key: accessToken,
           value: json.decode(response.body)['access_token'],
@@ -163,6 +164,23 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          actions: [
+            GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Demo()));
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("Demo",
+                      style: TextStyle(
+                          color: pxpColors.accent,
+                          fontWeight: FontWeight.bold)),
+                )),
+          ],
+          automaticallyImplyLeading: false,
+        ),
         backgroundColor: pxpColors.darkBasePrimary,
         body: FormBuilder(
           key: _formKey,
@@ -277,8 +295,8 @@ class _LoginState extends State<Login> {
                             ),
                             const SizedBox(height: 40),
                             Row(children: [
-                              Expanded(
-                                  child: const Padding(
+                              const Expanded(
+                                  child: Padding(
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Divider(
                                     color: pxpColors.dividerColor,
@@ -293,8 +311,8 @@ class _LoginState extends State<Login> {
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              Expanded(
-                                  child: const Padding(
+                              const Expanded(
+                                  child: Padding(
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Divider(
                                     color: pxpColors.dividerColor,
@@ -395,7 +413,7 @@ class _LoginState extends State<Login> {
                         GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => NewPassword()));
+                                  builder: (context) => const NewPassword()));
                             },
                             child: const Text("Forgot your password?",
                                 style: TextStyle(
@@ -407,7 +425,7 @@ class _LoginState extends State<Login> {
                         GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => Register()));
+                                  builder: (context) => const Register()));
                             },
                             child: const Text("Create an account",
                                 style: TextStyle(

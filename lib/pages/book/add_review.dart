@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
+import 'package:http/http.dart' as http;
+import 'package:pxp_flutter/pages/ig/app/app.dart';
 
 class AddReview extends StatefulWidget {
   const AddReview({Key? key}) : super(key: key);
@@ -12,9 +17,76 @@ class AddReview extends StatefulWidget {
 
 class _AddReviewState extends State<AddReview> {
   bool isAdvanced = false;
+  late double overall;
+  late double style;
+  late double grammar;
+  late double plot;
+  late double character;
+
+  final url = 'http://localhost:5000/api/v1/';
+  final jsonHeaders = {"Content-type": "application/json"};
+
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<void> createReview() async {
+    final reviewURL = Uri.parse(url + 'book_reviews/');
+    final simple = json.encode({
+      "style": 0,
+      "plot": 0,
+      "grammar": 0,
+      "character": 0,
+      "chapter": 0,
+      "title": "Truly amazing",
+      "text": "phenomenal tell me more"
+    });
+    final advanced = json.encode({
+      "style": style.toStringAsFixed(1),
+      "plot": plot.toStringAsFixed(1),
+      "grammar": grammar.toStringAsFixed(1),
+      "character": character.toStringAsFixed(1),
+      "chapter": 0,
+      "title": "Truly amazing",
+      "text": "phenomenal tell me more"
+    });
+
+    try {
+      // if (isAdvanced == false) {
+      // final response =
+      //     await http.post(reviewURL, headers: jsonHeaders, body: simple);
+      // if (kDebugMode) {
+      //   print('Status code: ${response.statusCode}');
+      //   print('Body: ${response.body}');
+      // }
+
+      // if (response.statusCode != 200) {
+      //   var error = json.decode(response.body);
+      //   context.removeAndShowSnackbar(error['detail']);
+      // } else {
+      //   context.removeAndShowSnackbar('Success!');
+      // }
+      // } else {
+      final advResp =
+          await http.post(reviewURL, headers: jsonHeaders, body: advanced);
+      if (kDebugMode) {
+        print('Status code: ${advResp.statusCode}');
+        print('Body: ${advResp.body}');
+      }
+
+      if (advResp.statusCode != 200) {
+        var error = json.decode(advResp.body);
+        context.removeAndShowSnackbar(error['detail']);
+      } else {
+        context.removeAndShowSnackbar('Success!');
+      }
+      // }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
   }
 
   @override
@@ -87,7 +159,9 @@ class _AddReviewState extends State<AddReview> {
                         Icons.star,
                         color: Colors.amber,
                       ),
-                      onRatingUpdate: (rating) {},
+                      onRatingUpdate: (rating) {
+                        setState(() => overall = rating);
+                      },
                     ),
                     SizedBox(height: 20),
                     isAdvanced == false
@@ -160,7 +234,9 @@ class _AddReviewState extends State<AddReview> {
                                           Icons.star,
                                           color: Colors.amber,
                                         ),
-                                        onRatingUpdate: (rating) {},
+                                        onRatingUpdate: (rating) {
+                                          setState(() => style = rating);
+                                        },
                                       ),
                                       const SizedBox(
                                         height: 10,
@@ -188,7 +264,9 @@ class _AddReviewState extends State<AddReview> {
                                           Icons.star,
                                           color: Colors.amber,
                                         ),
-                                        onRatingUpdate: (rating) {},
+                                        onRatingUpdate: (rating) {
+                                          setState(() => plot = rating);
+                                        },
                                       ),
                                       const SizedBox(
                                         height: 10,
@@ -224,7 +302,7 @@ class _AddReviewState extends State<AddReview> {
                                           color: Colors.amber,
                                         ),
                                         onRatingUpdate: (rating) {
-                                          print(rating);
+                                          setState(() => character = rating);
                                         },
                                       ),
                                     ],
@@ -251,7 +329,7 @@ class _AddReviewState extends State<AddReview> {
                                           color: Colors.amber,
                                         ),
                                         onRatingUpdate: (rating) {
-                                          print(rating);
+                                          setState(() => plot = rating);
                                         },
                                       ),
                                     ],
@@ -289,10 +367,8 @@ class _AddReviewState extends State<AddReview> {
                             color: Color.fromARGB(255, 193, 193, 193)),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const BookDetail()));
+                        // print(overall.toStringAsFixed(1));
+                        createReview();
                       },
                       child: const Text('Post review'),
                     ),

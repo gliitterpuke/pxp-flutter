@@ -74,6 +74,7 @@ dependencies:
   google_sign_in: ^5.3.3
   purchases_flutter: ^3.8.0
   flutter_svg: ^1.1.1+1
+  firebase_core: ^1.19.1
 
 
 dev_dependencies:
