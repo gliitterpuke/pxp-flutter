@@ -21,33 +21,58 @@ final mimeHeaders = {"Content-type": "image/jpeg"};
 
 class _UserDemoState extends State<UserDemo> {
   Future<void> createUser() async {
-    final userURL = Uri.parse(url + 'users/');
-    final jsonBody = json.encode({
-      "email": "demo@demo.com",
-      "password": "testing123",
-      "is_creator": true,
-      "username": "demo"
-    });
+    void user() async {
+      List<String> emails = [
+        "demo@demo.com",
+        "kat@pxp.fan",
+        "leon@pxp.fan",
+        "contact@pxp.fan",
+        "keigo@higashino.com",
+        "lee@minjin.com",
+        "colleen@hoover.com",
+        "agatha@christie.com",
+        "cs@lewis.com",
+      ];
+
+      List<String> usernames = [
+        "demo",
+        "glitterpuke",
+        "llyx",
+        "teampxp",
+        "higashino",
+        "lminjin",
+        "choover",
+        "achristie",
+        "cslewis"
+      ];
+
+      for (int i = 0; i < emails.length; i++) {
+        final userURL = Uri.parse(url + 'users/');
+        final userBody = json.encode({
+          "email": emails[i],
+          "password": "testing123",
+          "is_creator": true,
+          "username": usernames[i],
+        });
+        final resp =
+            await http.post(userURL, headers: jsonHeaders, body: userBody);
+        print(resp.body);
+        if (resp.statusCode != 200) {
+          var error = json.decode(resp.body);
+          context.removeAndShowSnackbar(error['detail']);
+        }
+      }
+    }
 
     try {
-      final response =
-          await http.post(userURL, headers: jsonHeaders, body: jsonBody);
-      if (kDebugMode) {
-        print('Status code: ${response.statusCode}');
-        print('Body: ${response.body}');
-      }
-
-      if (response.statusCode != 200) {
-        var error = json.decode(response.body);
-        context.removeAndShowSnackbar(error['detail']);
-      } else {
-        context.removeAndShowSnackbar('Success!');
-      }
+      user();
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
-    } finally {}
+    } finally {
+      context.removeAndShowSnackbar('Success!');
+    }
   }
 
   @override

@@ -10,6 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:pxp_flutter/pages/auth/demo_page.dart';
+import 'package:pxp_flutter/pages/auth/forgot_password.dart';
 import 'package:pxp_flutter/pages/chat/app_config.dart';
 import 'package:pxp_flutter/pages/chat/choose_user_page.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
@@ -128,19 +129,34 @@ class _LoginState extends State<Login> {
     try {
       final response = await http.post(url, headers: headers, body: formData);
       if (kDebugMode) {
-        print('Status code: ${response.statusCode}');
-        print('Body: ${response.body}');
+        // print('Status code: ${response.statusCode}');
+        // print('Body: ${response.body}');
       }
 
       if (response.statusCode != 200) {
         var error = json.decode(response.body);
         context.removeAndShowSnackbar(error['detail']);
       } else {
-        final secureStorage = const FlutterSecureStorage();
+        const secureStorage = FlutterSecureStorage();
         secureStorage.write(
           key: accessToken,
           value: json.decode(response.body)['access_token'],
         );
+        final authurl = Uri.parse('http://localhost:5000/api/v1/users/me/');
+        final authHeader = {
+          'Content-Type': 'application/json',
+          'Authorization':
+              'Bearer ${json.decode(response.body)['access_token']}',
+        };
+        await http
+            .get(authurl, headers: authHeader)
+            .then((value) => secureStorage.write(
+                      key: 'user',
+                      value: value.body,
+                    )
+                // print(json.decode(value.body))
+                // print(json.encode(value.body))
+                );
 
         final success = await context.appState.connect(DemoAppUser.sacha);
 
@@ -413,7 +429,8 @@ class _LoginState extends State<Login> {
                         GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const NewPassword()));
+                                  builder: (context) =>
+                                      const ForgotPassword()));
                             },
                             child: const Text("Forgot your password?",
                                 style: TextStyle(

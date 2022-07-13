@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:pxp_flutter/pages/auth/login.dart';
 import 'package:pxp_flutter/pages/demo/book_demo.dart';
+import 'package:pxp_flutter/pages/demo/collection_demo.dart';
 import 'package:pxp_flutter/pages/demo/user_demo.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
 
@@ -131,6 +133,7 @@ class _DemoState extends State<Demo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       backgroundColor: pxpColors.darkBasePrimary,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -157,38 +160,28 @@ class _DemoState extends State<Demo> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Column(
-                              children: [
+                              children: const [
                                 UserDemo(),
                                 SizedBox(height: 10),
-                                Text('Create user',
+                                Text('Users',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                               ],
                             ),
                             Column(
-                              children: [
+                              children: const [
                                 BookDemo(),
                                 SizedBox(height: 10),
-                                Text('Create book',
+                                Text('Books',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                               ],
                             ),
                             Column(
-                              children: [
-                                RawMaterialButton(
-                                  onPressed: () async {
-                                    createCollection();
-                                  },
-                                  fillColor: pxpColors.accent,
-                                  child: const Text('3',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  padding: const EdgeInsets.all(15.0),
-                                  shape: const CircleBorder(),
-                                ),
+                              children: const [
+                                CollectionDemo(),
                                 SizedBox(height: 10),
-                                Text('Create collection',
+                                Text('Collections',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                               ],
@@ -200,60 +193,32 @@ class _DemoState extends State<Demo> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Column(
-                              children: [
-                                RawMaterialButton(
-                                  onPressed: () async {
-                                    createChapter();
-                                  },
-                                  fillColor: pxpColors.accent,
-                                  child: const Text('1',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  padding: const EdgeInsets.all(15.0),
-                                  shape: const CircleBorder(),
-                                ),
+                              children: const [
+                                UserDemo(),
                                 SizedBox(height: 10),
-                                Text('Create chapter',
+                                Text('Users',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                               ],
                             ),
                             Column(
-                              children: [
-                                RawMaterialButton(
-                                  onPressed: () async {},
-                                  fillColor: pxpColors.accent,
-                                  child: const Text('1',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  padding: const EdgeInsets.all(15.0),
-                                  shape: const CircleBorder(),
-                                ),
+                              children: const [
+                                BookDemo(),
                                 SizedBox(height: 10),
-                                Text('Create review',
+                                Text('Books',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                               ],
                             ),
                             Column(
-                              children: [
-                                RawMaterialButton(
-                                  onPressed: () async {
-                                    createCollection();
-                                  },
-                                  fillColor: pxpColors.accent,
-                                  child: const Text('3',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  padding: const EdgeInsets.all(15.0),
-                                  shape: const CircleBorder(),
-                                ),
+                              children: const [
+                                CollectionDemo(),
                                 SizedBox(height: 10),
-                                Text('Create collection',
+                                Text('Collections',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                               ],
-                            ),
+                            )
                           ],
                         ),
                         const SizedBox(height: 40),
