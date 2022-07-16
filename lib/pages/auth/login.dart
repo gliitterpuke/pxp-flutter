@@ -6,6 +6,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -20,12 +21,15 @@ import 'package:pxp_flutter/pages/root_app.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:flutter_config/flutter_config.dart';
-import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart' as sc;
 import 'package:stream_chat_persistence/stream_chat_persistence.dart';
+import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:twitter_login/twitter_login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/Theme.dart';
+import '../demo/misc_demo.dart';
 import 'new_password.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,8 +38,8 @@ final chatPersistentClient = StreamChatPersistenceClient(
   connectionMode: ConnectionMode.regular,
 );
 
-void sampleAppLogHandler(LogRecord record) async {
-  if (kDebugMode) StreamChatClient.defaultLogHandler(record);
+void sampleAppLogHandler(sc.LogRecord record) async {
+  if (kDebugMode) sc.StreamChatClient.defaultLogHandler(record);
 
   // report errors to sentry
   if (record.error != null || record.stackTrace != null) {
@@ -46,11 +50,11 @@ void sampleAppLogHandler(LogRecord record) async {
   }
 }
 
-StreamChatClient buildStreamChatClient(
+sc.StreamChatClient buildStreamChatClient(
   String apiKey, {
   Level logLevel = Level.SEVERE,
 }) {
-  return StreamChatClient(
+  return sc.StreamChatClient(
     apiKey,
     logLevel: logLevel,
     logHandlerFunction: sampleAppLogHandler,
@@ -120,54 +124,58 @@ class _LoginState extends State<Login> {
     final headers = {
       "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
     };
-    var parts = [];
-    value.forEach((key, value) {
-      parts.add('${Uri.encodeQueryComponent(key)}='
-          '${Uri.encodeQueryComponent(value)}');
-    });
-    var formData = parts.join('&');
+    var formData =
+        'username=${Uri.encodeQueryComponent(value['username'])}&password=${Uri.encodeQueryComponent(value['password'])}';
     try {
+      final box = GetStorage();
+
       final response = await http.post(url, headers: headers, body: formData);
-      if (kDebugMode) {
-        // print('Status code: ${response.statusCode}');
-        // print('Body: ${response.body}');
-      }
 
       if (response.statusCode != 200) {
         var error = json.decode(response.body);
         context.removeAndShowSnackbar(error['detail']);
       } else {
-        const secureStorage = FlutterSecureStorage();
-        secureStorage.write(
-          key: accessToken,
-          value: json.decode(response.body)['access_token'],
-        );
+        box.write('access_token', json.decode(response.body)['access_token']);
+
         final authurl = Uri.parse('http://localhost:5000/api/v1/users/me/');
         final authHeader = {
           'Content-Type': 'application/json',
           'Authorization':
               'Bearer ${json.decode(response.body)['access_token']}',
         };
-        await http
-            .get(authurl, headers: authHeader)
-            .then((value) => secureStorage.write(
-                      key: 'user',
-                      value: value.body,
-                    )
-                // print(json.decode(value.body))
-                // print(json.encode(value.body))
-                );
 
-        final success = await context.appState.connect(DemoAppUser.sacha);
+        final secureUser = await http.get(authurl, headers: authHeader);
+        await box.write('user', json.decode(secureUser.body));
+        final username = box.read('user')['profile']['username'];
 
-        if (success) {
+        await context.appState.client.setUser(
+          User(id: username),
+          Token(json.decode(response.body)['stream_feed_token']),
+        );
+
+        final pic = box.read('user')['profile']['pic']['url'];
+        final a = Uri.parse(pic);
+        final pfpImg = await http.get(Uri.parse(
+            'http://localhost:5000/api/v1/sign-s3-get?bucket=pxp-demo2&key=${a.pathSegments.last}'));
+        print(pfpImg.body);
+
+        final success = await context.appState.client
+            .user(username)
+            .update({'username': username});
+        await box.write('pfp', pfpImg.body);
+
+        // final test = await context.appState.client.user('demo').get();
+        // print(test.data);
+        // // final success = await context.appState.connect(DemoAppUser.sacha);
+
+        if (success.data!.isNotEmpty) {
           await Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (_) => const RootApp(),
             ),
           );
         } else {
-          context.removeAndShowSnackbar(response.body);
+          context.removeAndShowSnackbar(success.data.toString());
         }
       }
     } catch (e) {
@@ -460,7 +468,7 @@ class _LoginState extends State<Login> {
 }
 
 class InitData {
-  final StreamChatClient client;
+  final sc.StreamChatClient client;
   final StreamingSharedPreferences preferences;
 
   InitData(this.client, this.preferences);

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_config/flutter_config.dart';
 import 'package:form_builder_validators/localization/l10n.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'package:pxp_flutter/pages/chat/splash_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -38,7 +39,7 @@ void main() async {
       );
       WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
       await FlutterConfig.loadEnvVariables();
-
+      await GetStorage.init();
       runApp(MyApp());
     },
     _reportError,

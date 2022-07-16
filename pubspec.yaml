@@ -75,6 +75,8 @@ dependencies:
   purchases_flutter: ^3.8.0
   flutter_svg: ^1.1.1+1
   firebase_core: ^1.19.1
+  get_storage: ^2.0.3
+  cached_network_image: ^3.2.1
 
 
 dev_dependencies:

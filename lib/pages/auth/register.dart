@@ -8,12 +8,16 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pxp_flutter/pages/auth/login.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
 import 'package:pxp_flutter/pages/root_app.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
+
 import 'package:twitter_login/twitter_login.dart';
 import 'package:http/http.dart' as http;
 
@@ -36,15 +40,17 @@ class _RegisterState extends State<Register> {
 
   GoogleSignInAccount? _currentUser;
   final String _contactText = '';
+  final url = 'http://localhost:5000/api/v1/';
 
   Future<void> createUser(Map<String, dynamic> value) async {
-    final url = Uri.parse('http://localhost:5000/api/v1/users/');
-    final headers = {"Content-type": "application/json"};
+    final jsonHeaders = {"Content-type": "application/json"};
     final newValue = {...value, 'is_creator': true};
     var jsonBody = jsonEncode(newValue);
 
     try {
-      final response = await http.post(url, headers: headers, body: jsonBody);
+      final box = GetStorage();
+      final response = await http.post(Uri.parse(url + 'users/'),
+          headers: jsonHeaders, body: jsonBody);
       if (kDebugMode) {
         print('Status code: ${response.statusCode}');
         print('Body: ${response.body}');
@@ -54,23 +60,97 @@ class _RegisterState extends State<Register> {
         var error = json.decode(response.body);
         context.removeAndShowSnackbar(error['detail']);
       } else {
-        final success = await context.appState.connect(DemoAppUser.sacha);
+        // add default pfp
+        final profile = json.decode(response.body)['profile'];
+        final profileURL =
+            Uri.parse(url + 'profiles/${json.decode(response.body)['id']}');
+        final profileBody = json.encode({
+          "username": profile['username'],
+          "display_name": "",
+          "bio": "",
+          "mature": profile['mature'],
+          "notifications": true,
+          "payout_acc_id": "",
+          "pic_id": 2
+        });
 
-        if (success) {
-          await Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (_) => const RootApp(),
-            ),
-          );
+        final pfpResp =
+            await http.put(profileURL, headers: jsonHeaders, body: profileBody);
+        if (pfpResp.statusCode != 200) {
+          var error = json.decode(pfpResp.body);
+          print(error);
         } else {
-          context.removeAndShowSnackbar(response.body);
+          print('Successful PFP upload');
+        }
+
+        final headers = {
+          "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+        };
+        var formData =
+            'username=${Uri.encodeQueryComponent(value['email'])}&password=${Uri.encodeQueryComponent(value['password'])}';
+        try {
+          final response = await http.post(Uri.parse(url + 'auth/token'),
+              headers: headers, body: formData);
+          if (response.statusCode != 200) {
+            var error = json.decode(response.body);
+            context.removeAndShowSnackbar(error['detail']);
+          } else {
+            print('Successful login');
+
+            // save access token
+            await box.write(
+                'access_token', json.decode(response.body)['access_token']);
+            await box.write('stream_feed_token',
+                json.decode(response.body)['stream_feed_token']);
+
+            // call user
+            final authurl = Uri.parse('http://localhost:5000/api/v1/users/me/');
+            final authHeader = {
+              'Content-Type': 'application/json',
+              'Authorization':
+                  'Bearer ${json.decode(response.body)['access_token']}',
+            };
+
+            // save user to storage
+            final secureUser = await http.get(authurl, headers: authHeader);
+            await box.write('user', json.decode(secureUser.body));
+            final user = await box.read('user');
+
+            // save default profile pic
+            final a = Uri.parse(user['profile']['pic']['url']);
+            final pfpImg = await http.get(Uri.parse(
+                'http://localhost:5000/api/v1/sign-s3-get?bucket=pxp-demo2&key=${a.pathSegments.last}'));
+
+            await box.write('pfp', pfpImg.body);
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print(e.toString());
+          }
+        } finally {
+          final user = await box.read('user');
+          final token = await box.read('stream_feed_token');
+          await context.appState.client.setUser(
+            User(id: user['profile']['username']),
+            Token(token),
+          );
+
+          if (context.appState.client.currentUser!.id.isNotEmpty) {
+            await Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (_) => const RootApp(),
+              ),
+            );
+          } else {
+            context.removeAndShowSnackbar(response.body);
+          }
         }
       }
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());
       }
-    } finally {}
+    }
   }
 
   @override

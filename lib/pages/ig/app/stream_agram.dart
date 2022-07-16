@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:provider/provider.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
 import 'package:pxp_flutter/pages/auth/onboarding.dart';
@@ -22,8 +23,7 @@ class StreamagramApp extends StatefulWidget {
 }
 
 class _StreamagramAppState extends State<StreamagramApp> {
-  final _client =
-      StreamFeedClient('rzxdu6bj5yaa'); // TODO: Add Stream API Token
+  final _client = StreamFeedClient(FlutterConfig.get('STREAM_FEED_API_KEY'));
   late final appState = AppState(client: _client);
 
   // Important to only initialize this once.

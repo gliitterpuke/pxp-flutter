@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:pxp_flutter/pages/auth/login.dart';
 import 'package:pxp_flutter/pages/demo/book_demo.dart';
 import 'package:pxp_flutter/pages/demo/collection_demo.dart';
+import 'package:pxp_flutter/pages/demo/misc_demo.dart';
+import 'package:pxp_flutter/pages/demo/pic_demo.dart';
 import 'package:pxp_flutter/pages/demo/user_demo.dart';
 import 'package:pxp_flutter/pages/ig/app/app.dart';
 
@@ -194,18 +196,18 @@ class _DemoState extends State<Demo> {
                           children: [
                             Column(
                               children: const [
-                                UserDemo(),
+                                MiscDemo(),
                                 SizedBox(height: 10),
-                                Text('Users',
+                                Text('Misc',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                               ],
                             ),
                             Column(
                               children: const [
-                                BookDemo(),
+                                PicDemo(),
                                 SizedBox(height: 10),
-                                Text('Books',
+                                Text('Pic',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold)),
                               ],

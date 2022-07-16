@@ -67,8 +67,8 @@ Future<void> cover() async {
 
   for (int i = 0; i < cover.length; i++) {
     final blobURL = Uri.parse(url + 'blobs/');
-    final s3post =
-        Uri.parse(url + 'sign-s3-post?key=cover$i.jpeg&mime_type=image%2Fjpeg');
+    final s3post = Uri.parse(url +
+        'sign-s3-post?bucket=pxp-demo2&key=cover$i.jpeg&mime_type=image%2Fjpeg');
     final s3 = await http.get(s3post, headers: jsonHeaders);
 
     Map<String, String> reqBody = <String, String>{
@@ -98,8 +98,9 @@ Future<void> cover() async {
       "mime_type": "image/jpeg",
       "bucket": "pxp-demo2",
       "tag": "string",
-      "url": "${json.decode(s3.body)['data']['url']}/cover$i}"
+      "url": "${json.decode(s3.body)['data']['url']}cover$i.jpg"
     });
+    print("${json.decode(s3.body)['data']['url']}cover$i.jpg");
     await http.post(blobURL, headers: jsonHeaders, body: coverBlob);
   }
 }
