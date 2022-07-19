@@ -133,7 +133,7 @@ class _BookDemoState extends State<BookDemo> {
         "completed": true,
         "mature": true,
         "author_id": 1,
-        "cover_id": 1,
+        "cover_id": 9,
         "language_id": 1,
         "tag_ids": [1],
       });
@@ -147,7 +147,7 @@ class _BookDemoState extends State<BookDemo> {
         "completed": true,
         "mature": true,
         "author_id": 1,
-        "cover_id": 2,
+        "cover_id": 10,
         "language_id": 1,
         "tag_ids": [1],
       });
@@ -161,7 +161,7 @@ class _BookDemoState extends State<BookDemo> {
         "completed": true,
         "mature": true,
         "author_id": 1,
-        "cover_id": 3,
+        "cover_id": 11,
         "language_id": 1,
         "tag_ids": [1],
       });
@@ -175,7 +175,7 @@ class _BookDemoState extends State<BookDemo> {
         "completed": true,
         "mature": true,
         "author_id": 1,
-        "cover_id": 4,
+        "cover_id": 12,
         "language_id": 1,
         "tag_ids": [1],
       });
@@ -189,7 +189,7 @@ class _BookDemoState extends State<BookDemo> {
         "completed": true,
         "mature": true,
         "author_id": 1,
-        "cover_id": 5,
+        "cover_id": 13,
         "language_id": 1,
         "tag_ids": [1],
       });

@@ -37,16 +37,30 @@ class NewProfilePage extends StatefulWidget {
 class _NewProfilePageState extends State<NewProfilePage> {
   late bool isFollowing;
   bool isHelpful = false;
+  late Future<Map> userDataFuture = getUser();
+  late String pfpImg;
+  late Map user;
   final box = GetStorage();
 
   Future<Map> getUser() async {
+    final futures = await Future.wait([getUserObj(), getPfp()]);
+    user = futures[0] as Map;
+    pfpImg = futures[1] as String;
+
+    return user;
+  }
+
+  Future<Map> getUserObj() async {
     final user = await box.read('user');
 
     return user;
   }
 
-  Future<bool> _isFollowingUser(String userId) async {
-    return FeedProvider.of(context).bloc.isFollowingFeed(followerId: userId);
+  Future<String> getPfp() async {
+    final box = GetStorage();
+    final pfp = await box.read('pfp');
+    final decodePfp = json.decode(pfp);
+    return decodePfp;
   }
 
   final ValueNotifier<bool> _showCommentBox = ValueNotifier(false);
@@ -101,19 +115,32 @@ class _NewProfilePageState extends State<NewProfilePage> {
         (_page * _perPage), ((_page * _perPage) + _perPage));
 
     return FutureBuilder<Map>(
-        future: getUser(),
+        future: userDataFuture,
         builder: (context, AsyncSnapshot<Map> snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
+              floatingActionButton: FloatingActionButton(
+                  child: Icon(
+                    AntDesign.addfile,
+                    size: 20,
+                  ),
+                  backgroundColor: pxpColors.accent,
+                  foregroundColor: Colors.white,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewPostScreen(),
+                        ));
+                  }),
               backgroundColor: Colors.black,
               appBar: AppBar(
-                // leading: const BackButton(),
-                // automaticallyImplyLeading: false,
+                automaticallyImplyLeading: false,
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 centerTitle: true,
                 title: Text(
-                  snapshot.data!['profile']['username'],
+                  user['profile']['username'],
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -152,8 +179,7 @@ class _NewProfilePageState extends State<NewProfilePage> {
                             const SizedBox(
                               height: 30,
                             ),
-                            _UserProfile(
-                                userId: snapshot.data!['profile']['username']),
+                            _UserProfile(userId: user['profile']['username']),
                             const SizedBox(height: 10),
                           ],
                         ),
@@ -169,7 +195,7 @@ class _NewProfilePageState extends State<NewProfilePage> {
                             fontSize: 12.0, fontWeight: FontWeight.bold),
                         labelColor: Colors.white,
                         unselectedLabelColor: Colors.grey.shade600,
-                        indicatorColor: Colors.grey,
+                        indicatorColor: pxpColors.accent,
                         tabs: const [
                           Tab(text: "BOOKS"),
                           Tab(text: "WALL"),
@@ -390,7 +416,8 @@ class _NewProfilePageState extends State<NewProfilePage> {
                                                 BorderRadius.circular(99),
                                             image: DecorationImage(
                                                 image: AssetImage(
-                                                    authorList[index]['img']),
+                                                    authorList[index]['profile']
+                                                        ['pic']['url']),
                                                 fit: BoxFit.cover)),
                                       ),
                                       const SizedBox(
@@ -400,7 +427,8 @@ class _NewProfilePageState extends State<NewProfilePage> {
                                         width: 100,
                                         child: Center(
                                           child: Text(
-                                            authorList[index]['author'],
+                                            authorList[index]['profile']
+                                                ['username'],
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: const TextStyle(
@@ -439,26 +467,29 @@ class _NewProfilePageState extends State<NewProfilePage> {
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Text('No posts yet',
-                                          style: TextStyle(fontSize: 16)),
+                                      const Text(
+                                          "Tell the world what you're up to",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold)),
                                       const SizedBox(height: 15),
                                       SizedBox(
-                                        // width: double.infinity,
                                         height: 40,
-                                        child: OutlinedButton(
-                                          style: OutlinedButton.styleFrom(
-                                            primary: Colors.white,
-                                            side: const BorderSide(
-                                                color: Color.fromARGB(
-                                                    255, 193, 193, 193)),
+                                        child: TextButton(
+                                          style: TextButton.styleFrom(
+                                            backgroundColor: pxpColors.accent,
                                           ),
                                           onPressed: () => Navigator.of(context)
                                               .push(NewPostScreen.route),
-                                          child: const Text("Add a post",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white)),
+                                          child: const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: Text("Create a post",
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.white)),
+                                          ),
                                         ),
                                       ),
                                     ]),
@@ -488,6 +519,8 @@ class _NewProfilePageState extends State<NewProfilePage> {
                                             'post-${activities[index].id}'),
                                         enrichedActivity: activities[index],
                                         onAddComment: openCommentBox,
+                                        user: user,
+                                        pfpImg: pfpImg,
                                       );
                                     },
                                   ),
@@ -1008,8 +1041,8 @@ class __ProfileTileState extends State<_ProfileTile> {
             ),
           ),
 
-        //change for live
-        if (context.appState.user.id == context.appState.client.currentUser!.id)
+        // change for live
+        if (context.appState.user.id != context.appState.client.currentUser!.id)
           Row(
             children: <Widget>[
               Expanded(
@@ -1017,7 +1050,7 @@ class __ProfileTileState extends State<_ProfileTile> {
                       ? const CircularProgressIndicator(strokeWidth: 3)
                       : TextButton(
                           child: _isFollowing
-                              ? Text(context.appState.client.currentUser!.id)
+                              ? const Text('Unfollow')
                               : const Text('Follow'),
                           style: TextButton.styleFrom(
                             textStyle: const TextStyle(

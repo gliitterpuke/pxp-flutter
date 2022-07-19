@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stream_feed_flutter_core/stream_feed_flutter_core.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -24,7 +26,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
   static const double maxImageHeight = 1000;
   static const double maxImageWidth = 800;
 
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormBuilderState>();
   final _text = TextEditingController();
 
   XFile? _pickedFile;
@@ -42,17 +44,12 @@ class _NewPostScreenState extends State<NewPostScreen> {
     setState(() {});
   }
 
-  Future<void> _postImage() async {
-    // if (_pickedFile == null) {
-    //   context.removeAndShowSnackbar('Please select an image first');
-    //   return;
-    // }
-
-    if (!_formKey.currentState!.validate()) {
-      context.removeAndShowSnackbar('Please enter a caption');
-      return;
-    }
-    _setLoading(true);
+  Future<void> _postImage(Map<String, dynamic> value) async {
+    print(value);
+    // if (!value.validate()) {
+    //   print("validation failed");
+    // } else {
+    //   _setLoading(true);
 
     final client = context.appState.client;
     if (_pickedFile == null) {
@@ -60,9 +57,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
         feedGroup: 'user',
         verb: 'post',
         object: 'image',
-        data: {
-          'description': _text.text,
-        },
+        data: {'description': value['description'], 'title': value['title']},
       );
     } else {
       var decodedImage =
@@ -83,7 +78,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
             verb: 'post',
             object: 'image',
             data: {
-              'description': _text.text,
+              'description': value['description'],
+              'title': value['title']
             },
           );
         } else if (_resizedUrl != null && client.currentUser != null) {
@@ -92,7 +88,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
             verb: 'post',
             object: 'image',
             data: {
-              'description': _text.text,
+              'description': value['description'],
+              'title': value['title'],
               'image_url': imageUrl,
               'resized_image_url': _resizedUrl,
               'image_width': decodedImage.width,
@@ -108,6 +105,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
     context.removeAndShowSnackbar('Post created!');
 
     Navigator.of(context).pop();
+    // }
   }
 
   void _setLoading(bool state, {bool shouldCallSetState = true}) {
@@ -139,7 +137,15 @@ class _NewPostScreenState extends State<NewPostScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: GestureDetector(
-                onTap: _postImage,
+                onTap: () async {
+                  // _formKey.currentState!.validate();
+                  _formKey.currentState!.save();
+                  if (_formKey.currentState!.validate()) {
+                    _postImage(_formKey.currentState!.value);
+                  } else {
+                    print("validation failed");
+                  }
+                },
                 child: const Text('Share', style: AppTextStyle.textStyleAction),
               ),
             ),
@@ -196,23 +202,40 @@ class _NewPostScreenState extends State<NewPostScreen> {
                 const SizedBox(
                   height: 22,
                 ),
-                Form(
+                FormBuilder(
                   key: _formKey,
+                  autovalidateMode: AutovalidateMode.disabled,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TextFormField(
-                      controller: _text,
-                      decoration: const InputDecoration(
-                        hintText: 'Tell us your story',
-                        border: InputBorder.none,
-                      ),
-                      maxLines: null,
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'Caption is empty';
-                        }
-                        return null;
-                      },
+                    child: Column(
+                      children: [
+                        FormBuilderTextField(
+                          name: 'title',
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w700),
+                          decoration: const InputDecoration(
+                            hintText: 'Headline / title',
+                            hintStyle: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            border: InputBorder.none,
+                          ),
+                          maxLines: 2,
+                          validator: FormBuilderValidators.compose(
+                              [FormBuilderValidators.required()]),
+                        ),
+                        FormBuilderTextField(
+                          name: 'description',
+                          decoration: const InputDecoration(
+                            hintText: 'Tell us your story',
+                            border: InputBorder.none,
+                          ),
+                          maxLines: null,
+                          validator: FormBuilderValidators.compose(
+                              [FormBuilderValidators.required()]),
+                        ),
+                      ],
                     ),
                   ),
                 ),

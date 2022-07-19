@@ -25,16 +25,20 @@ class PostCard extends StatelessWidget {
     Key? key,
     required this.enrichedActivity,
     required this.onAddComment,
+    required this.user,
+    required this.pfpImg,
   }) : super(key: key);
 
   /// Enriched activity (post) to display.
   final EnrichedActivity enrichedActivity;
   final OnAddComment onAddComment;
+  final Map user;
+  final String pfpImg;
 
   @override
   Widget build(BuildContext context) {
     final actorData = enrichedActivity.actor!.data;
-    final userData = StreamagramUser.fromMap(actorData as Map<String, dynamic>);
+    // final userData = StreamagramUser.fromMap(actorData as Map<String, dynamic>);
 
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
@@ -65,7 +69,9 @@ class PostCard extends StatelessWidget {
                               children: [
                                 _ProfileSlab(
                                   enrichedActivity: enrichedActivity,
-                                  userData: userData,
+                                  // userData: userData,
+                                  user: user,
+                                  pfpImg: pfpImg,
                                 ),
                                 const SizedBox(height: 10),
                                 if (enrichedActivity.extraData!['image_url'] !=
@@ -90,7 +96,9 @@ class PostCard extends StatelessWidget {
               children: [
                 _ProfileSlab(
                   enrichedActivity: enrichedActivity,
-                  userData: userData,
+                  // userData: userData,
+                  user: user,
+                  pfpImg: pfpImg,
                 ),
                 const SizedBox(height: 10),
                 if (enrichedActivity.extraData!['image_url'] != null)
@@ -248,7 +256,7 @@ class __DescriptionState extends State<_Description> {
     return [
       Padding(
         padding: const EdgeInsets.only(
-            left: 5.0, right: 5.0, top: 5.0, bottom: 10.0),
+            left: 8.0, right: 8.0, top: 5.0, bottom: 10.0),
         child: Text(
           widget.enrichedActivity.extraData?['description'] as String? ?? '',
           overflow: TextOverflow.ellipsis,
@@ -262,7 +270,7 @@ class __DescriptionState extends State<_Description> {
       ),
       Padding(
         padding: const EdgeInsets.only(
-            left: 5.0, right: 5.0, top: 5.0, bottom: 20.0),
+            left: 8.0, right: 8.0, top: 5.0, bottom: 20.0),
         child: Text(
           "Read More",
           style: TextStyle(
@@ -527,10 +535,9 @@ class _Title extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          const EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
+          const EdgeInsets.only(left: 8.0, right: 8.0, top: 5.0, bottom: 5.0),
       child: Text(
-        // enrichedActivity.extraData?['title'] as String? ?? '',
-        "Temporary Title",
+        enrichedActivity.extraData?['title'] as String? ?? '',
         style: const TextStyle(
           color: pxpColors.white,
           fontSize: 20,
@@ -541,30 +548,19 @@ class _Title extends StatelessWidget {
   }
 }
 
-class _ProfilePicture extends StatelessWidget {
-  const _ProfilePicture({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final streamagramUser = context.watch<AppState>().streamagramUser;
-    if (streamagramUser == null) {
-      return const Icon(Icons.error);
-    }
-    return Avatar.small(
-      streamagramUser: streamagramUser,
-    );
-  }
-}
-
 class _ProfileSlab extends StatefulWidget {
   const _ProfileSlab({
     Key? key,
-    required this.userData,
+    // required this.userData,
     required this.enrichedActivity,
+    required this.user,
+    required this.pfpImg,
   }) : super(key: key);
 
   final EnrichedActivity enrichedActivity;
-  final StreamagramUser userData;
+  // final StreamagramUser userData;
+  final Map user;
+  final String pfpImg;
   @override
   _ProfileSlabState createState() => _ProfileSlabState();
 }
@@ -581,14 +577,20 @@ class _ProfileSlabState extends State<_ProfileSlab> {
       padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 16.0),
       child: Row(
         children: [
-          Avatar.medium(streamagramUser: widget.userData),
+          CachedNetworkImage(
+            imageUrl: widget.pfpImg,
+            imageBuilder: (context, imageProvider) =>
+                CircleAvatar(radius: 30, backgroundImage: imageProvider),
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.userData.fullName,
+                  widget.user['profile']['username'],
                   style: TextStyle(
                       color: pxpColors.white,
                       fontSize: 16,

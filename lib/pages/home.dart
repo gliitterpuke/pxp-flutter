@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:pxp_flutter/json/home_json.dart';
+import 'package:pxp_flutter/pages/account.dart';
 import 'package:pxp_flutter/pages/book_detail.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:pxp_flutter/constants/Theme.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pxp_flutter/pages/genre.dart';
 import 'package:pxp_flutter/pages/search.dart';
+import 'package:pxp_flutter/pages/user_profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -572,7 +574,8 @@ class _HomePageState extends State<HomePage> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => BookDetail(),
+                                          builder: (context) => UserProfilePage(
+                                              userId: authorList[index]),
                                           // settings: RouteSettings(
                                           //   arguments: mylist[index],
                                           // )
@@ -587,7 +590,8 @@ class _HomePageState extends State<HomePage> {
                                               BorderRadius.circular(99),
                                           image: DecorationImage(
                                               image: AssetImage(
-                                                  authorList[index]['img']),
+                                                  authorList[index]['profile']
+                                                      ['pic']['url']),
                                               fit: BoxFit.cover)),
                                     ),
                                     SizedBox(
@@ -597,7 +601,8 @@ class _HomePageState extends State<HomePage> {
                                       width: 100,
                                       child: Center(
                                         child: Text(
-                                          authorList[index]['author'],
+                                          authorList[index]['profile']
+                                              ['display_name'],
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                           style: TextStyle(

@@ -10,39 +10,106 @@ class tierColor {
 
 const List authorList = [
   {
-    "img": "assets/images/loid.jpg",
-    "author": "Loid Forger",
+    "email": "loid@forger.com",
+    "id": 11,
+    "created_at": "2022-07-16T06:25:39.096037",
+    "updated_at": "2022-07-16T06:25:39.096050",
+    "is_active": true,
+    "is_creator": true,
+    "last_logged_in_at": null,
+    "profile": {
+      "username": "loid",
+      "id": 11,
+      "display_name": "loid",
+      "bio": "",
+      "pic": {
+        "filename": "loid.jpg",
+        "mime_type": "image/jpeg",
+        "bucket": "pxp-demo2",
+        "tag": "string",
+        "url": "assets/images/loid.jpg",
+        "id": 4,
+        "uploaded_at": "2022-07-16T06:25:18.802753",
+        "updated_at": "2022-07-16T06:25:18.802763"
+      },
+      "level": 1,
+      "points": 0,
+      "mature": true,
+      "notifications": true,
+      "balance": 0,
+      "payout_acc_id": "",
+      "payout_credit": 0
+    },
     "series": "2",
     "followers": "11,231",
-    "notification": "yes"
   },
   {
-    "img": "assets/images/gintoki.webp",
-    "author": "Gin-chan",
-    "series": "1",
-    "followers": "512",
-    "notification": "no"
-  },
-  {
-    "img": "assets/images/flyanya.jpg",
-    "author": "Anya Forger",
+    "email": "anya@forger.com",
+    "id": 10,
+    "created_at": "2022-07-16T06:25:38.172227",
+    "updated_at": "2022-07-16T06:25:38.172235",
+    "is_active": true,
+    "is_creator": true,
+    "last_logged_in_at": "2022-07-16T09:08:49.538343",
+    "profile": {
+      "username": "anya",
+      "id": 10,
+      "display_name": "anya",
+      "bio": "",
+      "pic": {
+        "filename": "anya.jpg",
+        "mime_type": "image/jpeg",
+        "bucket": "pxp-demo2",
+        "tag": "string",
+        "url": "assets/images/flyanya.jpg",
+        "id": 3,
+        "uploaded_at": "2022-07-16T06:25:18.069148",
+        "updated_at": "2022-07-16T06:25:18.069167"
+      },
+      "level": 1,
+      "points": 0,
+      "mature": true,
+      "notifications": true,
+      "balance": 0,
+      "payout_acc_id": "",
+      "payout_credit": 0
+    },
     "series": "1",
     "followers": "52",
-    "notification": "no"
   },
   {
-    "img": "assets/images/san.jpg",
-    "author": "San",
-    "series": "321",
-    "followers": "1,342",
-    "notification": "yes"
-  },
-  {
-    "img": "assets/images/drunkyor.jpg",
-    "author": "Yor Forger",
+    "email": "yor@forger.com",
+    "id": 12,
+    "created_at": "2022-07-16T06:25:40.231147",
+    "updated_at": "2022-07-16T06:25:40.231160",
+    "is_active": true,
+    "is_creator": true,
+    "last_logged_in_at": null,
+    "profile": {
+      "username": "yor",
+      "id": 12,
+      "display_name": "yor",
+      "bio": "",
+      "pic": {
+        "filename": "drunkyor.jpg",
+        "mime_type": "image/jpeg",
+        "bucket": "pxp-demo2",
+        "tag": "string",
+        "url": "assets/images/drunkyor.jpg",
+        "id": 5,
+        "uploaded_at": "2022-07-16T06:25:19.571358",
+        "updated_at": "2022-07-16T06:25:19.571368"
+      },
+      "level": 1,
+      "points": 0,
+      "mature": true,
+      "notifications": true,
+      "balance": 0,
+      "payout_acc_id": "",
+      "payout_credit": 0
+    },
     "series": "1",
     "followers": "2,468",
-    "notification": "no"
   },
 ];
 

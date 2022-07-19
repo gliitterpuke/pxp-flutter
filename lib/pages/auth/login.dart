@@ -157,16 +157,12 @@ class _LoginState extends State<Login> {
         final a = Uri.parse(pic);
         final pfpImg = await http.get(Uri.parse(
             'http://localhost:5000/api/v1/sign-s3-get?bucket=pxp-demo2&key=${a.pathSegments.last}'));
-        print(pfpImg.body);
 
+        final id = box.read('user')['id'];
         final success = await context.appState.client
             .user(username)
-            .update({'username': username});
+            .update({'username': username, 'id': id});
         await box.write('pfp', pfpImg.body);
-
-        // final test = await context.appState.client.user('demo').get();
-        // print(test.data);
-        // // final success = await context.appState.connect(DemoAppUser.sacha);
 
         if (success.data!.isNotEmpty) {
           await Navigator.of(context).pushReplacement(
